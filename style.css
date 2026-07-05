@@ -819,10 +819,32 @@ footer {
         background: var(--bg);
         border-right: 1px solid var(--border);
         box-shadow: 4px 0 24px rgba(0,0,0,0.4);
+        padding: 16px;
     }
 
     .docs-sidebar.docs-sidebar-open {
         display: block;
+    }
+
+    .docs-sidebar-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 32px;
+        height: 32px;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        border-radius: var(--radius-sm);
+    }
+
+    .docs-sidebar-close:hover {
+        background: var(--bg-hover);
+        color: var(--text);
     }
 
     .docs-sidebar-toggle {
@@ -2218,6 +2240,10 @@ footer {
     overflow-y: auto;
 }
 
+.docs-sidebar-close {
+    display: none;
+}
+
 .docs-sidebar-toggle {
     display: none;
     position: fixed;
@@ -2274,7 +2300,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 10px;
+    padding: 6px 12px;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -2284,6 +2310,7 @@ footer {
     border-radius: var(--radius-sm);
     transition: color 0.15s;
     user-select: none;
+    width: 100%;
 }
 
 .docs-category-title:hover {
@@ -2306,13 +2333,15 @@ footer {
 }
 
 .docs-link {
-    display: block;
-    padding: 7px 10px;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
     font-size: 0.875rem;
     color: var(--text-muted);
     text-decoration: none;
     border-radius: var(--radius-sm);
     transition: all 0.1s;
+    width: auto;
 }
 
 .docs-link:hover {

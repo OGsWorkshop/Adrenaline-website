@@ -160,7 +160,14 @@ function filterDocs(query) {
 
 function toggleDocsSidebar() {
     document.getElementById('docs-sidebar').classList.toggle('docs-sidebar-open');
-    document.querySelector('.docs-sidebar-toggle').classList.toggle('is-open');
+    const toggle = document.querySelector('.docs-sidebar-toggle');
+    if (toggle) toggle.classList.toggle('is-open');
+}
+
+function closeDocsSidebar() {
+    document.getElementById('docs-sidebar').classList.remove('docs-sidebar-open');
+    const toggle = document.querySelector('.docs-sidebar-toggle');
+    if (toggle) toggle.classList.remove('is-open');
 }
 
 function showToast(message, type) {
@@ -347,6 +354,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            closeDocsSidebar();
         }
     });
 });

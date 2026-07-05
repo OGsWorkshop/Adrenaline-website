@@ -35,72 +35,75 @@
 
     <div class="docs-layout">
         <aside class="docs-sidebar" id="docs-sidebar">
-            <div class="docs-search">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                <input type="text" placeholder="Search docs..." oninput="filterDocs(this.value)">
+        <button class="docs-sidebar-close" onclick="closeDocsSidebar()">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="docs-search">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <input type="text" placeholder="Search docs..." oninput="filterDocs(this.value)">
+        </div>
+        <nav class="docs-nav" id="docs-nav">
+            <div class="docs-category">
+                <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                    <span>Getting Started</span>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <div class="docs-category-links">
+                    <a href="#intro" class="docs-link active">Introduction</a>
+                    <a href="#installation" class="docs-link">Installation</a>
+                    <a href="#quickstart" class="docs-link">Quick Start</a>
+                    <a href="#setup" class="docs-link">Setup Guide</a>
+                </div>
             </div>
-            <nav class="docs-nav" id="docs-nav">
-                <div class="docs-category">
-                    <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
-                        <span>Getting Started</span>
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </div>
-                    <div class="docs-category-links">
-                        <a href="#intro" class="docs-link active">Introduction</a>
-                        <a href="#installation" class="docs-link">Installation</a>
-                        <a href="#quickstart" class="docs-link">Quick Start</a>
-                        <a href="#setup" class="docs-link">Setup Guide</a>
-                    </div>
+            <div class="docs-category">
+                <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                    <span>Core Features</span>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </div>
-                <div class="docs-category">
-                    <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
-                        <span>Core Features</span>
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </div>
-                    <div class="docs-category-links">
-                        <a href="#script-execution" class="docs-link">Script Execution</a>
-                        <a href="#script-hub" class="docs-link">Script Hub</a>
-                        <a href="#api-levels" class="docs-link">API Levels</a>
-                        <a href="#auto-updater" class="docs-link">Auto-Updater</a>
-                    </div>
+                <div class="docs-category-links">
+                    <a href="#script-execution" class="docs-link">Script Execution</a>
+                    <a href="#script-hub" class="docs-link">Script Hub</a>
+                    <a href="#api-levels" class="docs-link">API Levels</a>
+                    <a href="#auto-updater" class="docs-link">Auto-Updater</a>
                 </div>
-                <div class="docs-category">
-                    <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
-                        <span>API Reference</span>
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </div>
-                    <div class="docs-category-links">
-                        <a href="#environment" class="docs-link">Environment</a>
-                        <a href="#functions" class="docs-link">Functions</a>
-                        <a href="#globals" class="docs-link">Globals</a>
-                        <a href="#metatables" class="docs-link">Metatables</a>
-                        <a href="#drawing" class="docs-link">Drawing Library</a>
-                    </div>
+            </div>
+            <div class="docs-category">
+                <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                    <span>API Reference</span>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </div>
-                <div class="docs-category">
-                    <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
-                        <span>Security</span>
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </div>
-                    <div class="docs-category-links">
-                        <a href="#bypass" class="docs-link">Bypass Methods</a>
-                        <a href="#detection" class="docs-link">Detection Risks</a>
-                        <a href="#best-practices" class="docs-link">Best Practices</a>
-                    </div>
+                <div class="docs-category-links">
+                    <a href="#environment" class="docs-link">Environment</a>
+                    <a href="#functions" class="docs-link">Functions</a>
+                    <a href="#globals" class="docs-link">Globals</a>
+                    <a href="#metatables" class="docs-link">Metatables</a>
+                    <a href="#drawing" class="docs-link">Drawing Library</a>
                 </div>
-                <div class="docs-category">
-                    <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
-                        <span>Troubleshooting</span>
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </div>
-                    <div class="docs-category-links">
-                        <a href="#common-issues" class="docs-link">Common Issues</a>
-                        <a href="#antivirus" class="docs-link">Antivirus Conflicts</a>
-                        <a href="#faq" class="docs-link">FAQ</a>
-                    </div>
+            </div>
+            <div class="docs-category">
+                <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                    <span>Security</span>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </div>
-            </nav>
-        </aside>
+                <div class="docs-category-links">
+                    <a href="#bypass" class="docs-link">Bypass Methods</a>
+                    <a href="#detection" class="docs-link">Detection Risks</a>
+                    <a href="#best-practices" class="docs-link">Best Practices</a>
+                </div>
+            </div>
+            <div class="docs-category">
+                <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                    <span>Troubleshooting</span>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <div class="docs-category-links">
+                    <a href="#common-issues" class="docs-link">Common Issues</a>
+                    <a href="#antivirus" class="docs-link">Antivirus Conflicts</a>
+                    <a href="#faq" class="docs-link">FAQ</a>
+                </div>
+            </div>
+        </nav>
+    </aside>
 
         <button class="docs-sidebar-toggle" onclick="toggleDocsSidebar()">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10H17M3 5H17M7 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
