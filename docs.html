@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Adrenaline Executor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="docs-page">
+    <nav>
+        <div class="nav-inner">
+            <a href="/" class="logo">
+                <svg class="logo-icon" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect width="28" height="28" rx="6" fill="#8A5DF4"/>
+                    <path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="logo-text">ADRENALINE</span>
+            </a>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/pricing">Pricing</a>
+                    <a href="/docs" class="active">Docs</a>
+                </div>
+                <a href="/pricing" class="btn btn-primary btn-sm">Get Premium</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="docs-layout">
+        <aside class="docs-sidebar" id="docs-sidebar">
+            <div class="docs-search">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <input type="text" placeholder="Search docs..." oninput="filterDocs(this.value)">
+            </div>
+            <nav class="docs-nav" id="docs-nav">
+                <div class="docs-category">
+                    <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <span>Getting Started</span>
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <div class="docs-category-links">
+                        <a href="#intro" class="docs-link active">Introduction</a>
+                        <a href="#installation" class="docs-link">Installation</a>
+                        <a href="#quickstart" class="docs-link">Quick Start</a>
+                        <a href="#setup" class="docs-link">Setup Guide</a>
+                    </div>
+                </div>
+                <div class="docs-category">
+                    <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <span>Core Features</span>
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <div class="docs-category-links">
+                        <a href="#script-execution" class="docs-link">Script Execution</a>
+                        <a href="#script-hub" class="docs-link">Script Hub</a>
+                        <a href="#api-levels" class="docs-link">API Levels</a>
+                        <a href="#auto-updater" class="docs-link">Auto-Updater</a>
+                    </div>
+                </div>
+                <div class="docs-category">
+                    <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <span>API Reference</span>
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <div class="docs-category-links">
+                        <a href="#environment" class="docs-link">Environment</a>
+                        <a href="#functions" class="docs-link">Functions</a>
+                        <a href="#globals" class="docs-link">Globals</a>
+                        <a href="#metatables" class="docs-link">Metatables</a>
+                        <a href="#drawing" class="docs-link">Drawing Library</a>
+                    </div>
+                </div>
+                <div class="docs-category">
+                    <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <span>Security</span>
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <div class="docs-category-links">
+                        <a href="#bypass" class="docs-link">Bypass Methods</a>
+                        <a href="#detection" class="docs-link">Detection Risks</a>
+                        <a href="#best-practices" class="docs-link">Best Practices</a>
+                    </div>
+                </div>
+                <div class="docs-category">
+                    <div class="docs-category-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <span>Troubleshooting</span>
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <div class="docs-category-links">
+                        <a href="#common-issues" class="docs-link">Common Issues</a>
+                        <a href="#antivirus" class="docs-link">Antivirus Conflicts</a>
+                        <a href="#faq" class="docs-link">FAQ</a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <button class="docs-sidebar-toggle" onclick="toggleDocsSidebar()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10H17M3 5H17M7 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <main class="docs-content">
+            <section id="intro" class="docs-section">
+                <h1>Introduction</h1>
+                <p class="docs-lead">Welcome to Adrenaline — the most powerful Roblox script executor, engineered for superior efficiency and precision.</p>
+                <p>Adrenaline empowers penetration testing of your games with unmatched ultra-high performance. Whether you're a developer testing security vulnerabilities or a power user looking to enhance your gameplay, Adrenaline provides the tools you need.</p>
+                
+                <div class="docs-alert docs-alert-info">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M10 6V10M10 14V13.99" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    <div>
+                        <strong>Important:</strong> Adrenaline is intended for educational and security research purposes only. Always comply with Roblox's Terms of Service.
+                    </div>
+                </div>
+
+                <h2>Key Features</h2>
+                <ul>
+                    <li>Level 8 API execution — run any script</li>
+                    <li>Built-in script hub with thousands of premium scripts</li>
+                    <li>Advanced Hyperion bypass technology</li>
+                    <li>Auto-updater — always stay on the latest version</li>
+                    <li>HWID spoofer for enhanced anonymity</li>
+                </ul>
+
+                <div class="docs-code-header">Example: Hello World</div>
+                <pre class="docs-code"><code><span class="cmnt">-- Hello World in Adrenaline</span>
+<span class="kw">local</span> <span class="var">message</span> = <span class="str">"Hello, Adrenaline!"</span>
+<span class="fn">print</span>(<span class="var">message</span>)
+
+<span class="cmnt">-- Execute in Roblox</span>
+<span class="fn">game</span>:<span class="fn">GetService</span>(<span class="str">"Players"</span>).<span class="var">LocalPlayer</span>.<span class="var">Character</span>:<span class="fn">BreakJoints</span>()</code></pre>
+            </section>
+
+            <section id="installation" class="docs-section">
+                <h1>Installation</h1>
+                <p>Follow these steps to get Adrenaline up and running on your system.</p>
+
+                <h2>System Requirements</h2>
+                <ul>
+                    <li>Windows 10 or Windows 11 (64-bit)</li>
+                    <li>4GB RAM minimum (8GB recommended)</li>
+                    <li>500MB free disk space</li>
+                    <li>Stable internet connection</li>
+                </ul>
+
+                <h2>Step-by-Step Guide</h2>
+                <ol>
+                    <li>Download the latest version of Adrenaline from our <a href="/pricing">pricing page</a>.</li>
+                    <li>Temporarily disable Windows Defender or add an exception for the Adrenaline folder.</li>
+                    <li>Extract the downloaded ZIP file to a folder of your choice.</li>
+                    <li>Run <code class="inline-code">Adrenaline.exe</code> as Administrator.</li>
+                    <li>If you purchased Premium, enter your license key when prompted.</li>
+                    <li>Launch Roblox and click "Inject" in the Adrenaline window.</li>
+                </ol>
+
+                <div class="docs-alert docs-alert-warning">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L2 18H18L10 2Z" stroke="currentColor" stroke-width="1.5"/><path d="M10 8V12M10 15V14.99" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    <div>
+                        <strong>Antivirus Notice:</strong> Adrenaline interacts with Roblox's memory, which may trigger antivirus false positives. This is normal for all script executors.
+                    </div>
+                </div>
+            </section>
+
+            <section id="quickstart" class="docs-section">
+                <h1>Quick Start</h1>
+                <p>Get started with Adrenaline in under 60 seconds.</p>
+
+                <div class="docs-steps">
+                    <div class="docs-step">
+                        <div class="docs-step-num">1</div>
+                        <div class="docs-step-content">
+                            <h3>Launch Adrenaline</h3>
+                            <p>Open the application as Administrator. You'll see the main dashboard with the script editor.</p>
+                        </div>
+                    </div>
+                    <div class="docs-step">
+                        <div class="docs-step-num">2</div>
+                        <div class="docs-step-content">
+                            <h3>Open Roblox</h3>
+                            <p>Launch Roblox and join any game. Adrenaline will automatically detect the Roblox process.</p>
+                        </div>
+                    </div>
+                    <div class="docs-step">
+                        <div class="docs-step-num">3</div>
+                        <div class="docs-step-content">
+                            <h3>Write or Paste a Script</h3>
+                            <p>Use the built-in editor to write your own script or paste one from the Script Hub.</p>
+                        </div>
+                    </div>
+                    <div class="docs-step">
+                        <div class="docs-step-num">4</div>
+                        <div class="docs-step-content">
+                            <h3>Execute!</h3>
+                            <p>Click "Execute" or press F5 to run your script. Watch as Adrenaline injects and runs your code instantly.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="api-levels" class="docs-section">
+                <h1>API Levels</h1>
+                <p>Adrenaline supports multiple API execution levels, each offering different capabilities.</p>
+
+                <div class="docs-table-wrap">
+                    <table class="docs-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Capabilities</th>
+                                <th>Availability</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-level">Level 7</span></td>
+                                <td>Basic execution, limited library support</td>
+                                <td>Free</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-level badge-purple">Level 8</span></td>
+                                <td>Full execution, all libraries, script hub</td>
+                                <td>Premium</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-level badge-gold">Level 8+</span></td>
+                                <td>Everything + custom API, whitelabel</td>
+                                <td>Enterprise</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="script-execution" class="docs-section">
+                <h1>Script Execution</h1>
+                <p>Adrenaline offers the most robust script execution engine available.</p>
+
+                <h2>Basic Execution</h2>
+                <pre class="docs-code"><code><span class="fn">loadstring</span>(<span class="str">[[print("Hello from Adrenaline!")]]</span>)()</code></pre>
+
+                <h2>Using the Environment</h2>
+                <pre class="docs-code"><code><span class="cmnt">-- Access the game environment</span>
+<span class="kw">local</span> <span class="var">plr</span> = <span class="fn">game</span>:<span class="fn">GetService</span>(<span class="str">"Players"</span>).<span class="var">LocalPlayer</span>
+<span class="kw">local</span> <span class="var">char</span> = <span class="var">plr</span>.<span class="var">Character</span>
+
+<span class="cmnt">-- Teleport to a position</span>
+<span class="var">char</span>.<span class="var">HumanoidRootPart</span>.<span class="var">CFrame</span> = <span class="fn">CFrame</span>.<span class="fn">new</span>(<span class="num">0</span>, <span class="num">50</span>, <span class="num">0</span>)</code></pre>
+            </section>
+
+            <section id="script-hub" class="docs-section">
+                <h1>Script Hub</h1>
+                <p>The Adrenaline Script Hub gives you access to thousands of community-contributed scripts.</p>
+                <ul>
+                    <li>Categories: Universal, Jailbreak, Blox Fruits, Arsenal, MM2, and more</li>
+                    <li>Daily updates from our team and community</li>
+                    <li>One-click insert into the editor</li>
+                    <li>Premium members get access to exclusive scripts</li>
+                </ul>
+            </section>
+
+            <section id="faq" class="docs-section">
+                <h1>Frequently Asked Questions</h1>
+
+                <div class="docs-faq">
+                    <details class="docs-faq-item">
+                        <summary>Is Adrenaline detectable?</summary>
+                        <p>Adrenaline uses advanced Hyperion bypass technology and is regularly updated to remain undetected. However, no executor can guarantee 100% undetection forever. We recommend using alts for high-risk activities.</p>
+                    </details>
+                    <details class="docs-faq-item">
+                        <summary>Do I need to disable my antivirus?</summary>
+                        <p>Yes, most antivirus software will flag Adrenaline (and all script executors) as a false positive. Add an exception or temporarily disable it during use.</p>
+                    </details>
+                    <details class="docs-faq-item">
+                        <summary>How do I get my license key?</summary>
+                        <p>After purchasing Premium or Enterprise, your license key is sent to the email you provided during checkout. It's also available in your account dashboard.</p>
+                    </details>
+                    <details class="docs-faq-item">
+                        <summary>Can I use Adrenaline on multiple PCs?</summary>
+                        <p>Premium allows up to 2 simultaneous activations. Enterprise allows up to 5. Contact support if you need more.</p>
+                    </details>
+                </div>
+            </section>
+
+            <div class="docs-footer-nav">
+                <a href="/pricing" class="docs-nav-link docs-nav-prev">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span>Pricing</span>
+                </a>
+                <a href="/" class="docs-nav-link docs-nav-next">
+                    <span>Home</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

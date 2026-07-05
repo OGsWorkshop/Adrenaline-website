@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Adrenaline Executor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body class="pricing-page">
+    <nav>
+        <div class="nav-inner">
+            <a href="/" class="logo">
+                <svg class="logo-icon" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect width="28" height="28" rx="6" fill="#8A5DF4"/>
+                    <path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="logo-text">ADRENALINE</span>
+            </a>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/pricing" class="active">Pricing</a>
+                    <a href="/docs">Docs</a>
+                </div>
+                <a href="/pricing" class="btn btn-primary btn-sm">Get Premium</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="pricing-hero">
+        <div class="pricing-hero-bg"></div>
+        <div class="pricing-hero-content">
+            <span class="section-label">Pricing</span>
+            <h1 class="pricing-hero-title">Choose your <span class="gradient-text">weapon</span></h1>
+            <p class="pricing-hero-desc">Start for free. Get a weekly key or go lifetime. No hidden fees, no surprises.</p>
+        </div>
+    </div>
+
+    <div class="pricing-plans">
+        <div class="plan-card" onclick="selectPlan('free')">
+            <div class="plan-header">
+                <div class="plan-icon">🔓</div>
+                <h3 class="plan-name">Free</h3>
+            </div>
+            <div class="plan-price-box">
+                <div class="plan-price">$0</div>
+                <div class="plan-period">forever</div>
+            </div>
+            <ul class="plan-features">
+                <li class="check">Basic script execution</li>
+                <li class="check">Limited script hub</li>
+                <li class="check">Level 7 API</li>
+                <li class="check">Standard support</li>
+                <li class="cross">Premium scripts</li>
+                <li class="cross">Priority support</li>
+                <li class="cross">Early access updates</li>
+            </ul>
+            <button class="btn btn-plan btn-plan-outline" onclick="event.stopPropagation(); linkvertiseRedirect()">
+                <span>Get Started</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M8 13L4 9M8 13L12 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+        </div>
+
+        <div class="plan-card plan-featured" data-plan="premium" onclick="selectPlan('premium')">
+            <div class="plan-badge">Most Popular</div>
+            <div class="plan-header">
+                <div class="plan-icon">⚡</div>
+                <h3 class="plan-name">Premium</h3>
+            </div>
+            <div class="plan-price-box">
+                <div class="plan-price">
+                    <span class="price-amount">$2.99</span>
+                </div>
+                <div class="plan-period">per week</div>
+            </div>
+            <ul class="plan-features">
+                <li class="check">Unlimited execution</li>
+                <li class="check">Full script hub access</li>
+                <li class="check">Level 8 API</li>
+                <li class="check">Priority support</li>
+                <li class="check">Exclusive premium scripts</li>
+                <li class="check">Early access updates</li>
+                <li class="check">HWID Spoofer</li>
+            </ul>
+            <button class="btn btn-plan btn-plan-primary" onclick="event.stopPropagation(); proceedToCheckout('premium')">
+                <span>Buy Premium - $2.99/week</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+        </div>
+
+        <div class="plan-card" data-plan="enterprise" onclick="selectPlan('enterprise')">
+            <div class="plan-badge plan-badge-gold">Best Value</div>
+            <div class="plan-header">
+                <div class="plan-icon">👑</div>
+                <h3 class="plan-name">Enterprise</h3>
+            </div>
+            <div class="plan-price-box">
+                <div class="plan-price">
+                    <span class="price-amount">$29.99</span>
+                </div>
+                <div class="plan-period">lifetime access</div>
+            </div>
+            <ul class="plan-features">
+                <li class="check">Everything in Premium</li>
+                <li class="check">Private server support</li>
+                <li class="check">Custom script development</li>
+                <li class="check">API access</li>
+                <li class="check">Whitelabel option</li>
+                <li class="check">Direct developer access</li>
+                <li class="check">Dedicated Discord channel</li>
+            </ul>
+            <button class="btn btn-plan btn-plan-primary" onclick="event.stopPropagation(); proceedToCheckout('enterprise')">
+                <span>Buy Enterprise - $29.99 Lifetime</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="trust-section">
+        <div class="trust-grid">
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#8A5DF4"/></svg>
+                </div>
+                <div>
+                    <strong>Trusted by 120,000+</strong>
+                    <span>users worldwide</span>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" fill="#8A5DF4"/></svg>
+                </div>
+                <div>
+                    <strong>Secure checkout</strong>
+                    <span>256-bit encrypted</span>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 12L11 14L15 10M21 12C21 16.97 17.97 20 13 20C11.48 20 10.04 19.64 8.76 19L3 21L4.76 15.24C4.14 13.96 3.78 12.52 3.78 11C3.78 6.03 6.81 3 11.78 3C16.75 3 19.78 6.03 19.78 11L19.77 11.04L20.98 9.83L21 12Z" stroke="#8A5DF4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                    <strong>24/7 Support</strong>
+                    <span>Discord & email</span>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#8A5DF4"/></svg>
+                </div>
+                <div>
+                    <strong>Instant delivery</strong>
+                    <span>after payment</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="checkout-section" class="checkout-section hidden">
+        <div class="checkout-overlay" onclick="closeCheckout()"></div>
+        <div class="checkout-container">
+            <button class="checkout-close" onclick="closeCheckout()">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+
+            <div class="checkout-layout">
+                <div class="checkout-sidebar">
+                    <div class="checkout-sidebar-inner">
+                        <div class="checkout-brand">
+                            <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#8A5DF4"/><path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>ADRENALINE</span>
+                        </div>
+                        <div class="checkout-summary">
+                            <div class="checkout-plan-label">Selected Plan</div>
+                            <div class="checkout-plan-name" id="checkout-plan-name">Premium Plan</div>
+                            <div class="checkout-price-row">
+                                <span>Subtotal</span>
+                                <span id="checkout-subtotal">$9.99</span>
+                            </div>
+                            <div class="checkout-price-row">
+                                <span>Billing</span>
+                                <span id="checkout-billing">Weekly</span>
+                            </div>
+                            <div class="checkout-price-divider"></div>
+                            <div class="checkout-price-row checkout-total">
+                                <span>Total</span>
+                                <span id="checkout-total">$9.99</span>
+                            </div>
+                        </div>
+                        <div class="checkout-guarantee">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L10.5 5.5L15 6.5L11.5 10L12.5 15L8 12.5L3.5 15L4.5 10L1 6.5L5.5 5.5L8 1Z" fill="#22c55e"/></svg>
+                            <span>30-day money-back guarantee</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-main">
+                    <div class="checkout-main-inner">
+                        <h2 class="checkout-title">Complete Payment</h2>
+                        <p class="checkout-subtitle">Secure payment via Stripe</p>
+
+                        <form id="payment-form">
+                            <div class="form-group">
+                                <label>Card Information</label>
+                                <div class="card-input-wrapper">
+                                    <div class="card-input-icon">
+                                        <svg width="20" height="16" viewBox="0 0 20 16" fill="none"><rect x="0.5" y="0.5" width="19" height="15" rx="2.5" stroke="currentColor"/><path d="M0 5H20M5 12H8M11 12H14" stroke="currentColor" stroke-width="1.5"/></svg>
+                                    </div>
+                                    <div id="card-element"></div>
+                                </div>
+                                <div id="card-errors" class="card-errors"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" class="form-input" placeholder="you@example.com" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-checkout" id="submit-btn">
+                                <span class="btn-checkout-text">
+                                    Pay <span id="pay-amount">$9.99</span>
+                                </span>
+                                <span class="btn-checkout-loader hidden">
+                                    <svg class="spinner" width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" opacity="0.3"/><path d="M18 10C18 5.58 14.42 2 10 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                    Processing...
+                                </span>
+                            </button>
+                        </form>
+
+                        <div class="checkout-payment-methods">
+                            <span>We accept</span>
+                            <div class="payment-methods">
+                                <span>Visa</span>
+                                <span>Mastercard</span>
+                                <span>Amex</span>
+                                <span>Discover</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="payment-success" class="payment-success hidden">
+                <div class="success-checkmark">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <circle cx="32" cy="32" r="30" stroke="#22c55e" stroke-width="3" fill="none" class="success-circle"/>
+                        <path d="M20 32L28 40L44 24" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="success-check"/>
+                    </svg>
+                </div>
+                <h2 class="success-title">Payment Successful!</h2>
+                <p class="success-desc">Welcome to the Adrenaline family. Your license key has been sent to your email.</p>
+                <button class="btn btn-success" onclick="downloadAfterPurchase()">
+                    Download Adrenaline
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M8 13L4 9M8 13L12 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button class="btn btn-success-ghost" onclick="closeCheckout()">
+                    Go back to site
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
