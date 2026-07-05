@@ -1,16 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const stripe = require('stripe')('sk_test_XXXXXXXXXXXXXXXXXXXXXXXX');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+module.exports = async (req, res) => {
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
 
-app.use(cors());
-app.use(express.json());
-app.use(express.static(path.join(__dirname, '..')));
-
-app.post('/api/create-payment-intent', async (req, res) => {
     try {
         const { amount, plan } = req.body;
 
@@ -29,8 +23,4 @@ app.post('/api/create-payment-intent', async (req, res) => {
         console.error('Stripe error:', err);
         res.status(500).json({ error: err.message });
     }
-});
-
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+};

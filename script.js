@@ -1,5 +1,5 @@
 const LINKVERTISE_URL = 'https://linkvertise.com/your-link-here';
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_XXXXXXXXXXXXXXXXXXXXXXXX';
+const STRIPE_PUBLISHABLE_KEY = window.STRIPE_KEY || 'pk_test_XXXXXXXXXXXXXXXXXXXXXXXX';
 const API_ENDPOINT = '/api/create-payment-intent';
 
 let stripe;
