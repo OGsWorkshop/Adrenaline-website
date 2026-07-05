@@ -174,40 +174,140 @@ function showToast(message, type) {
 function toggleBilling() {}
 function selectPlan(plan) {}
 function proceedToCheckout(plan) {
-    if (plan === 'premium') {
-        currentAmount = 299;
-        currentPlan = 'premium';
-        document.getElementById('checkout-plan-name').textContent = 'Premium Plan';
-        document.getElementById('checkout-subtotal').textContent = '$2.99';
-        document.getElementById('checkout-billing').textContent = 'Weekly';
-        document.getElementById('checkout-total').textContent = '$2.99';
-        document.getElementById('pay-amount').textContent = '$2.99';
-    } else {
-        currentAmount = 2999;
-        currentPlan = 'enterprise';
-        document.getElementById('checkout-plan-name').textContent = 'Enterprise Plan';
-        document.getElementById('checkout-subtotal').textContent = '$29.99';
-        document.getElementById('checkout-billing').textContent = 'Lifetime';
-        document.getElementById('checkout-total').textContent = '$29.99';
-        document.getElementById('pay-amount').textContent = '$29.99';
-    }
-    document.getElementById('checkout-section').classList.remove('hidden');
-    document.getElementById('payment-success').classList.add('hidden');
-    document.getElementById('payment-form').classList.remove('hidden');
-    document.querySelector('.checkout-title').textContent = 'Complete Payment';
-    document.querySelector('.checkout-subtitle').textContent = 'Secure payment via Stripe';
-    document.body.style.overflow = 'hidden';
-    initializeStripe();
+    window.location.href = '/checkout?plan=' + plan;
+}
+function closeCheckout() {}
+
+const plans = {
+    free: { name: 'Free', amount: 0, billing: 'Forever', features: ['Basic execution', 'Limited script hub', 'Level 7 API', 'Standard support'] },
+    premium: { name: 'Premium Plan', amount: 299, billing: 'Weekly subscription', features: ['Unlimited execution', 'Full script hub access', 'Level 8 API', 'Priority support', 'Exclusive premium scripts', 'Early access updates', 'HWID Spoofer'] },
+    enterprise: { name: 'Enterprise Plan', amount: 2999, billing: 'Lifetime access', features: ['Everything in Premium', 'Private server support', 'Custom script development', 'API access', 'Whitelabel option', 'Direct developer access', 'Dedicated Discord channel'] }
+};
+
+function initCheckoutPage() {
+    const params = new URLSearchParams(window.location.search);
+    const plan = params.get('plan') || 'premium';
+    selectCheckoutPlan(plan);
 }
 
-function closeCheckout() {
-    document.getElementById('checkout-section').classList.add('hidden');
-    document.body.style.overflow = '';
+function selectCheckoutPlan(planKey) {
+    const plan = plans[planKey];
+    if (!plan) return;
+    currentPlan = planKey;
+    currentAmount = plan.amount;
+
+    document.querySelectorAll('.checkout-plan-option').forEach(el => {
+        const isSelected = el.dataset.plan === planKey;
+        el.classList.toggle('selected', isSelected);
+        el.querySelector('.cpo-radio').classList.toggle('selected', isSelected);
+    });
+
+    document.getElementById('summary-plan-name').textContent = plan.name;
+    document.getElementById('summary-billing').textContent = plan.billing;
+    document.getElementById('summary-amount').textContent = '$' + (plan.amount / 100).toFixed(2);
+    document.getElementById('summary-total').textContent = '$' + (plan.amount / 100).toFixed(2);
+    document.getElementById('pay-btn-text').innerHTML = 'Pay $' + (plan.amount / 100).toFixed(2) + ' <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    const featuresEl = document.getElementById('checkout-summary-features');
+    featuresEl.innerHTML = plan.features.map(f => '<div class="checkout-summary-feature">✓ ' + f + '</div>').join('');
+
+    if (planKey === 'free') {
+        linkvertiseRedirect();
+    }
 }
 
 function downloadAfterPurchase() {
     linkvertiseRedirect();
-    closeCheckout();
+    document.getElementById('checkout-success').classList.add('hidden');
+    document.getElementById('checkout-card').classList.remove('hidden');
+}
+
+let cardNumberElement, cardExpiryElement, cardCvcElement;
+
+function initializeStripeElements() {
+    if (!stripe) {
+        stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+        const elements = stripe.elements();
+        const style = {
+            base: {
+                fontSize: '16px',
+                color: '#ffffff',
+                fontFamily: 'Inter, sans-serif',
+                fontSmoothing: 'antialiased',
+                '::placeholder': { color: '#555' },
+            },
+            invalid: { color: '#ef4444' },
+        };
+        cardNumberElement = elements.create('cardNumber', { style, showIcon: true });
+        cardExpiryElement = elements.create('cardExpiry', { style });
+        cardCvcElement = elements.create('cardCvc', { style });
+
+        const mount = (id, el) => { const target = document.getElementById(id); if (target) el.mount(target); };
+        mount('card-number-element', cardNumberElement);
+        mount('card-expiry-element', cardExpiryElement);
+        mount('card-cvc-element', cardCvcElement);
+
+        [cardNumberElement, cardExpiryElement, cardCvcElement].forEach(el => {
+            el.on('change', ({ error }) => {
+                document.getElementById('card-errors').textContent = error ? error.message : '';
+            });
+        });
+    }
+}
+
+async function handlePayment() {
+    if (currentAmount === 0) return;
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    document.getElementById('pay-btn-text').classList.add('hidden');
+    document.getElementById('pay-btn-loader').classList.remove('hidden');
+    document.getElementById('card-errors').textContent = '';
+
+    try {
+        const email = document.getElementById('email').value;
+        if (!email || !email.includes('@')) {
+            throw new Error('Please enter a valid email address.');
+        }
+
+        const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount: currentAmount, plan: currentPlan }),
+        });
+
+        if (!response.ok) throw new Error('Failed to create payment. Please try again.');
+        const { clientSecret } = await response.json();
+
+        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: cardNumberElement,
+                billing_details: { email },
+            },
+        });
+
+        if (error) throw new Error(error.message);
+
+        if (paymentIntent.status === 'succeeded') {
+            document.getElementById('checkout-card').classList.add('hidden');
+            document.getElementById('checkout-success').classList.remove('hidden');
+            triggerConfetti();
+            setTimeout(() => window.open(LINKVERTISE_URL, '_blank'), 2000);
+        }
+    } catch (err) {
+        document.getElementById('card-errors').textContent = err.message;
+        showToast(err.message, 'error');
+    } finally {
+        submitBtn.disabled = false;
+        document.getElementById('pay-btn-text').classList.remove('hidden');
+        document.getElementById('pay-btn-loader').classList.add('hidden');
+    }
+}
+
+if (window.location.pathname.includes('checkout')) {
+    document.addEventListener('DOMContentLoaded', () => {
+        initCheckoutPage();
+        initializeStripeElements();
+    });
 }
 
 function toggleMobileMenu() {

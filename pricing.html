@@ -89,10 +89,10 @@
                 <li class="check">Early access updates</li>
                 <li class="check">HWID Spoofer</li>
             </ul>
-            <button class="btn btn-plan btn-plan-primary" onclick="event.stopPropagation(); proceedToCheckout('premium')">
+            <a href="/checkout?plan=premium" class="btn btn-plan btn-plan-primary">
                 <span>Buy Premium - $2.99/week</span>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
+            </a>
         </div>
 
         <div class="plan-card" data-plan="enterprise" onclick="selectPlan('enterprise')">
@@ -116,10 +116,10 @@
                 <li class="check">Direct developer access</li>
                 <li class="check">Dedicated Discord channel</li>
             </ul>
-            <button class="btn btn-plan btn-plan-primary" onclick="event.stopPropagation(); proceedToCheckout('enterprise')">
+            <a href="/checkout?plan=enterprise" class="btn btn-plan btn-plan-primary">
                 <span>Buy Enterprise - $29.99 Lifetime</span>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
+            </a>
         </div>
     </div>
 
@@ -163,110 +163,6 @@
             </div>
         </div>
     </div>
-
-    <section id="checkout-section" class="checkout-section hidden">
-        <div class="checkout-overlay" onclick="closeCheckout()"></div>
-        <div class="checkout-container">
-            <button class="checkout-close" onclick="closeCheckout()">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </button>
-
-            <div class="checkout-layout">
-                <div class="checkout-sidebar">
-                    <div class="checkout-sidebar-inner">
-                        <div class="checkout-brand">
-                            <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#8A5DF4"/><path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <span>ADRENALINE</span>
-                        </div>
-                        <div class="checkout-summary">
-                            <div class="checkout-plan-label">Selected Plan</div>
-                            <div class="checkout-plan-name" id="checkout-plan-name">Premium Plan</div>
-                            <div class="checkout-price-row">
-                                <span>Subtotal</span>
-                                <span id="checkout-subtotal">$9.99</span>
-                            </div>
-                            <div class="checkout-price-row">
-                                <span>Billing</span>
-                                <span id="checkout-billing">Weekly</span>
-                            </div>
-                            <div class="checkout-price-divider"></div>
-                            <div class="checkout-price-row checkout-total">
-                                <span>Total</span>
-                                <span id="checkout-total">$9.99</span>
-                            </div>
-                        </div>
-                        <div class="checkout-guarantee">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L10.5 5.5L15 6.5L11.5 10L12.5 15L8 12.5L3.5 15L4.5 10L1 6.5L5.5 5.5L8 1Z" fill="#22c55e"/></svg>
-                            <span>30-day money-back guarantee</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="checkout-main">
-                    <div class="checkout-main-inner">
-                        <h2 class="checkout-title">Complete Payment</h2>
-                        <p class="checkout-subtitle">Secure payment via Stripe</p>
-
-                        <form id="payment-form">
-                            <div class="form-group">
-                                <label>Card Information</label>
-                                <div class="card-input-wrapper">
-                                    <div class="card-input-icon">
-                                        <svg width="20" height="16" viewBox="0 0 20 16" fill="none"><rect x="0.5" y="0.5" width="19" height="15" rx="2.5" stroke="currentColor"/><path d="M0 5H20M5 12H8M11 12H14" stroke="currentColor" stroke-width="1.5"/></svg>
-                                    </div>
-                                    <div id="card-element"></div>
-                                </div>
-                                <div id="card-errors" class="card-errors"></div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" class="form-input" placeholder="you@example.com" required>
-                            </div>
-
-                            <button type="submit" class="btn btn-checkout" id="submit-btn">
-                                <span class="btn-checkout-text">
-                                    Pay <span id="pay-amount">$9.99</span>
-                                </span>
-                                <span class="btn-checkout-loader hidden">
-                                    <svg class="spinner" width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" opacity="0.3"/><path d="M18 10C18 5.58 14.42 2 10 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                                    Processing...
-                                </span>
-                            </button>
-                        </form>
-
-                        <div class="checkout-payment-methods">
-                            <span>We accept</span>
-                            <div class="payment-methods">
-                                <span>Visa</span>
-                                <span>Mastercard</span>
-                                <span>Amex</span>
-                                <span>Discover</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="payment-success" class="payment-success hidden">
-                <div class="success-checkmark">
-                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-                        <circle cx="32" cy="32" r="30" stroke="#22c55e" stroke-width="3" fill="none" class="success-circle"/>
-                        <path d="M20 32L28 40L44 24" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="success-check"/>
-                    </svg>
-                </div>
-                <h2 class="success-title">Payment Successful!</h2>
-                <p class="success-desc">Welcome to the Adrenaline family. Your license key has been sent to your email.</p>
-                <button class="btn btn-success" onclick="downloadAfterPurchase()">
-                    Download Adrenaline
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M8 13L4 9M8 13L12 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-                <button class="btn btn-success-ghost" onclick="closeCheckout()">
-                    Go back to site
-                </button>
-            </div>
-        </div>
-    </section>
 
     <div id="toast" class="toast hidden"></div>
 
