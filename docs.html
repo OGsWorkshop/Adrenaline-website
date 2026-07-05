@@ -1,191 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Documentation — Adrenaline Executor</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation — Adrenaline Executor</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Standalone Docs Stylesheet -->
+    <link rel="stylesheet" href="docs.css">
 </head>
 <body class="docs-page">
-  <!-- ═══════ Minimal Top Nav ═══════ -->
-  <nav class="docs-topnav">
-    <div class="docs-topnav-inner">
-      <div class="docs-topnav-left">
-        <a href="/" class="docs-topnav-logo">
-          <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
-            <rect width="28" height="28" rx="6" fill="#8B5CF6"/>
-            <path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>ADRENALINE</span>
-        </a>
-      </div>
-      <div class="docs-topnav-center">
-        <a href="/docs" class="active">Documentation</a>
-        <a href="/pricing">Pricing</a>
-      </div>
-      <div class="docs-topnav-right">
-        <a href="#" class="docs-topnav-icon" aria-label="GitHub">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        </a>
-        <a href="#" class="docs-topnav-icon" aria-label="Discord">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.08.22.17.33.25.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02M8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12m6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12"/></svg>
-        </a>
-        <button class="docs-search-btn" onclick="openSearch()" aria-label="Search (Ctrl+K)">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span>Search</span>
-          <kbd>Ctrl+K</kbd>
-        </button>
-        <button class="docs-theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-          <svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-          <svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <button class="docs-mobile-menu-btn" onclick="toggleMobileSidebar()" aria-label="Toggle sidebar">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M7 15h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </button>
-      </div>
-    </div>
-  </nav>
 
-  <!-- ═══════ Three-Column Layout ═══════ -->
-  <div class="docs-layout">
+    <!-- ═══════ Header ═══════ -->
+    <header class="docs-header">
+        <div class="docs-header-inner">
+            <a href="/" class="docs-header-logo">
+                <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+                    <rect width="28" height="28" rx="6" fill="#8B5CF6"/>
+                    <path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>ADRENALINE</span>
+            </a>
 
-    <!-- ===== Sidebar ===== -->
-    <aside class="docs-sidebar" id="docs-sidebar">
-      <div class="docs-sidebar-inner">
-        <div class="docs-sidebar-search">
-          <button onclick="openSearch()">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Search docs...
-          </button>
+            <nav class="docs-header-nav">
+                <a href="/docs" class="active">Documentation</a>
+                <a href="/pricing">Pricing</a>
+            </nav>
+
+            <div class="docs-header-actions">
+                <!-- GitHub Icon -->
+                <a href="https://github.com" class="docs-header-icon" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                </a>
+                <!-- Discord Icon -->
+                <a href="https://discord.com" class="docs-header-icon" aria-label="Discord" target="_blank" rel="noopener noreferrer">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.08.22.17.33.25.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.01.06.02.09.01 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02M8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12m6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12"/>
+                    </svg>
+                </a>
+                
+                <!-- Search Button -->
+                <button class="docs-header-search" onclick="AdrenalineDocs.openSearch()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="7" cy="7" r="5.5"/>
+                        <path d="M11 11L14.5 14.5" stroke-linecap="round"/>
+                    </svg>
+                    <span>Search docs...</span>
+                    <kbd>Ctrl+K</kbd>
+                </button>
+
+                <!-- Theme Toggle Button -->
+                <button class="docs-header-theme" aria-label="Toggle theme">
+                    <svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+
+                <!-- Mobile Drawer Toggle -->
+                <button class="docs-header-mobile-btn" onclick="AdrenalineDocs.toggleMobileSidebar()" aria-label="Toggle sidebar">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M3 5h14M3 10h14M3 15h14"/>
+                    </svg>
+                </button>
+            </div>
         </div>
+    </header>
 
-        <nav class="docs-sidebar-nav" id="docs-sidebar-nav">
-          <div class="docs-sidebar-category">
-            <div class="docs-sidebar-cat-title" onclick="toggleCategory(this)">
-              <span>Getting Started</span>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 4.5L6 7.5L8 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <!-- ═══════ Docs Layout ═══════ -->
+    <div class="docs-layout">
+        
+        <!-- ===== Sidebar ===== -->
+        <aside class="docs-sidebar" id="docs-sidebar">
+            <div class="docs-sidebar-inner">
+                <div class="docs-sidebar-search">
+                    <button onclick="AdrenalineDocs.openSearch()">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="7" cy="7" r="5.5"/>
+                            <path d="M11 11L14.5 14.5" stroke-linecap="round"/>
+                        </svg>
+                        Search documentation...
+                    </button>
+                </div>
+
+                <nav class="docs-sidebar-nav">
+                    <!-- Category: Getting Started -->
+                    <div class="docs-sidebar-category">
+                        <div class="docs-sidebar-cat-title">
+                            <span>Getting Started</span>
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="docs-sidebar-cat-links">
+                            <a href="#introduction" class="docs-sidebar-link" data-section="introduction">Introduction</a>
+                        </div>
+                    </div>
+
+                    <!-- Category: Core API -->
+                    <div class="docs-sidebar-category">
+                        <div class="docs-sidebar-cat-title">
+                            <span>Core API</span>
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="docs-sidebar-cat-links">
+                            <a href="#actors" class="docs-sidebar-link" data-section="actors">Actors</a>
+                            <a href="#cache" class="docs-sidebar-link" data-section="cache">Cache</a>
+                            <a href="#closures" class="docs-sidebar-link" data-section="closures">Closures</a>
+                            <a href="#console" class="docs-sidebar-link" data-section="console">Console</a>
+                            <a href="#crypt" class="docs-sidebar-link" data-section="crypt">Crypt</a>
+                            <a href="#debug" class="docs-sidebar-link" data-section="debug">Debug</a>
+                            <a href="#drawing" class="docs-sidebar-link" data-section="drawing">Drawing</a>
+                            <a href="#encoding" class="docs-sidebar-link" data-section="encoding">Encoding</a>
+                            <a href="#environment" class="docs-sidebar-link" data-section="environment">Environment</a>
+                            <a href="#filesystem" class="docs-sidebar-link" data-section="filesystem">Filesystem</a>
+                            <a href="#input" class="docs-sidebar-link" data-section="input">Input</a>
+                            <a href="#instances" class="docs-sidebar-link" data-section="instances">Instances</a>
+                        </div>
+                    </div>
+
+                    <!-- Category: Advanced API -->
+                    <div class="docs-sidebar-category">
+                        <div class="docs-sidebar-cat-title">
+                            <span>Advanced API</span>
+                            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="docs-sidebar-cat-links">
+                            <a href="#luastateproxy" class="docs-sidebar-link" data-section="luastateproxy">LuaStateProxy</a>
+                            <a href="#metatable" class="docs-sidebar-link" data-section="metatable">Metatable</a>
+                            <a href="#miscellaneous" class="docs-sidebar-link" data-section="miscellaneous">Miscellaneous</a>
+                            <a href="#oth" class="docs-sidebar-link" data-section="oth">oth</a>
+                            <a href="#raknet" class="docs-sidebar-link" data-section="raknet">RakNet</a>
+                            <a href="#reflection" class="docs-sidebar-link" data-section="reflection">Reflection</a>
+                            <a href="#scripts" class="docs-sidebar-link" data-section="scripts">Scripts</a>
+                            <a href="#signals" class="docs-sidebar-link" data-section="signals">Signals</a>
+                            <a href="#voltsignal" class="docs-sidebar-link" data-section="voltsignal">VoltSignal</a>
+                            <a href="#websocket" class="docs-sidebar-link" data-section="websocket">WebSocket</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="docs-sidebar-footer">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    <span>Adrenaline API v2.4.7</span>
+                </div>
             </div>
-            <div class="docs-sidebar-cat-links">
-              <a href="#introduction" class="docs-sidebar-link" data-section="introduction">Introduction</a>
-            </div>
-          </div>
+        </aside>
 
-          <div class="docs-sidebar-category">
-            <div class="docs-sidebar-cat-title" onclick="toggleCategory(this)">
-              <span>Core API</span>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 4.5L6 7.5L8 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </div>
-            <div class="docs-sidebar-cat-links">
-              <a href="#actors" class="docs-sidebar-link" data-section="actors">Actors</a>
-              <a href="#cache" class="docs-sidebar-link" data-section="cache">Cache</a>
-              <a href="#closures" class="docs-sidebar-link" data-section="closures">Closures</a>
-              <a href="#console" class="docs-sidebar-link" data-section="console">Console</a>
-              <a href="#crypt" class="docs-sidebar-link" data-section="crypt">Crypt</a>
-              <a href="#debug" class="docs-sidebar-link" data-section="debug">Debug</a>
-              <a href="#drawing" class="docs-sidebar-link" data-section="drawing">Drawing</a>
-              <a href="#encoding" class="docs-sidebar-link" data-section="encoding">Encoding</a>
-              <a href="#environment" class="docs-sidebar-link" data-section="environment">Environment</a>
-              <a href="#filesystem" class="docs-sidebar-link" data-section="filesystem">Filesystem</a>
-              <a href="#input" class="docs-sidebar-link" data-section="input">Input</a>
-              <a href="#instances" class="docs-sidebar-link" data-section="instances">Instances</a>
-            </div>
-          </div>
+        <!-- ===== Main Content ===== -->
+        <main class="docs-main" id="docs-content">
+            <div class="docs-main-inner">
+                
+                <!-- Breadcrumbs -->
+                <nav class="docs-breadcrumbs">
+                    <a href="/docs">Documentation</a>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                    <span id="docs-breadcrumb-current">Introduction</span>
+                </nav>
 
-          <div class="docs-sidebar-category">
-            <div class="docs-sidebar-cat-title" onclick="toggleCategory(this)">
-              <span>Advanced API</span>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 4.5L6 7.5L8 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </div>
-            <div class="docs-sidebar-cat-links">
-              <a href="#luastateproxy" class="docs-sidebar-link" data-section="luastateproxy">LuaStateProxy</a>
-              <a href="#metatable" class="docs-sidebar-link" data-section="metatable">Metatable</a>
-              <a href="#miscellaneous" class="docs-sidebar-link" data-section="miscellaneous">Miscellaneous</a>
-              <a href="#oth" class="docs-sidebar-link" data-section="oth">oth</a>
-              <a href="#raknet" class="docs-sidebar-link" data-section="raknet">RakNet</a>
-              <a href="#reflection" class="docs-sidebar-link" data-section="reflection">Reflection</a>
-              <a href="#scripts" class="docs-sidebar-link" data-section="scripts">Scripts</a>
-              <a href="#signals" class="docs-sidebar-link" data-section="signals">Signals</a>
-              <a href="#voltsignal" class="docs-sidebar-link" data-section="voltsignal">VoltSignal</a>
-              <a href="#websocket" class="docs-sidebar-link" data-section="websocket">WebSocket</a>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </aside>
+                <!-- ── INTRODUCTION ── -->
+                <section id="introduction" class="docs-section" data-section="introduction">
+                    <h1>Introduction</h1>
+                    <p class="docs-lead">Welcome to the Adrenaline API documentation. This guide covers all available libraries, functions, and classes.</p>
+                    <p>Adrenaline provides a comprehensive Lua scripting environment for Roblox with advanced execution capabilities, deep API access, and extensive library support.</p>
 
-    <!-- ===== Main Content ===== -->
-    <main class="docs-content" id="docs-content">
-      <div class="docs-content-inner">
+                    <h2>Overview</h2>
+                    <p>Adrenaline's scripting API is designed to give developers and power users complete control over the Roblox environment. Whether you're building automation tools, testing security, or extending functionality, the Adrenaline API provides the primitives you need.</p>
 
-        <!-- Breadcrumbs -->
-        <nav class="docs-breadcrumbs">
-          <a href="/docs">Documentation</a>
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 3L7.5 6L4.5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span id="docs-breadcrumb-current">Introduction</span>
-        </nav>
+                    <div class="docs-callout docs-callout-info">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="16" x2="12" y2="12"/>
+                            <line x1="12" y1="8" x2="12.01" y2="8"/>
+                        </svg>
+                        <div><strong>Note:</strong> This documentation is for Adrenaline API version 2.0+. Some functions may differ from earlier versions.</div>
+                    </div>
 
-        <!-- ═══ Sections ═══ -->
+                    <h2>Getting Started</h2>
+                    <p>To begin scripting with Adrenaline, you'll need the executor injected into your Roblox client. Once injected, the global environment is extended with all Adrenaline-specific libraries.</p>
 
-        <section id="introduction" class="docs-section" data-section="introduction">
-          <h1>Introduction</h1>
-          <p class="docs-lead">Welcome to the Adrenaline API documentation. This guide covers all available libraries, functions, and classes.</p>
-          <p>Adrenaline provides a comprehensive Lua scripting environment for Roblox with advanced execution capabilities, deep API access, and extensive library support.</p>
-
-          <h2>Overview</h2>
-          <p>Adrenaline's scripting API is designed to give developers and power users complete control over the Roblox environment. Whether you're building automation tools, testing security, or extending functionality, the Adrenaline API provides the primitives you need.</p>
-
-          <div class="docs-callout docs-callout-info">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-            <div><strong>Note:</strong> This documentation is for Adrenaline API version 2.0+. Some functions may differ from earlier versions.</div>
-          </div>
-
-          <h2>Getting Started</h2>
-          <p>To begin scripting with Adrenaline, you'll need the executor injected into your Roblox client. Once injected, the global environment is extended with all Adrenaline-specific libraries.</p>
-
-          <div class="docs-code-header">Lua — Basic Script</div>
-          <pre class="docs-code"><code><span class="cmnt">-- Check if Adrenaline is loaded</span>
+                    <div class="docs-code-block">
+                        <div class="docs-code-header">
+                            <span class="docs-code-lang">Lua — Basic Script</span>
+                        </div>
+                        <pre class="docs-code"><code><span class="cmnt">-- Check if Adrenaline is loaded</span>
 <span class="kw">if</span> <span class="fn">Adrenaline</span> <span class="kw">then</span>
     <span class="fn">print</span>(<span class="str">"Adrenaline API loaded successfully"</span>)
 <span class="kw">end</span></code></pre>
+                    </div>
 
-          <h2>Core Concepts</h2>
-          <p>The Adrenaline API is organized into modular libraries, each providing specific functionality. Libraries are accessible globally once the executor is injected.</p>
+                    <h2>Core Concepts</h2>
+                    <p>The Adrenaline API is organized into modular libraries, each providing specific functionality. Libraries are accessible globally once the executor is injected.</p>
 
-          <div class="docs-table-wrap">
-            <table class="docs-table">
-              <thead>
-                <tr><th>Library</th><th>Description</th><th>Category</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Actors</td><td>Actor management and control</td><td>Core API</td></tr>
-                <tr><td>Cache</td><td>Caching utilities</td><td>Core API</td></tr>
-                <tr><td>Closures</td><td>Closure manipulation</td><td>Core API</td></tr>
-                <tr><td>Drawing</td><td>Drawing library for overlays</td><td>Core API</td></tr>
-                <tr><td>WebSocket</td><td>WebSocket client</td><td>Advanced API</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Library</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Actors</td><td>Actor management and control</td><td>Core API</td></tr>
+                                <tr><td>Cache</td><td>Caching utilities</td><td>Core API</td></tr>
+                                <tr><td>Closures</td><td>Closure manipulation</td><td>Core API</td></tr>
+                                <tr><td>Drawing</td><td>Drawing library for overlays</td><td>Core API</td></tr>
+                                <tr><td>WebSocket</td><td>WebSocket client</td><td>Advanced API</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
-        <section id="actors" class="docs-section" data-section="actors">
-          <h1>Actors</h1>
-          <p class="docs-lead">The Actors library provides functions for managing Roblox Actor instances within parallel Lua scripts.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── ACTORS ── -->
+                <section id="actors" class="docs-section" data-section="actors">
+                    <h1>Actors</h1>
+                    <p class="docs-lead">The Actors library provides functions for managing Roblox Actor instances within parallel Lua scripts.</p>
+                    <p>Parallel execution is essential for complex Roblox scripts. With Actors, tasks can be distributed over multiple cores to maximize efficiency without bottlenecking the main Lua thread.</p>
+                    
+                    <div class="docs-callout docs-callout-warning">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        <div><strong>Warning:</strong> Ensure clean task synchronization to prevent race conditions or unexpected parallel behaviors.</div>
+                    </div>
+                </section>
 
-        <section id="cache" class="docs-section" data-section="cache">
-          <h1>Cache</h1>
-          <p class="docs-lead">The Cache library provides in-memory caching utilities for storing and retrieving data across script executions.</p>
-          <p>Content coming soon.</p>
+                <!-- ── CACHE ── -->
+                <section id="cache" class="docs-section" data-section="cache">
+                    <h1>Cache</h1>
+                    <p class="docs-lead">The Cache library provides in-memory caching utilities for storing and retrieving data across script executions.</p>
+                    <p>The cache module gives you simple key-value storage that persists for the duration of the Adrenaline session.</p>
 
-          <h2>Cache Overview</h2>
-          <p>The cache module gives you simple key-value storage that persists for the duration of the Adrenaline session.</p>
+                    <h2>Basic Usage</h2>
+                    <p>Below is an example of storing, checking, and retrieving items from the cache.</p>
 
-          <div class="docs-code-header">Lua — Cache Example</div>
-          <pre class="docs-code"><code><span class="cmnt">-- Store a value</span>
+                    <div class="docs-code-block">
+                        <div class="docs-code-header">
+                            <span class="docs-code-lang">Lua — Cache Example</span>
+                        </div>
+                        <pre class="docs-code"><code><span class="cmnt">-- Store a value</span>
 <span class="fn">Cache.set</span>(<span class="str">"key"</span>, <span class="str">"value"</span>)
 
 <span class="cmnt">-- Retrieve a value</span>
@@ -195,169 +274,210 @@
 <span class="kw">if</span> <span class="fn">Cache.has</span>(<span class="str">"key"</span>) <span class="kw">then</span>
     <span class="fn">print</span>(<span class="str">"Key exists"</span>)
 <span class="kw">end</span></code></pre>
+                    </div>
 
-          <div class="docs-callout docs-callout-warning">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-            <div><strong>Warning:</strong> Cached data is stored in memory only and will be cleared when the Adrenaline process exits.</div>
-          </div>
-        </section>
+                    <div class="docs-callout docs-callout-warning">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        <div><strong>Warning:</strong> Cached data is stored in memory only and will be cleared when the Adrenaline process exits.</div>
+                    </div>
+                </section>
 
-        <section id="closures" class="docs-section" data-section="closures">
-          <h1>Closures</h1>
-          <p class="docs-lead">The Closures library enables manipulation and introspection of Lua closures and functions.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── CLOSURES ── -->
+                <section id="closures" class="docs-section" data-section="closures">
+                    <h1>Closures</h1>
+                    <p class="docs-lead">The Closures library enables manipulation and introspection of Lua closures and functions.</p>
+                    <p>Functions can be queried for their upvalues, constants, env references, and other internal debug information safely.</p>
+                </section>
 
-        <section id="console" class="docs-section" data-section="console">
-          <h1>Console</h1>
-          <p class="docs-lead">The Console library provides enhanced console output and logging capabilities.</p>
-          <p>Content coming soon.</p>
+                <!-- ── CONSOLE ── -->
+                <section id="console" class="docs-section" data-section="console">
+                    <h1>Console</h1>
+                    <p class="docs-lead">The Console library provides enhanced console output and logging capabilities.</p>
+                    <p>Use the console functions to customize execution feedback logs, error dumps, and tracing outputs.</p>
 
-          <div class="docs-callout docs-callout-tip">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <div><strong>Tip:</strong> Use <code class="inline-code">Console.clear()</code> to clear the output window at any time.</div>
-          </div>
-        </section>
+                    <div class="docs-callout docs-callout-tip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <div><strong>Tip:</strong> Use <code class="inline-code">Console.clear()</code> to clear the output window at any time.</div>
+                    </div>
+                </section>
 
-        <section id="crypt" class="docs-section" data-section="crypt">
-          <h1>Crypt</h1>
-          <p class="docs-lead">The Crypt library provides cryptographic functions including hashing, encryption, and encoding.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── CRYPT ── -->
+                <section id="crypt" class="docs-section" data-section="crypt">
+                    <h1>Crypt</h1>
+                    <p class="docs-lead">The Crypt library provides cryptographic functions including hashing, encryption, and encoding.</p>
+                    <p>Encrypt strings, generate MD5/SHA-256 hashes, or use standard Base64 encode and decode functions directly inside Adrenaline.</p>
+                </section>
 
-        <section id="debug" class="docs-section" data-section="debug">
-          <h1>Debug</h1>
-          <p class="docs-lead">The Debug library provides debugging utilities and introspection tools for Lua scripts.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── DEBUG ── -->
+                <section id="debug" class="docs-section" data-section="debug">
+                    <h1>Debug</h1>
+                    <p class="docs-lead">The Debug library provides debugging utilities and introspection tools for Lua scripts.</p>
+                    <p>Inspect active stack frames, variables, hook internal script setups, and trace call structures dynamically.</p>
+                </section>
 
-        <section id="drawing" class="docs-section" data-section="drawing">
-          <h1>Drawing</h1>
-          <p class="docs-lead">The Drawing library provides a comprehensive 2D rendering API for creating custom overlays and UI elements.</p>
-          <p>Content coming soon.</p>
+                <!-- ── DRAWING ── -->
+                <section id="drawing" class="docs-section" data-section="drawing">
+                    <h1>Drawing</h1>
+                    <p class="docs-lead">The Drawing library provides a comprehensive 2D rendering API for creating custom overlays and UI elements.</p>
+                    <p>The Drawing library allows you to create and manipulate 2D shapes, text, and images rendered directly on screen, bypassing traditional Roblox UI structures.</p>
 
-          <h2>Drawing Overview</h2>
-          <p>The Drawing library allows you to create and manipulate 2D shapes, text, and images rendered directly on screen.</p>
+                    <h2>Drawing Overview</h2>
+                    <p>Creating visual UI highlights, esp boxes, or customized text indicators with the drawing API is simple.</p>
 
-          <div class="docs-code-header">Lua — Drawing a Square</div>
-          <pre class="docs-code"><code><span class="kw">local</span> <span class="var">square</span> = <span class="fn">Drawing.new</span>(<span class="str">"Square"</span>)
+                    <div class="docs-code-block">
+                        <div class="docs-code-header">
+                            <span class="docs-code-lang">Lua — Drawing a Square</span>
+                        </div>
+                        <pre class="docs-code"><code><span class="kw">local</span> <span class="var">square</span> = <span class="fn">Drawing.new</span>(<span class="str">"Square"</span>)
 <span class="var">square</span>.<span class="var">Size</span> = <span class="fn">Vector2.new</span>(<span class="num">200</span>, <span class="num">200</span>)
 <span class="var">square</span>.<span class="var">Position</span> = <span class="fn">Vector2.new</span>(<span class="num">100</span>, <span class="num">100</span>)
 <span class="var">square</span>.<span class="var">Color</span> = <span class="fn">Color3.fromRGB</span>(<span class="num">139</span>, <span class="num">92</span>, <span class="num">246</span>)
 <span class="var">square</span>.<span class="var">Filled</span> = <span class="kw">true</span>
 <span class="var">square</span>.<span class="var">Visible</span> = <span class="kw">true</span></code></pre>
-        </section>
+                    </div>
+                </section>
 
-        <section id="encoding" class="docs-section" data-section="encoding">
-          <h1>Encoding</h1>
-          <p class="docs-lead">The Encoding library provides data encoding and serialization utilities.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── ENCODING ── -->
+                <section id="encoding" class="docs-section" data-section="encoding">
+                    <h1>Encoding</h1>
+                    <p class="docs-lead">The Encoding library provides data encoding and serialization utilities.</p>
+                    <p>Support for JSON serialization (<code class="inline-code">HttpService:JSONEncode</code> equivalents), URL encoding, binary transformations, and hex conversions are included.</p>
+                </section>
 
-        <section id="environment" class="docs-section" data-section="environment">
-          <h1>Environment</h1>
-          <p class="docs-lead">The Environment library allows you to interact with and modify the Lua execution environment.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── ENVIRONMENT ── -->
+                <section id="environment" class="docs-section" data-section="environment">
+                    <h1>Environment</h1>
+                    <p class="docs-lead">The Environment library allows you to interact with and modify the Lua execution environment.</p>
+                    <p>Access registries, alter environment tables, declare new globals, or isolate script environments completely.</p>
+                </section>
 
-        <section id="filesystem" class="docs-section" data-section="filesystem">
-          <h1>Filesystem</h1>
-          <p class="docs-lead">The Filesystem library provides file and directory operations from within your scripts.</p>
-          <p>Content coming soon.</p>
+                <!-- ── FILESYSTEM ── -->
+                <section id="filesystem" class="docs-section" data-section="filesystem">
+                    <h1>Filesystem</h1>
+                    <p class="docs-lead">The Filesystem library provides file and directory operations from within your scripts.</p>
+                    <p>Read, write, and manage files on the local filesystem sandbox directly from your Adrenaline scripts.</p>
 
-          <h2>Filesystem Overview</h2>
-          <p>Read, write, and manage files on the local filesystem directly from your Adrenaline scripts.</p>
+                    <h2>Filesystem Overview</h2>
+                    <p>Operations are sandboxed to the Adrenaline workspace folder for safety and security.</p>
 
-          <div class="docs-table-wrap">
-            <table class="docs-table">
-              <thead>
-                <tr><th>Function</th><th>Description</th></tr>
-              </thead>
-              <tbody>
-                <tr><td><code class="inline-code">Filesystem.read(path)</code></td><td>Read file contents as string</td></tr>
-                <tr><td><code class="inline-code">Filesystem.write(path, data)</code></td><td>Write string data to a file</td></tr>
-                <tr><td><code class="inline-code">Filesystem.append(path, data)</code></td><td>Append data to a file</td></tr>
-                <tr><td><code class="inline-code">Filesystem.exists(path)</code></td><td>Check if a file exists</td></tr>
-                <tr><td><code class="inline-code">Filesystem.delete(path)</code></td><td>Delete a file</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Function</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code class="inline-code">Filesystem.read(path)</code></td><td>Read file contents as string</td></tr>
+                                <tr><td><code class="inline-code">Filesystem.write(path, data)</code></td><td>Write string data to a file</td></tr>
+                                <tr><td><code class="inline-code">Filesystem.append(path, data)</code></td><td>Append data to a file</td></tr>
+                                <tr><td><code class="inline-code">Filesystem.exists(path)</code></td><td>Check if a file exists</td></tr>
+                                <tr><td><code class="inline-code">Filesystem.delete(path)</code></td><td>Delete a file</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
-        <section id="input" class="docs-section" data-section="input">
-          <h1>Input</h1>
-          <p class="docs-lead">The Input library provides mouse and keyboard simulation capabilities.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── INPUT ── -->
+                <section id="input" class="docs-section" data-section="input">
+                    <h1>Input</h1>
+                    <p class="docs-lead">The Input library provides mouse and keyboard simulation capabilities.</p>
+                    <p>Simulate keystrokes, mouse moves, clicks, and drag inputs programmatically directly through the executor system.</p>
+                </section>
 
-        <section id="instances" class="docs-section" data-section="instances">
-          <h1>Instances</h1>
-          <p class="docs-lead">The Instances library extends Roblox Instance manipulation with additional capabilities.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── INSTANCES ── -->
+                <section id="instances" class="docs-section" data-section="instances">
+                    <h1>Instances</h1>
+                    <p class="docs-lead">The Instances library extends Roblox Instance manipulation with additional capabilities.</p>
+                    <p>Bypass properties, modify internal instance parameters, cache references, and access hidden core gui properties.</p>
+                </section>
 
-        <section id="luastateproxy" class="docs-section" data-section="luastateproxy">
-          <h1>LuaStateProxy</h1>
-          <p class="docs-lead">LuaStateProxy provides low-level access to the underlying Lua state and execution environment.</p>
-          <p>Content coming soon.</p>
+                <!-- ── LUASTATEPROXY ── -->
+                <section id="luastateproxy" class="docs-section" data-section="luastateproxy">
+                    <h1>LuaStateProxy</h1>
+                    <p class="docs-lead">LuaStateProxy provides low-level access to the underlying Lua state and execution environment.</p>
+                    <p>Direct stack modifications and registry access are exposed here. Use with intense caution.</p>
 
-          <div class="docs-callout docs-callout-danger">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
-            <div><strong>Caution:</strong> Improper use of LuaStateProxy can crash the executor or the Roblox client. Use with care.</div>
-          </div>
-        </section>
+                    <div class="docs-callout docs-callout-danger">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="15" y1="9" x2="9" y2="15"/>
+                            <line x1="9" y1="9" x2="15" y2="15"/>
+                        </svg>
+                        <div><strong>Caution:</strong> Improper use of LuaStateProxy can crash the executor or the Roblox client. Use with care.</div>
+                    </div>
+                </section>
 
-        <section id="metatable" class="docs-section" data-section="metatable">
-          <h1>Metatable</h1>
-          <p class="docs-lead">The Metatable library provides utilities for working with Lua metatables and metamethods.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── METATABLE ── -->
+                <section id="metatable" class="docs-section" data-section="metatable">
+                    <h1>Metatable</h1>
+                    <p class="docs-lead">The Metatable library provides utilities for working with Lua metatables and metamethods.</p>
+                    <p>Read-only metatables can be bypassed or hooked safely, allowing custom hooks on <code class="inline-code">__index</code>, <code class="inline-code">__newindex</code>, or <code class="inline-code">__namecall</code>.</p>
+                </section>
 
-        <section id="miscellaneous" class="docs-section" data-section="miscellaneous">
-          <h1>Miscellaneous</h1>
-          <p class="docs-lead">The Miscellaneous library contains utility functions that don't fit into other categories.</p>
-          <p>Content coming soon.</p>
+                <!-- ── MISCELLANEOUS ── -->
+                <section id="miscellaneous" class="docs-section" data-section="miscellaneous">
+                    <h1>Miscellaneous</h1>
+                    <p class="docs-lead">The Miscellaneous library contains utility functions that don't fit into other categories.</p>
+                    <p>Includes functions like setting clipboard text, fetching online contents, or handling system state calls.</p>
 
-          <div class="docs-callout docs-callout-success">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-            <div><strong>Success:</strong> Most miscellaneous functions have no side effects and are safe to call at any time.</div>
-          </div>
-        </section>
+                    <div class="docs-callout docs-callout-success">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        <div><strong>Success:</strong> Most miscellaneous functions have no side effects and are safe to call at any time.</div>
+                    </div>
+                </section>
 
-        <section id="oth" class="docs-section" data-section="oth">
-          <h1>oth</h1>
-          <p class="docs-lead">The oth library provides miscellaneous Roblox-specific utility functions.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── OTH ── -->
+                <section id="oth" class="docs-section" data-section="oth">
+                    <h1>oth</h1>
+                    <p class="docs-lead">The oth library provides miscellaneous Roblox-specific utility functions.</p>
+                    <p>Control task yields, simulate Roblox network events, or hook basic physics behaviors.</p>
+                </section>
 
-        <section id="raknet" class="docs-section" data-section="raknet">
-          <h1>RakNet</h1>
-          <p class="docs-lead">The RakNet library provides low-level networking utilities for intercepting and manipulating network traffic.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── RAKNET ── -->
+                <section id="raknet" class="docs-section" data-section="raknet">
+                    <h1>RakNet</h1>
+                    <p class="docs-lead">The RakNet library provides low-level networking utilities for intercepting and manipulating network traffic.</p>
+                    <p>Intercept incoming/outgoing replication packets, edit physics coordinates mid-transit, or debug Roblox protocol data.</p>
+                </section>
 
-        <section id="reflection" class="docs-section" data-section="reflection">
-          <h1>Reflection</h1>
-          <p class="docs-lead">The Reflection library enables runtime type introspection and reflection capabilities.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── REFLECTION ── -->
+                <section id="reflection" class="docs-section" data-section="reflection">
+                    <h1>Reflection</h1>
+                    <p class="docs-lead">The Reflection library enables runtime type introspection and reflection capabilities.</p>
+                    <p>Retrieve class descriptors, method signatures, properties, and execute hidden functions from the Roblox reflection database.</p>
+                </section>
 
-        <section id="scripts" class="docs-section" data-section="scripts">
-          <h1>Scripts</h1>
-          <p class="docs-lead">The Scripts library provides utilities for managing and executing Lua scripts.</p>
-          <p>Content coming soon.</p>
-        </section>
+                <!-- ── SCRIPTS ── -->
+                <section id="scripts" class="docs-section" data-section="scripts">
+                    <h1>Scripts</h1>
+                    <p class="docs-lead">The Scripts library provides utilities for managing and executing Lua scripts.</p>
+                    <p>Load local script modules, spawn concurrent script instances, or isolate specific code execution channels.</p>
+                </section>
 
-        <section id="signals" class="docs-section" data-section="signals">
-          <h1>Signals</h1>
-          <p class="docs-lead">The Signals library provides an event-driven communication system between scripts.</p>
-          <p>Content coming soon.</p>
+                <!-- ── SIGNALS ── -->
+                <section id="signals" class="docs-section" data-section="signals">
+                    <h1>Signals</h1>
+                    <p class="docs-lead">The Signals library provides an event-driven communication system between scripts.</p>
+                    <p>Signals allow different scripts to communicate by emitting and listening for named events dynamically.</p>
 
-          <h2>Signals Overview</h2>
-          <p>Signals allow different scripts to communicate by emitting and listening for named events.</p>
+                    <h2>Signals Overview</h2>
+                    <p>Connect multiple event handlers or trigger script listeners on custom triggers easily.</p>
 
-          <div class="docs-code-header">Lua — Signal Example</div>
-          <pre class="docs-code"><code><span class="cmnt">-- Create a signal</span>
+                    <div class="docs-code-block">
+                        <div class="docs-code-header">
+                            <span class="docs-code-lang">Lua — Signal Example</span>
+                        </div>
+                        <pre class="docs-code"><code><span class="cmnt">-- Create a signal</span>
 <span class="kw">local</span> <span class="var">mySignal</span> = <span class="fn">Signal.new</span>(<span class="str">"MyEvent"</span>)
 
 <span class="cmnt">-- Connect a handler</span>
@@ -367,110 +487,136 @@
 
 <span class="cmnt">-- Fire the signal</span>
 <span class="var">mySignal</span>:<span class="fn">Fire</span>(<span class="str">"Hello World"</span>)</code></pre>
-        </section>
+                    </div>
+                </section>
 
-        <section id="voltsignal" class="docs-section" data-section="voltsignal">
-          <h1>VoltSignal</h1>
-          <p class="docs-lead">VoltSignal provides an advanced signal implementation with additional features over the standard Signal library.</p>
-          <p>Content coming soon.</p>
+                <!-- ── VOLTSIGNAL ── -->
+                <section id="voltsignal" class="docs-section" data-section="voltsignal">
+                    <h1>VoltSignal</h1>
+                    <p class="docs-lead">VoltSignal provides an advanced signal implementation with additional features over the standard Signal library.</p>
+                    <p>VoltSignal is designed for enterprise systems requiring promise-based sequencing, filtering triggers, and auto-disconnection parameters.</p>
 
-          <div class="docs-callout docs-callout-info">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-            <div><strong>Note:</strong> VoltSignal is an enhanced version of Signals with promise-like chaining and filtering capabilities.</div>
-          </div>
-        </section>
+                    <div class="docs-callout docs-callout-info">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="16" x2="12" y2="12"/>
+                            <line x1="12" y1="8" x2="12.01" y2="8"/>
+                        </svg>
+                        <div><strong>Note:</strong> VoltSignal is an enhanced version of Signals with promise-like chaining and filtering capabilities.</div>
+                    </div>
+                </section>
 
-        <section id="websocket" class="docs-section" data-section="websocket">
-          <h1>WebSocket</h1>
-          <p class="docs-lead">The WebSocket library provides WebSocket client functionality for real-time communication.</p>
-          <p>Content coming soon.</p>
+                <!-- ── WEBSOCKET ── -->
+                <section id="websocket" class="docs-section" data-section="websocket">
+                    <h1>WebSocket</h1>
+                    <p class="docs-lead">The WebSocket library provides WebSocket client functionality for real-time communication.</p>
+                    <p>Connect to WebSocket servers for real-time bidirectional communication directly from your scripts, bypass CORS limitations and fetch external resources.</p>
 
-          <h2>WebSocket Overview</h2>
-          <p>Connect to WebSocket servers for real-time bidirectional communication directly from your scripts.</p>
+                    <h2>WebSocket Overview</h2>
+                    <p>Start a websocket client, listen to inbound commands, and output values.</p>
 
-          <div class="docs-code-header">Lua — WebSocket Client</div>
-          <pre class="docs-code"><code><span class="kw">local</span> <span class="var">ws</span> = <span class="fn">WebSocket.connect</span>(<span class="str">"wss://example.com"</span>)
+                    <div class="docs-code-block">
+                        <div class="docs-code-header">
+                            <span class="docs-code-lang">Lua — WebSocket Client</span>
+                        </div>
+                        <pre class="docs-code"><code><span class="kw">local</span> <span class="var">ws</span> = <span class="fn">WebSocket.connect</span>(<span class="str">"wss://example.com"</span>)
 
 <span class="var">ws</span>.<span class="fn">OnMessage</span>(<span class="kw">function</span>(<span class="var">msg</span>)
     <span class="fn">print</span>(<span class="str">"Received:"</span>, <span class="var">msg</span>)
 <span class="kw">end</span>)
 
 <span class="var">ws</span>:<span class="fn">Send</span>(<span class="str">"Hello server!"</span>)</code></pre>
-        </section>
+                    </div>
+                </section>
 
-        <!-- FAQ Section -->
-        <section id="faq" class="docs-section" data-section="faq">
-          <h1>Frequently Asked Questions</h1>
-          <div class="docs-faq">
-            <details class="docs-faq-item">
-              <summary>How do I load a library?</summary>
-              <p>All Adrenaline libraries are available globally once the executor is injected. Simply call any function by its library name, e.g. <code class="inline-code">Cache.set("key", "value")</code>.</p>
-            </details>
-            <details class="docs-faq-item">
-              <summary>Can I use multiple libraries together?</summary>
-              <p>Yes, all libraries are designed to work together seamlessly. You can mix and match functions from different libraries in the same script.</p>
-            </details>
-            <details class="docs-faq-item">
-              <summary>Is there a limit on cache size?</summary>
-              <p>The cache library has a configurable maximum size. By default, it supports up to 1000 entries. Use <code class="inline-code">Cache.setMaxSize(n)</code> to adjust.</p>
-            </details>
-            <details class="docs-faq-item">
-              <summary>How do I report a bug?</summary>
-              <p>Report bugs through our Discord server or GitHub repository. Include the library name, function, and a minimal reproduction script.</p>
-            </details>
-          </div>
-        </section>
+                <!-- FAQ Section -->
+                <section id="faq" class="docs-section" data-section="faq">
+                    <h1>Frequently Asked Questions</h1>
+                    <p class="docs-lead">Find answers to common questions about the Adrenaline executor and API integration.</p>
+                    
+                    <div class="docs-faq">
+                        <details class="docs-faq-item">
+                            <summary>How do I load a library?</summary>
+                            <div class="faq-answer">
+                                <p>All Adrenaline libraries are available globally once the executor is injected. Simply call any function by its library name, e.g. <code class="inline-code">Cache.set("key", "value")</code>.</p>
+                            </div>
+                        </details>
+                        <details class="docs-faq-item">
+                            <summary>Can I use multiple libraries together?</summary>
+                            <div class="faq-answer">
+                                <p>Yes, all libraries are designed to work together seamlessly. You can mix and match functions from different libraries in the same script.</p>
+                            </div>
+                        </details>
+                        <details class="docs-faq-item">
+                            <summary>Is there a limit on cache size?</summary>
+                            <div class="faq-answer">
+                                <p>The cache library has a configurable maximum size. By default, it supports up to 1000 entries. Use <code class="inline-code">Cache.setMaxSize(n)</code> to adjust.</p>
+                            </div>
+                        </details>
+                        <details class="docs-faq-item">
+                            <summary>How do I report a bug?</summary>
+                            <div class="faq-answer">
+                                <p>Report bugs through our Discord server or GitHub repository. Include the library name, function, and a minimal reproduction script.</p>
+                            </div>
+                        </details>
+                    </div>
+                </section>
 
-        <!-- Previous / Next Navigation -->
-        <nav class="docs-prevnext">
-          <a href="#" class="docs-prevnext-link docs-prevnext-prev disabled" id="docs-prev">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            <div class="docs-prevnext-label">
-              <span class="docs-prevnext-dir">Previous</span>
-              <span class="docs-prevnext-title" id="docs-prev-title">—</span>
+                <!-- Previous / Next Navigation -->
+                <nav class="docs-prevnext">
+                    <a class="docs-prevnext-link docs-prevnext-prev disabled" id="docs-prev">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                        <div class="docs-prevnext-label">
+                            <span class="docs-prevnext-dir">Previous</span>
+                            <span class="docs-prevnext-title" id="docs-prev-title">—</span>
+                        </div>
+                    </a>
+                    <a class="docs-prevnext-link docs-prevnext-next" id="docs-next">
+                        <div class="docs-prevnext-label">
+                            <span class="docs-prevnext-dir">Next</span>
+                            <span class="docs-prevnext-title" id="docs-next-title">—</span>
+                        </div>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </a>
+                </nav>
+
             </div>
-          </a>
-          <a href="#" class="docs-prevnext-link docs-prevnext-next" id="docs-next">
-            <div class="docs-prevnext-label">
-              <span class="docs-prevnext-dir">Next</span>
-              <span class="docs-prevnext-title" id="docs-next-title">—</span>
+        </main>
+
+        <!-- ===== Table of Contents ===== -->
+        <aside class="docs-toc" id="docs-toc">
+            <div class="docs-toc-inner">
+                <div class="docs-toc-title">On this page</div>
+                <nav class="docs-toc-nav" id="docs-toc-nav"></nav>
             </div>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </a>
-        </nav>
+        </aside>
 
-      </div>
-    </main>
-
-    <!-- ===== Table of Contents ===== -->
-    <aside class="docs-toc" id="docs-toc">
-      <div class="docs-toc-inner">
-        <div class="docs-toc-title">On this page</div>
-        <nav class="docs-toc-nav" id="docs-toc-nav"></nav>
-      </div>
-    </aside>
-
-  </div>
-
-  <!-- ═══════ Sidebar Overlay (mobile) ═══════ -->
-  <div class="docs-sidebar-overlay" id="docs-sidebar-overlay" onclick="closeMobileSidebar()"></div>
-
-  <!-- ═══════ Search Dialog ═══════ -->
-  <div class="docs-search-overlay" id="docs-search-overlay" onclick="closeSearch(event)"></div>
-  <div class="docs-search-dialog" id="docs-search-dialog" role="dialog" aria-label="Search documentation">
-    <div class="docs-search-header">
-      <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <input type="text" class="docs-search-input" id="docs-search-input" placeholder="Search documentation..." autofocus>
-      <kbd>ESC</kbd>
     </div>
-    <div class="docs-search-results" id="docs-search-results">
-      <div class="docs-search-empty">Type to start searching...</div>
+
+    <!-- ═══════ Sidebar Overlay (mobile drawer) ═══════ -->
+    <div class="docs-sidebar-overlay" id="docs-sidebar-overlay" onclick="AdrenalineDocs.closeMobileSidebar()"></div>
+
+    <!-- ═══════ Search Dialog Overlay ═══════ -->
+    <div class="docs-search-overlay" id="docs-search-overlay" onclick="AdrenalineDocs.closeSearch()"></div>
+    <div class="docs-search-dialog" id="docs-search-dialog" role="dialog" aria-modal="true" aria-label="Search documentation">
+        <div class="docs-search-header">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="7" cy="7" r="5.5"/>
+                <path d="M11 11L14.5 14.5" stroke-linecap="round"/>
+            </svg>
+            <input type="text" class="docs-search-input" id="docs-search-input" placeholder="Search documentation..." autocomplete="off">
+            <kbd>ESC</kbd>
+        </div>
+        <div class="docs-search-results" id="docs-search-results">
+            <div class="docs-search-empty">Type to start searching...</div>
+        </div>
     </div>
-  </div>
 
-  <!-- ═══════ Toast ═══════ -->
-  <div id="toast" class="toast hidden"></div>
-
-  <script src="script.js"></script>
+    <!-- Standalone Docs JavaScript -->
+    <script src="docs.js"></script>
 </body>
 </html>
