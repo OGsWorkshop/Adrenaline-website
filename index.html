@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adrenaline - Roblox Executor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="logo">
+                <svg class="logo-icon" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect width="28" height="28" rx="6" fill="#8A5DF4"/>
+                    <path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="logo-text">ADRENALINE</span>
+            </a>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#download">Download</a>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="openStripeModal()">Purchase</button>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-glow"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">v2.4.7 — Latest Version</div>
+            <h1 class="hero-title">
+                The most powerful<br>
+                <span class="gradient-text">Roblox executor</span>
+            </h1>
+            <p class="hero-desc">
+                Engineered for superior efficiency and precision. Adrenaline is the ultimate script executor, 
+                empowering penetration testing of your games with unmatched ultra-high performance.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary btn-lg" onclick="linkvertiseRedirect()">
+                    Download
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 3V13M8 13L4 9M8 13L12 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="btn btn-outline btn-lg" onclick="openStripeModal()">
+                    Purchase
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="hero-disclaimer">By downloading, you agree to our Terms of Service and Privacy Policy.</p>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="section-header">
+            <span class="section-label">Features</span>
+            <h2 class="section-title">Everything you need to <span class="gradient-text">dominate</span></h2>
+            <p class="section-desc">Built for performance, designed for reliability.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Blazing Fast Execution</h3>
+                <p>Lightning-fast script execution with zero delay. Outperform any other executor on the market.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>100% Undetected</h3>
+                <p>Advanced bypass technology keeps you safe. Regular updates to stay ahead of detection.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📜</div>
+                <h3>Built-in Script Hub</h3>
+                <p>Thousands of premium scripts at your fingertips. Updated daily by our community.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎮</div>
+                <h3>Universal Game Support</h3>
+                <p>Works with every Roblox game. No exceptions. From Jailbreak to Blox Fruits.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Auto-Updater</h3>
+                <p>Never worry about patches. Auto-updates keep you running the latest version at all times.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>24/7 Discord Support</h3>
+                <p>Dedicated support team ready to help. Average response time under 5 minutes.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <div class="section-header">
+            <span class="section-label">Pricing</span>
+            <h2 class="section-title">Choose your <span class="gradient-text">plan</span></h2>
+            <p class="section-desc">Start for free or go premium for the full experience.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Free</h3>
+                <div class="price">$0</div>
+                <p class="price-desc">Forever free</p>
+                <ul class="pricing-features">
+                    <li class="included">Basic script execution</li>
+                    <li class="included">Limited script hub</li>
+                    <li class="included">Level 7 API</li>
+                    <li class="included">Standard support</li>
+                    <li class="excluded">Premium scripts</li>
+                    <li class="excluded">Priority support</li>
+                </ul>
+                <button class="btn btn-primary btn-full" onclick="linkvertiseRedirect()">
+                    Get Started
+                </button>
+            </div>
+            <div class="pricing-card featured">
+                <div class="popular-badge">Most Popular</div>
+                <h3>Premium</h3>
+                <div class="price">$9.99</div>
+                <p class="price-desc">Lifetime access</p>
+                <ul class="pricing-features">
+                    <li class="included">Unlimited execution</li>
+                    <li class="included">Full script hub</li>
+                    <li class="included">Level 8 API</li>
+                    <li class="included">Priority support</li>
+                    <li class="included">Exclusive premium scripts</li>
+                    <li class="included">Early access updates</li>
+                </ul>
+                <button class="btn btn-primary btn-full" onclick="openStripeModal()">
+                    Buy Premium
+                </button>
+            </div>
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <div class="price">$24.99</div>
+                <p class="price-desc">Lifetime access</p>
+                <ul class="pricing-features">
+                    <li class="included">Everything in Premium</li>
+                    <li class="included">Private server support</li>
+                    <li class="included">Custom scripts</li>
+                    <li class="included">API access</li>
+                    <li class="included">Whitelabel option</li>
+                    <li class="included">Direct developer access</li>
+                </ul>
+                <button class="btn btn-primary btn-full" onclick="openStripeModal(2499)">
+                    Buy Enterprise
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="cta-section">
+        <div class="cta-box">
+            <h2 class="cta-title">Ready to <span class="gradient-text">unleash</span> the power?</h2>
+            <p class="cta-desc">Download Adrenaline today and experience the difference.</p>
+            <div class="cta-buttons">
+                <button class="btn btn-primary btn-lg" onclick="linkvertiseRedirect()">
+                    Download Free
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 3V13M8 13L4 9M8 13L12 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="btn btn-ghost btn-lg" onclick="openStripeModal()">
+                    Buy Premium
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="cta-features">
+                <span>Windows 10/11</span>
+                <span>SmartScreen Bypass</span>
+                <span>Auto-Inject</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+                        <rect width="28" height="28" rx="6" fill="#8A5DF4"/>
+                        <path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    ADRENALINE
+                </div>
+                <p class="footer-desc">Engineered for superior efficiency and precision.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#download">Download</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <a href="#">Discord</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Adrenaline Executor. All rights reserved. For educational purposes only.</p>
+        </div>
+    </footer>
+
+    <div id="stripe-modal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeStripeModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeStripeModal()">&times;</button>
+            <div class="modal-header">
+                <h2>Complete your <span class="gradient-text">purchase</span></h2>
+                <p>Secure payment via Stripe</p>
+            </div>
+            <div class="modal-body">
+                <div class="order-summary">
+                    <div class="order-row">
+                        <span id="plan-name">Premium Plan</span>
+                        <span id="plan-price">$9.99</span>
+                    </div>
+                    <div class="order-divider"></div>
+                    <div class="order-row order-total">
+                        <span>Total</span>
+                        <span id="total-price">$9.99</span>
+                    </div>
+                </div>
+                <form id="payment-form">
+                    <div class="form-group">
+                        <label for="card-element">Card Details</label>
+                        <div id="card-element"></div>
+                        <div id="card-errors" class="card-errors"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full btn-pay" id="submit-btn">
+                        Pay $<span id="pay-amount">9.99</span>
+                    </button>
+                </form>
+                <div class="payment-footer">
+                    <span>🔒 Secured by Stripe</span>
+                    <span>✅ Instant delivery</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
