@@ -105,7 +105,7 @@ function toggleMobileMenu() {
     if (existing) { existing.remove(); return; }
     const menu = document.createElement('div');
     menu.className = 'mobile-menu active';
-    menu.innerHTML = '<a href="/">Home</a><a href="/#features">What you get</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a>';
+    menu.innerHTML = '<a href="/">Home</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a>';
     document.body.appendChild(menu);
 }
 
@@ -215,7 +215,7 @@ function initCodeTyping() {
         if (position >= source.length) return;
         caret.before(document.createTextNode(source[position]));
         position += 1;
-        window.setTimeout(typeNext, source[position - 1] === '\n' ? 260 : 42);
+        window.setTimeout(typeNext, source[position - 1] === '\n' ? 220 : 52);
     };
     window.setTimeout(typeNext, 500);
 }
