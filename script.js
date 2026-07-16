@@ -231,25 +231,64 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initCodeTyping() {
-    const code = document.getElementById('hero-code');
-    if (!code) return;
-    const source = code.dataset.code || '';
+    const editor = document.getElementById('hero-code');
+    const editorFrame = document.getElementById('hero-code-editor');
+    const gutter = document.getElementById('hero-line-numbers');
+    if (!editor || !editorFrame) return;
+    const source = editorFrame.dataset.code || '';
+
+    const refreshLineNumbers = () => {
+        const lineCount = Math.max(1, (editor.textContent || '').split('\n').length);
+        if (gutter) gutter.innerHTML = Array.from({ length: lineCount }, (_, index) => `<span>${index + 1}</span>`).join('');
+    };
+
+    editor.addEventListener('input', refreshLineNumbers);
+    editor.addEventListener('blur', () => highlightHeroCode(editor));
+
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        code.textContent = source;
+        editor.textContent = source;
+        refreshLineNumbers();
+        highlightHeroCode(editor);
         return;
     }
-    code.textContent = '';
-    let position = 0;
+
+    editor.textContent = '';
     const caret = document.createElement('span');
     caret.className = 'hero-code-caret';
-    code.appendChild(caret);
+    editor.appendChild(caret);
+    let position = 0;
+
     const typeNext = () => {
-        if (position >= source.length) return;
+        if (position >= source.length) {
+            caret.remove();
+            highlightHeroCode(editor);
+            refreshLineNumbers();
+            return;
+        }
         caret.before(document.createTextNode(source[position]));
         position += 1;
+        refreshLineNumbers();
         window.setTimeout(typeNext, source[position - 1] === '\n' ? 220 : 52);
     };
     window.setTimeout(typeNext, 500);
+}
+
+function highlightHeroCode(editor) {
+    const source = editor.textContent || '';
+    const escapeHtml = value => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const tokenPattern = /(--[^\n]*|"(?:\\.|[^"])*"|'(?:\\.|[^'])*'|\b(?:local|function|end|if|then|else|for|in|do|return|true|false|nil)\b|\b(?:print|warn|wait|task)\b|\b\d+(?:\.\d+)?\b)/g;
+    let output = '';
+    let cursor = 0;
+
+    source.replace(tokenPattern, (token, offset) => {
+        output += escapeHtml(source.slice(cursor, offset));
+        const type = token.startsWith('--') ? 'comment' : token[0] === '"' || token[0] === "'" ? 'string' : /^\d/.test(token) ? 'number' : /^(print|warn|wait|task)$/.test(token) ? 'function' : 'keyword';
+        output += `<span class="syntax-${type}">${escapeHtml(token)}</span>`;
+        cursor = offset + token.length;
+        return token;
+    });
+    output += escapeHtml(source.slice(cursor));
+    editor.innerHTML = output;
 }
 
 function initHeroExecutor() {

@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Adrenaline is a focused Roblox scripting client with a clean workspace and straightforward licensing.">
-    <title>Adrenaline — A cleaner scripting workspace</title>
+    <title>Adrenaline — Clean. Fast. Reliable.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/AdrenalineLogoNoBg.png">
     <link rel="stylesheet" href="style.css">
     <script src="https://js.stripe.com/v3/"></script>
 </head>
@@ -48,9 +49,9 @@
             </div>
             <div class="hero-panel reveal reveal-delay-one" aria-label="Adrenaline preview">
                 <div class="window-bar"><span></span><span></span><span></span><small>adrenaline.lua</small></div>
-                <div class="code-preview" id="hero-code" data-code='print("Adrenaline Attached")' contenteditable="true" spellcheck="false" role="textbox" aria-label="LuaU script preview"></div>
-                <div class="hero-output" aria-live="polite"><div class="hero-output-label"><span class="output-dot"></span>Output</div><code id="hero-output-text">Click Execute to run this preview.</code></div>
-                <div class="panel-status"><span class="panel-status-label"><span class="status-pulse"></span>Workspace ready</span><button class="hero-execute" id="hero-execute" type="button">Execute <span class="btn-arrow">→</span></button><span class="hero-version">v2.4.7</span></div>
+                <div class="code-preview" id="hero-code-editor" data-code='print("Adrenaline Attached")' role="textbox" aria-label="LuaU script preview"><div class="code-gutter" id="hero-line-numbers" aria-hidden="true"><span>1</span></div><div class="code-content" id="hero-code" contenteditable="true" spellcheck="false"></div></div>
+                <div class="hero-output" aria-live="polite"><div class="hero-output-label"><span class="output-dot"></span>Output</div><div class="hero-output-scroll"><code id="hero-output-text">Click Execute to run this preview.</code></div></div>
+                <div class="panel-toolbar"><span class="hero-language">Luau</span><button class="hero-execute" id="hero-execute" type="button">Execute <span class="btn-arrow">↑</span></button><span class="hero-version">v2.4.7</span></div>
             </div>
         </section>
 
