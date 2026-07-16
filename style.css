@@ -33,3 +33,12 @@
 @media(max-width:640px){.hero-output{gap:10px;padding-left:14px;padding-right:14px}.hero-output-label{min-width:52px}.panel-status{padding-left:14px;padding-right:14px}}
 
 .panel-status .panel-status-label .status-pulse{margin-left:0}
+
+/* Stripe Payment Element and available-methods note */
+.stripe-payment-element{min-height:82px;padding:3px 0}
+.payment-element-loading,.payment-element-error{padding:15px;border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:.82rem;background:rgba(255,255,255,.025)}
+.payment-element-error{color:#ff8f9a;border-color:rgba(255,143,154,.35)}
+.stripe-methods-note{display:flex;align-items:flex-start;gap:10px;margin:2px 0 20px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:rgba(155,117,255,.045);color:var(--muted);font-size:.73rem;line-height:1.55}
+.stripe-methods-note p{margin:0}
+.stripe-methods-icon{display:grid;place-items:center;flex:0 0 19px;width:19px;height:19px;border:1px solid var(--primary);border-radius:50%;color:var(--primary-light);font-size:.7rem}
+@media(max-width:640px){.stripe-methods-note{font-size:.7rem}}

@@ -9,9 +9,9 @@ const PLANS = {
 
 let stripe;
 let stripeElements;
-let cardNumber;
-let cardExpiry;
-let cardCvc;
+let paymentElement;
+let paymentClientSecret;
+let paymentRequestId = 0;
 let currentPlan = 'premium';
 
 function linkvertiseRedirect() {
@@ -109,16 +109,7 @@ function toggleMobileMenu() {
     document.body.appendChild(menu);
 }
 
-function configureStripeField(field, selector) {
-    field.mount(selector);
-    field.on('change', event => {
-        const error = document.getElementById('card-errors');
-        if (error && event.error) error.textContent = event.error.message;
-        else if (error && !document.querySelector('.checkout-error[data-form-error]')) error.textContent = '';
-    });
-}
-
-function initStripeCheckout() {
+async function initStripeCheckout() {
     if (typeof Stripe === 'undefined') {
         showToast('Stripe could not be loaded. Refresh and try again.', 'error');
         return false;
@@ -127,16 +118,48 @@ function initStripeCheckout() {
         showToast('Add your Stripe publishable key before taking payments.', 'error');
         return false;
     }
+
     stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-    stripeElements = stripe.elements();
-    const style = { base: { color: '#f6f4fb', fontFamily: 'DM Sans, sans-serif', fontSize: '15px', '::placeholder': { color: '#666371' } }, invalid: { color: '#ff8f9a' } };
-    cardNumber = stripeElements.create('cardNumber', { style });
-    cardExpiry = stripeElements.create('cardExpiry', { style });
-    cardCvc = stripeElements.create('cardCvc', { style });
-    configureStripeField(cardNumber, '#card-number-element');
-    configureStripeField(cardExpiry, '#card-expiry-element');
-    configureStripeField(cardCvc, '#card-cvc-element');
+    await preparePaymentElement();
     return true;
+}
+
+async function preparePaymentElement() {
+    const mountPoint = document.getElementById('payment-element');
+    if (!stripe || !mountPoint) return;
+
+    const requestId = ++paymentRequestId;
+    const button = document.getElementById('submit-btn');
+    button?.setAttribute('disabled', 'disabled');
+    mountPoint.innerHTML = '<div class="payment-element-loading">Loading payment methods…</div>';
+
+    try {
+        const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ plan: currentPlan }),
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || 'Could not load payment methods.');
+        if (requestId !== paymentRequestId) return;
+
+        paymentClientSecret = result.clientSecret;
+        paymentElement?.unmount();
+        stripeElements?.destroy?.();
+        stripeElements = stripe.elements({ clientSecret: paymentClientSecret, appearance: {
+            theme: 'night',
+            variables: { colorPrimary: '#9b75ff', colorBackground: '#15151d', colorText: '#f6f4fb', colorTextSecondary: '#a6a3b0', borderRadius: '10px', fontFamily: 'DM Sans, sans-serif' },
+        } });
+        paymentElement = stripeElements.create('payment', { layout: 'tabs' });
+        mountPoint.innerHTML = '';
+        paymentElement.mount('#payment-element');
+        button?.removeAttribute('disabled');
+    } catch (error) {
+        if (requestId !== paymentRequestId) return;
+        paymentClientSecret = null;
+        mountPoint.innerHTML = '<div class="payment-element-error">Payment methods could not be loaded. Refresh and try again.</div>';
+        showToast(error.message || 'Payment methods could not be loaded.', 'error');
+    }
 }
 
 function setSelectedPlan(planId) {
@@ -158,16 +181,21 @@ async function handleCheckoutSubmit(event) {
     const error = document.getElementById('card-errors');
     const button = document.getElementById('submit-btn');
     if (!emailInput?.value || !emailInput.checkValidity()) { emailInput?.reportValidity(); return; }
-    if (!stripe || !cardNumber) { showToast('Payment fields are not ready yet.', 'error'); return; }
+    if (!stripe || !stripeElements || !paymentElement || !paymentClientSecret) { showToast('Payment methods are not ready yet.', 'error'); return; }
     button.disabled = true;
     document.getElementById('pay-btn-text')?.classList.add('hidden');
     document.getElementById('pay-btn-loader')?.classList.remove('hidden');
     if (error) error.textContent = '';
     try {
-        const response = await fetch(API_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ amount: PLANS[currentPlan].amount, plan: currentPlan, email: emailInput.value.trim() }) });
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(result.error || 'Could not start payment.');
-        const confirmation = await stripe.confirmCardPayment(result.clientSecret, { payment_method: { card: cardNumber, billing_details: { email: emailInput.value.trim() } } });
+        const confirmation = await stripe.confirmPayment({
+            elements: stripeElements,
+            clientSecret: paymentClientSecret,
+            confirmParams: {
+                return_url: window.location.href,
+                payment_method_data: { billing_details: { email: emailInput.value.trim() } },
+            },
+            redirect: 'if_required',
+        });
         if (confirmation.error) throw new Error(confirmation.error.message);
         if (confirmation.paymentIntent?.status === 'succeeded') {
             document.getElementById('checkout-form')?.classList.add('hidden');
@@ -186,7 +214,10 @@ async function handleCheckoutSubmit(event) {
 function initCheckoutPage() {
     const queryPlan = new URLSearchParams(window.location.search).get('plan');
     setSelectedPlan(PLANS[queryPlan] ? queryPlan : 'premium');
-    document.querySelectorAll('.checkout-plan-option').forEach(option => option.addEventListener('click', () => setSelectedPlan(option.dataset.plan)));
+    document.querySelectorAll('.checkout-plan-option').forEach(option => option.addEventListener('click', () => {
+        setSelectedPlan(option.dataset.plan);
+        if (stripe) preparePaymentElement();
+    }));
     document.getElementById('checkout-form')?.addEventListener('submit', handleCheckoutSubmit);
     initStripeCheckout();
 }
