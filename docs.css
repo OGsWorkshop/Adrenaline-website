@@ -135,6 +135,12 @@ body.docs-page::-webkit-scrollbar-thumb:hover { background: #444; }
     flex-shrink: 0;
 }
 
+.docs-logo-image {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
 .docs-header-logo svg {
     flex-shrink: 0;
 }

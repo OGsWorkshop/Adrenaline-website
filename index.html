@@ -3,236 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adrenaline - Roblox Executor</title>
+    <meta name="description" content="Adrenaline is a focused Roblox scripting client with a clean workspace and straightforward licensing.">
+    <title>Adrenaline — A cleaner scripting workspace</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
-    <nav>
+    <canvas class="ambient-canvas" aria-hidden="true"></canvas>
+    <nav class="site-nav">
         <div class="nav-inner">
-            <a href="#" class="logo">
-                <svg class="logo-icon" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                    <rect width="28" height="28" rx="6" fill="#8A5DF4"/>
-                    <path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+            <a href="/" class="logo" aria-label="Adrenaline home">
+                <img src="AdrenalineLogoNoBg.png" alt="" class="logo-image">
                 <span class="logo-text">ADRENALINE</span>
             </a>
             <div class="nav-right">
                 <div class="nav-links">
-                    <a href="#features">Features</a>
+                    <a href="#features">What you get</a>
                     <a href="/pricing">Pricing</a>
                     <a href="/docs">Docs</a>
                 </div>
-                <a href="/pricing" class="btn btn-primary btn-sm">Get Premium</a>
+                <a href="/pricing" class="btn btn-primary btn-sm">View plans</a>
             </div>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button class="mobile-menu-btn" type="button" aria-label="Open menu" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
             </button>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-bg">
-            <div class="hero-glow"></div>
-        </div>
-        <div class="hero-content">
-            <div class="hero-badge">v2.4.7 — Latest Version</div>
-            <h1 class="hero-title">
-                The most powerful<br>
-                <span class="gradient-text">Roblox executor</span>
-            </h1>
-            <p class="hero-desc">
-                Engineered for superior efficiency and precision. Adrenaline is the ultimate script executor, 
-                empowering penetration testing of your games with unmatched ultra-high performance.
-            </p>
-            <div class="hero-buttons">
-                <button class="btn btn-primary btn-lg" onclick="linkvertiseRedirect()">
-                    Download
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M8 3V13M8 13L4 9M8 13L12 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                <a href="/pricing" class="btn btn-outline btn-lg">
-                    Purchase
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
+    <main>
+        <section class="hero page-section">
+            <div class="hero-orbit hero-orbit-one"></div>
+            <div class="hero-orbit hero-orbit-two"></div>
+            <div class="hero-content reveal">
+                <div class="eyebrow"><span class="eyebrow-dot"></span>Built for people who like a clean setup</div>
+                <h1 class="hero-title">A better place to<br><span class="gradient-text">run your scripts.</span></h1>
+                <p class="hero-desc">Adrenaline keeps the useful parts close: a quick workspace, a simple client, and licensing that tells you exactly what you are getting.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-lg" type="button" onclick="linkvertiseRedirect()">Download client <span class="btn-arrow">↘</span></button>
+                    <a href="/pricing" class="btn btn-outline btn-lg">See plans <span class="btn-arrow">→</span></a>
+                </div>
+                <p class="hero-note">Windows 10 and 11 · Keys delivered after checkout</p>
             </div>
-            <p class="hero-disclaimer">By downloading, you agree to our Terms of Service and Privacy Policy.</p>
-        </div>
-    </section>
+            <div class="hero-panel reveal reveal-delay-one" aria-label="Adrenaline preview">
+                <div class="window-bar"><span></span><span></span><span></span><small>adrenaline.lua</small></div>
+                <div class="code-preview"><span class="code-muted">-- your workspace</span><br><span class="code-purple">local</span> <span class="code-blue">session</span> = <span class="code-green">Adrenaline</span>.<span class="code-yellow">connect</span>()<br><br><span class="code-purple">if</span> session.<span class="code-yellow">ready</span> <span class="code-purple">then</span><br>&nbsp;&nbsp;session:<span class="code-yellow">run</span>(script)<br><span class="code-purple">end</span></div>
+                <div class="panel-status"><span class="status-pulse"></span>Workspace ready <span>v2.4.7</span></div>
+            </div>
+        </section>
 
-    <section id="features" class="features">
-        <div class="section-header">
-            <span class="section-label">Features</span>
-            <h2 class="section-title">Everything you need to <span class="gradient-text">dominate</span></h2>
-            <p class="section-desc">Built for performance, designed for reliability.</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Blazing Fast Execution</h3>
-                <p>Lightning-fast script execution with zero delay. Outperform any other executor on the market.</p>
+        <section id="features" class="features page-section section-shell">
+            <div class="section-header reveal">
+                <span class="section-label">The basics, done well</span>
+                <h2 class="section-title">No inflated feature list.<br><span class="gradient-text">Just the useful stuff.</span></h2>
+                <p class="section-desc">A straightforward client for scripting, testing, and keeping your workspace organized.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <h3>100% Undetected</h3>
-                <p>Advanced bypass technology keeps you safe. Regular updates to stay ahead of detection.</p>
+            <div class="features-grid">
+                <article class="feature-card reveal"><div class="feature-mark">01</div><h3>Quick to open</h3><p>Get from desktop to workspace without a maze of setup screens.</p></article>
+                <article class="feature-card reveal reveal-delay-one"><div class="feature-mark">02</div><h3>A familiar workspace</h3><p>Keep scripts, output, and the controls you use most in one place.</p></article>
+                <article class="feature-card reveal reveal-delay-two"><div class="feature-mark">03</div><h3>Clear licensing</h3><p>Pick a key by duration. What you see on the plan is what you receive.</p></article>
+                <article class="feature-card reveal"><div class="feature-mark">04</div><h3>Updates when needed</h3><p>We keep the client maintained as the surrounding platform changes.</p></article>
+                <article class="feature-card reveal reveal-delay-one"><div class="feature-mark">05</div><h3>Documentation that helps</h3><p>Short examples and notes for the parts you actually need to get started.</p></article>
+                <article class="feature-card reveal reveal-delay-two"><div class="feature-mark">06</div><h3>Support from real people</h3><p>Have a question? Reach out through the community and we will point you in the right direction.</p></article>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">📜</div>
-                <h3>Built-in Script Hub</h3>
-                <p>Thousands of premium scripts at your fingertips. Updated daily by our community.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎮</div>
-                <h3>Universal Game Support</h3>
-                <p>Works with every Roblox game. No exceptions. From Jailbreak to Blox Fruits.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔄</div>
-                <h3>Auto-Updater</h3>
-                <p>Never worry about patches. Auto-updates keep you running the latest version at all times.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💬</div>
-                <h3>24/7 Discord Support</h3>
-                <p>Dedicated support team ready to help. Average response time under 5 minutes.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="pricing" class="pricing">
-        <div class="section-header">
-            <span class="section-label">Pricing</span>
-            <h2 class="section-title">Choose your <span class="gradient-text">plan</span></h2>
-            <p class="section-desc">Free forever. Premium weekly. Enterprise lifetime.</p>
-        </div>
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <h3>Free</h3>
-                <div class="price">$0</div>
-                <p class="price-desc">Forever free</p>
-                <ul class="pricing-features">
-                    <li class="included">Basic script execution</li>
-                    <li class="included">Limited script hub</li>
-                    <li class="included">Level 7 API</li>
-                    <li class="included">Standard support</li>
-                    <li class="excluded">Premium scripts</li>
-                    <li class="excluded">Priority support</li>
-                </ul>
-                <button class="btn btn-primary btn-full" onclick="linkvertiseRedirect()">
-                    Get Started
-                </button>
+        <section class="pricing page-section" id="pricing">
+            <div class="section-header reveal"><span class="section-label">Plans</span><h2 class="section-title">Pick the time frame<br><span class="gradient-text">that fits.</span></h2><p class="section-desc">Start free, or grab a key when you are ready. The duration is always clear before you pay.</p></div>
+            <div class="pricing-grid">
+                <article class="pricing-card reveal"><div class="plan-kicker">Start here</div><h3>Free</h3><div class="price">$0</div><p class="price-desc">No key required</p><ul class="pricing-features"><li>Basic client access</li><li>Community documentation</li><li>Community support</li></ul><button class="btn btn-outline btn-full" type="button" onclick="linkvertiseRedirect()">Download free</button></article>
+                <article class="pricing-card featured reveal reveal-delay-one"><div class="popular-badge">Most picked</div><div class="plan-kicker">Short-term access</div><h3>Premium</h3><div class="price">$6.99</div><p class="price-desc">One-week key</p><ul class="pricing-features"><li>Adrenaline client access</li><li>One-week license key</li><li>Access to current updates</li></ul><a href="/checkout?plan=premium" class="btn btn-primary btn-full">Get Premium <span class="btn-arrow">→</span></a></article>
+                <article class="pricing-card reveal reveal-delay-two"><div class="plan-kicker">More breathing room</div><h3>Enterprise</h3><div class="price">$17.99</div><p class="price-desc">One-month key</p><ul class="pricing-features"><li>Adrenaline client access</li><li>One-month license key</li><li>Access to current updates</li></ul><a href="/checkout?plan=enterprise" class="btn btn-primary btn-full">Get Enterprise <span class="btn-arrow">→</span></a></article>
             </div>
-            <div class="pricing-card featured">
-                <div class="popular-badge">Most Popular</div>
-                <h3>Premium</h3>
-                <div class="price">$2.99</div>
-                <p class="price-desc">Per week</p>
-                <ul class="pricing-features">
-                    <li class="included">Unlimited execution</li>
-                    <li class="included">Full script hub</li>
-                    <li class="included">Level 8 API</li>
-                    <li class="included">Priority support</li>
-                    <li class="included">Exclusive premium scripts</li>
-                    <li class="included">Early access updates</li>
-                </ul>
-                <a href="/pricing" class="btn btn-primary btn-full">
-                    Buy Premium
-                </a>
-            </div>
-            <div class="pricing-card">
-                <div class="popular-badge" style="background: linear-gradient(135deg, #f59e0b, #d97706);">Best Value</div>
-                <h3>Enterprise</h3>
-                <div class="price">$29.99</div>
-                <p class="price-desc">Lifetime</p>
-                <ul class="pricing-features">
-                    <li class="included">Everything in Premium</li>
-                    <li class="included">Private server support</li>
-                    <li class="included">Custom scripts</li>
-                    <li class="included">API access</li>
-                    <li class="included">Whitelabel option</li>
-                    <li class="included">Direct developer access</li>
-                </ul>
-                <a href="/pricing" class="btn btn-primary btn-full">
-                    Buy Enterprise
-                </a>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="download" class="cta-section">
-        <div class="cta-box">
-            <h2 class="cta-title">Ready to <span class="gradient-text">unleash</span> the power?</h2>
-            <p class="cta-desc">Download Adrenaline today and experience the difference.</p>
-            <div class="cta-buttons">
-                <button class="btn btn-primary btn-lg" onclick="linkvertiseRedirect()">
-                    Download Free
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M8 3V13M8 13L4 9M8 13L12 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                <a href="/pricing" class="btn btn-ghost btn-lg">
-                    Buy Premium
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-            </div>
-            <div class="cta-features">
-                <span>Windows 10/11</span>
-                <span>SmartScreen Bypass</span>
-                <span>Auto-Inject</span>
-            </div>
-        </div>
-    </section>
+        <section class="cta-section page-section section-shell reveal"><div class="cta-box"><div><span class="section-label">Ready when you are</span><h2 class="cta-title">Keep your setup<br><span class="gradient-text">simple.</span></h2><p class="cta-desc">Download the client or choose a key. Either way, you can be up and running in a few minutes.</p></div><div class="cta-buttons"><button class="btn btn-primary btn-lg" type="button" onclick="linkvertiseRedirect()">Download client <span class="btn-arrow">↘</span></button><a href="/pricing" class="btn btn-ghost btn-lg">View pricing <span class="btn-arrow">→</span></a></div></div></section>
+    </main>
 
     <footer>
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <div class="footer-logo">
-                    <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
-                        <rect width="28" height="28" rx="6" fill="#8A5DF4"/>
-                        <path d="M8 14L12 18L20 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    ADRENALINE
-                </div>
-                <p class="footer-desc">Engineered for superior efficiency and precision.</p>
-            </div>
-            <div class="footer-links">
-                <div class="footer-col">
-                    <h4>Product</h4>
-                    <a href="/">Home</a>
-                    <a href="/pricing">Pricing</a>
-                    <a href="/docs">Docs</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Legal</h4>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Privacy Policy</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <a href="https://discord.gg/8ZhSp6PqmK" target="_blank" rel="noopener noreferrer">Discord</a>
-                    <a href="#">YouTube</a>
-                    <a href="#">Twitter</a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Adrenaline Executor. All rights reserved. For educational purposes only.</p>
-        </div>
+        <div class="footer-inner"><div class="footer-brand"><a href="/" class="footer-logo"><img src="AdrenalineLogoNoBg.png" alt="" class="footer-logo-image">ADRENALINE</a><p class="footer-desc">A focused scripting workspace without the sales pitch.</p></div><div class="footer-links"><div class="footer-col"><h4>Explore</h4><a href="/">Home</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a></div><div class="footer-col"><h4>Community</h4><a href="https://discord.gg/8ZhSp6PqmK" target="_blank" rel="noopener noreferrer">Discord</a></div></div></div>
+        <div class="footer-bottom"><p>© 2026 Adrenaline. Made for a better scripting workflow.</p></div>
     </footer>
-
-    <div id="toast" class="toast hidden"></div>
-
+    <div id="toast" class="toast hidden" role="status"></div>
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,209 +1,198 @@
 const LINKVERTISE_URL = 'https://linkvertise.com/your-link-here';
-const STRIPE_PUBLISHABLE_KEY = window.STRIPE_KEY || 'pk_test_XXXXXXXXXXXXXXXXXXXXXXXX';
+const STRIPE_PUBLISHABLE_KEY = window.STRIPE_PUBLISHABLE_KEY || window.STRIPE_KEY || 'pk_test_REPLACE_ME';
 const API_ENDPOINT = '/api/create-payment-intent';
 
+const PLANS = {
+    premium: { name: 'Premium key', duration: 'Valid for one week', amount: 699, display: '$6.99' },
+    enterprise: { name: 'Enterprise key', duration: 'Valid for one month', amount: 1799, display: '$17.99' },
+};
+
 let stripe;
-let elements;
-let paymentIntentId = null;
+let stripeElements;
+let cardNumber;
+let cardExpiry;
+let cardCvc;
 let currentPlan = 'premium';
-let currentAmount = 999;
 
 function linkvertiseRedirect() {
-    window.open(LINKVERTISE_URL, '_blank');
-    showToast('Redirecting to download...', 'success');
-}
-
-function openStripeModal(amount) {
-    if (amount) {
-        currentAmount = amount;
-        currentPlan = 'enterprise';
-        document.getElementById('plan-name').textContent = 'Enterprise Plan';
-        document.getElementById('plan-price').textContent = amount === 2999 ? '$29.99' : '$24.99';
-        document.getElementById('total-price').textContent = amount === 2999 ? '$29.99' : '$24.99';
-        document.getElementById('pay-amount').textContent = amount === 2999 ? '29.99' : '24.99';
-    } else {
-        currentAmount = 299;
-        currentPlan = 'premium';
-        document.getElementById('plan-name').textContent = 'Premium Plan';
-        document.getElementById('plan-price').textContent = '$2.99';
-        document.getElementById('total-price').textContent = '$2.99';
-        document.getElementById('pay-amount').textContent = '2.99';
+    if (LINKVERTISE_URL.includes('your-link-here')) {
+        showToast('The download link has not been connected yet.', 'error');
+        return;
     }
-    document.getElementById('stripe-modal').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    initializeStripe();
+    window.open(LINKVERTISE_URL, '_blank', 'noopener,noreferrer');
 }
 
-function closeStripeModal() {
-    document.getElementById('stripe-modal').classList.add('hidden');
-    document.body.style.overflow = '';
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.className = `toast ${type}`;
+    window.clearTimeout(showToast.timeout);
+    showToast.timeout = window.setTimeout(() => toast.classList.add('hidden'), 3600);
 }
 
-async function initializeStripe() {
-    if (!stripe) {
-        stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-        elements = stripe.elements();
-        const cardElement = elements.create('card', {
-            style: {
-                base: {
-                    fontSize: '16px',
-                    color: '#ffffff',
-                    fontFamily: 'Inter, sans-serif',
-                    '::placeholder': { color: '#666666' },
-                },
-                invalid: { color: '#ef4444' },
-            },
+function initAmbientBackground() {
+    const canvas = document.querySelector('.ambient-canvas');
+    if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const context = canvas.getContext('2d');
+    const pointer = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.35, targetX: window.innerWidth * 0.5, targetY: window.innerHeight * 0.35 };
+    const particles = Array.from({ length: 38 }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        radius: Math.random() * 1.7 + .4,
+        speed: Math.random() * .18 + .04,
+        phase: Math.random() * Math.PI * 2,
+    }));
+
+    function resize() {
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = window.innerWidth * ratio;
+        canvas.height = window.innerHeight * ratio;
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    }
+
+    function draw(time) {
+        pointer.x += (pointer.targetX - pointer.x) * .025;
+        pointer.y += (pointer.targetY - pointer.y) * .025;
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        particles.forEach((particle, index) => {
+            particle.y -= particle.speed;
+            if (particle.y < -10) particle.y = window.innerHeight + 10;
+            const drift = Math.sin(time * .00035 + particle.phase) * .35;
+            const x = particle.x + drift;
+            const distance = Math.hypot(x - pointer.x, particle.y - pointer.y);
+            const alpha = Math.max(.08, .34 - distance / 850);
+            context.beginPath();
+            context.fillStyle = `rgba(${index % 3 === 0 ? '186,154,255' : '116,170,255'},${alpha})`;
+            context.arc(x, particle.y, particle.radius, 0, Math.PI * 2);
+            context.fill();
         });
-        cardElement.mount('#card-element');
-        cardElement.on('change', ({ error }) => {
-            const displayError = document.getElementById('card-errors');
-            displayError.textContent = error ? error.message : '';
-        });
+        context.beginPath();
+        const glow = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 250);
+        glow.addColorStop(0, 'rgba(143, 98, 255, .055)');
+        glow.addColorStop(1, 'rgba(143, 98, 255, 0)');
+        context.fillStyle = glow;
+        context.arc(pointer.x, pointer.y, 250, 0, Math.PI * 2);
+        context.fill();
+        requestAnimationFrame(draw);
     }
+
+    window.addEventListener('resize', resize);
+    window.addEventListener('pointermove', event => { pointer.targetX = event.clientX; pointer.targetY = event.clientY; }, { passive: true });
+    resize();
+    requestAnimationFrame(draw);
 }
 
-document.getElementById('payment-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const submitBtn = document.getElementById('submit-btn');
-    submitBtn.disabled = true;
-    submitBtn.querySelector('.btn-checkout-text').classList.add('hidden');
-    submitBtn.querySelector('.btn-checkout-loader').classList.remove('hidden');
-
-    try {
-        const response = await fetch(API_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount: currentAmount, plan: currentPlan }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to create payment');
-        }
-
-        const { clientSecret } = await response.json();
-
-        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: { card: elements.getElement('card') },
-        });
-
-        if (error) {
-            throw new Error(error.message);
-        }
-
-        if (paymentIntent.status === 'succeeded') {
-            if (document.getElementById('payment-success')) {
-                document.getElementById('payment-form').classList.add('hidden');
-                document.getElementById('payment-success').classList.remove('hidden');
-                document.querySelector('.checkout-title').textContent = 'Payment Successful!';
-                document.querySelector('.checkout-subtitle').textContent = 'Welcome to the Adrenaline family.';
-                triggerConfetti();
-            } else {
-                showToast('Payment successful! Check your email for download link.', 'success');
-                closeStripeModal();
-            }
-            setTimeout(() => window.open(LINKVERTISE_URL, '_blank'), 1500);
-        }
-    } catch (err) {
-        if (document.querySelector('.card-errors')) {
-            document.querySelector('.card-errors').textContent = err.message || 'Payment failed. Please try again.';
-        }
-        showToast(err.message || 'Payment failed. Please try again.', 'error');
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.querySelector('.btn-checkout-text').classList.remove('hidden');
-        submitBtn.querySelector('.btn-checkout-loader').classList.add('hidden');
+function initRevealAnimations() {
+    const items = document.querySelectorAll('.reveal');
+    if (!items.length || !('IntersectionObserver' in window)) {
+        items.forEach(item => item.classList.add('is-visible'));
+        return;
     }
-});
-
-function triggerConfetti() {
-    const colors = ['#8A5DF4', '#b388ff', '#22c55e', '#f59e0b', '#ef4444', '#3b82f6'];
-    for (let i = 0; i < 80; i++) {
-        const el = document.createElement('div');
-        el.style.cssText = `
-            position: fixed; z-index: 9999; pointer-events: none;
-            width: ${6 + Math.random() * 6}px; height: ${6 + Math.random() * 6}px;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
-            left: ${Math.random() * 100}vw; top: -10px;
-            animation: confettiFall ${1.5 + Math.random() * 2}s linear forwards;
-            transform: rotate(${Math.random() * 360}deg);
-        `;
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 4000);
-    }
-}
-
-const styleSheet = document.createElement('style');
-styleSheet.textContent = `
-    @keyframes confettiFall {
-        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-    }
-`;
-document.head.appendChild(styleSheet);
-
-if (window.location.pathname.includes('checkout')) {
-    document.addEventListener('DOMContentLoaded', () => {
-        initCheckoutPage();
-        initializeStripeElements();
-    });
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+        }
+    }), { threshold: .12 });
+    items.forEach(item => observer.observe(item));
 }
 
 function toggleMobileMenu() {
     const existing = document.querySelector('.mobile-menu');
-    if (existing) {
-        existing.remove();
-        return;
-    }
+    if (existing) { existing.remove(); return; }
     const menu = document.createElement('div');
     menu.className = 'mobile-menu active';
-    menu.innerHTML = `
-        <a href="/" onclick="this.closest('.mobile-menu').remove()">Home</a>
-        <a href="/pricing" onclick="this.closest('.mobile-menu').remove()">Pricing</a>
-        <a href="/docs" onclick="this.closest('.mobile-menu').remove()">Docs</a>
-        <a href="/pricing" class="btn btn-primary btn-full" onclick="this.closest('.mobile-menu').remove()">Get Premium</a>
-    `;
+    menu.innerHTML = '<a href="/">Home</a><a href="/#features">What you get</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/pricing" class="btn btn-primary btn-full">View plans</a>';
     document.body.appendChild(menu);
 }
 
-document.addEventListener('click', (e) => {
-    if (e.target.closest('.mobile-menu') || e.target.closest('.mobile-menu-btn')) return;
-    const menu = document.querySelector('.mobile-menu');
-    if (menu && !menu.contains(e.target)) {
-        menu.remove();
+function configureStripeField(field, selector) {
+    field.mount(selector);
+    field.on('change', event => {
+        const error = document.getElementById('card-errors');
+        if (error && event.error) error.textContent = event.error.message;
+        else if (error && !document.querySelector('.checkout-error[data-form-error]')) error.textContent = '';
+    });
+}
+
+function initStripeCheckout() {
+    if (typeof Stripe === 'undefined') {
+        showToast('Stripe could not be loaded. Refresh and try again.', 'error');
+        return false;
     }
-});
+    if (!STRIPE_PUBLISHABLE_KEY || STRIPE_PUBLISHABLE_KEY.includes('REPLACE_ME')) {
+        showToast('Add your Stripe publishable key before taking payments.', 'error');
+        return false;
+    }
+    stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+    stripeElements = stripe.elements();
+    const style = { base: { color: '#f6f4fb', fontFamily: 'DM Sans, sans-serif', fontSize: '15px', '::placeholder': { color: '#666371' } }, invalid: { color: '#ff8f9a' } };
+    cardNumber = stripeElements.create('cardNumber', { style });
+    cardExpiry = stripeElements.create('cardExpiry', { style });
+    cardCvc = stripeElements.create('cardCvc', { style });
+    configureStripeField(cardNumber, '#card-number-element');
+    configureStripeField(cardExpiry, '#card-expiry-element');
+    configureStripeField(cardCvc, '#card-cvc-element');
+    return true;
+}
 
-const currentPath = window.location.pathname;
-document.querySelectorAll('.nav-links a').forEach(a => {
-    const href = a.getAttribute('href');
-    a.classList.toggle('active', href === currentPath || (currentPath === '/' && href === '/'));
-});
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            if (window.innerWidth < 1024) closeMobileSidebar();
-        }
+function setSelectedPlan(planId) {
+    if (!PLANS[planId]) return;
+    currentPlan = planId;
+    const plan = PLANS[planId];
+    document.querySelectorAll('.checkout-plan-option').forEach(option => {
+        const selected = option.dataset.plan === planId;
+        option.classList.toggle('selected', selected);
+        option.querySelector('.cpo-radio')?.classList.toggle('selected', selected);
     });
-});
+    const values = { 'pay-amount': plan.display, 'summary-plan-name': plan.name, 'summary-billing': plan.duration, 'summary-amount': plan.display, 'summary-subtotal': plan.display, 'summary-total': plan.display };
+    Object.entries(values).forEach(([id, value]) => { const element = document.getElementById(id); if (element) element.textContent = value; });
+}
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+async function handleCheckoutSubmit(event) {
+    event.preventDefault();
+    const emailInput = document.getElementById('email');
+    const error = document.getElementById('card-errors');
+    const button = document.getElementById('submit-btn');
+    if (!emailInput?.value || !emailInput.checkValidity()) { emailInput?.reportValidity(); return; }
+    if (!stripe || !cardNumber) { showToast('Payment fields are not ready yet.', 'error'); return; }
+    button.disabled = true;
+    document.getElementById('pay-btn-text')?.classList.add('hidden');
+    document.getElementById('pay-btn-loader')?.classList.remove('hidden');
+    if (error) error.textContent = '';
+    try {
+        const response = await fetch(API_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ amount: PLANS[currentPlan].amount, plan: currentPlan, email: emailInput.value.trim() }) });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || 'Could not start payment.');
+        const confirmation = await stripe.confirmCardPayment(result.clientSecret, { payment_method: { card: cardNumber, billing_details: { email: emailInput.value.trim() } } });
+        if (confirmation.error) throw new Error(confirmation.error.message);
+        if (confirmation.paymentIntent?.status === 'succeeded') {
+            document.getElementById('checkout-form')?.classList.add('hidden');
+            document.querySelector('.checkout-summary-card')?.classList.add('hidden');
+            document.getElementById('checkout-success')?.classList.remove('hidden');
         }
-    });
-}, { threshold: 0.1 });
+    } catch (paymentError) {
+        if (error) { error.textContent = paymentError.message || 'Payment could not be completed.'; error.dataset.formError = 'true'; }
+    } finally {
+        button.disabled = false;
+        document.getElementById('pay-btn-text')?.classList.remove('hidden');
+        document.getElementById('pay-btn-loader')?.classList.add('hidden');
+    }
+}
 
-document.querySelectorAll('.feature-card, .pricing-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'all 0.5s ease';
-    observer.observe(el);
+function initCheckoutPage() {
+    const queryPlan = new URLSearchParams(window.location.search).get('plan');
+    setSelectedPlan(PLANS[queryPlan] ? queryPlan : 'premium');
+    document.querySelectorAll('.checkout-plan-option').forEach(option => option.addEventListener('click', () => setSelectedPlan(option.dataset.plan)));
+    document.getElementById('checkout-form')?.addEventListener('submit', handleCheckoutSubmit);
+    initStripeCheckout();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initAmbientBackground();
+    initRevealAnimations();
+    if (document.body.classList.contains('checkout-body')) initCheckoutPage();
 });
-
