@@ -246,22 +246,30 @@ function initCodeTyping() {
         if (gutter) gutter.innerHTML = Array.from({ length: lineCount }, (_, index) => `<span>${index + 1}</span>`).join('');
     };
 
+    const stopTyping = () => {
+        if (!typingActive) return;
+        typingActive = false;
+        window.clearTimeout(typingTimer);
+        editor.classList.remove('is-typing');
+    };
+
     const finishTyping = () => {
+        if (!typingActive) return;
         typingActive = false;
         window.clearTimeout(typingTimer);
         editor.value = source;
-        editor.readOnly = false;
         editor.classList.remove('is-typing');
         refreshLineNumbers();
     };
 
-    const stopTypingForEditing = () => {
-        if (editor.readOnly) finishTyping();
-    };
-
-    editor.addEventListener('input', refreshLineNumbers);
-    editor.addEventListener('focus', stopTypingForEditing);
-    editor.readOnly = true;
+    editor.addEventListener('pointerdown', stopTyping);
+    editor.addEventListener('keydown', stopTyping);
+    editor.addEventListener('paste', stopTyping);
+    editor.addEventListener('input', () => {
+        stopTyping();
+        refreshLineNumbers();
+    });
+    editor.readOnly = false;
     editor.value = '';
     editor.classList.add('is-typing');
     refreshLineNumbers();
