@@ -236,45 +236,52 @@ function initCodeTyping() {
     const gutter = document.getElementById('hero-line-numbers');
     if (!editor || !editorFrame) return;
     const source = editorFrame.dataset.code || '';
+    const highlight = document.getElementById('hero-code-highlight');
 
     const refreshLineNumbers = () => {
-        const lineCount = Math.max(1, (editor.textContent || '').split('\n').length);
+        const lineCount = Math.max(1, editor.value.split('\n').length);
         if (gutter) gutter.innerHTML = Array.from({ length: lineCount }, (_, index) => `<span>${index + 1}</span>`).join('');
     };
 
-    editor.addEventListener('input', refreshLineNumbers);
-    editor.addEventListener('blur', () => highlightHeroCode(editor));
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        editor.textContent = source;
+    const refreshEditor = () => {
         refreshLineNumbers();
         highlightHeroCode(editor);
+    };
+
+    editor.addEventListener('input', refreshEditor);
+    editor.addEventListener('scroll', () => {
+        if (highlight) {
+            highlight.scrollTop = editor.scrollTop;
+            highlight.scrollLeft = editor.scrollLeft;
+        }
+    });
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        editor.value = source;
+        refreshEditor();
         return;
     }
 
-    editor.textContent = '';
-    const caret = document.createElement('span');
-    caret.className = 'hero-code-caret';
-    editor.appendChild(caret);
+    editor.value = '';
+    refreshEditor();
     let position = 0;
-
     const typeNext = () => {
         if (position >= source.length) {
-            caret.remove();
-            highlightHeroCode(editor);
-            refreshLineNumbers();
+            refreshEditor();
             return;
         }
-        caret.before(document.createTextNode(source[position]));
+        editor.value += source[position];
         position += 1;
-        refreshLineNumbers();
+        refreshEditor();
         window.setTimeout(typeNext, source[position - 1] === '\n' ? 220 : 52);
     };
     window.setTimeout(typeNext, 500);
 }
 
 function highlightHeroCode(editor) {
-    const source = editor.textContent || '';
+    const highlight = document.getElementById('hero-code-highlight');
+    if (!highlight) return;
+    const source = editor.value || '';
     const escapeHtml = value => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const tokenPattern = /(--[^\n]*|"(?:\\.|[^"])*"|'(?:\\.|[^'])*'|\b(?:local|function|end|if|then|else|for|in|do|return|true|false|nil)\b|\b(?:print|warn|wait|task)\b|\b\d+(?:\.\d+)?\b)/g;
     let output = '';
@@ -288,7 +295,7 @@ function highlightHeroCode(editor) {
         return token;
     });
     output += escapeHtml(source.slice(cursor));
-    editor.innerHTML = output;
+    highlight.innerHTML = output + (source.endsWith('\n') ? ' ' : '');
 }
 
 function initHeroExecutor() {
@@ -298,7 +305,7 @@ function initHeroExecutor() {
     if (!code || !output || !button) return;
 
     button.addEventListener('click', () => {
-        const source = (code.textContent || '').trim();
+        const source = code.value.trim();
         const prints = [...source.matchAll(/\bprint\s*\(\s*(['"])([\s\S]*?)\1\s*\)/g)]
             .map(match => match[2].replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\'/g, "'"));
 
