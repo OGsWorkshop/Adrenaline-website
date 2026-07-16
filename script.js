@@ -1,6 +1,6 @@
 const LINKVERTISE_URL = 'https://linkvertise.com/your-link-here';
 const STRIPE_PUBLISHABLE_KEY = window.STRIPE_PUBLISHABLE_KEY || window.STRIPE_KEY || 'pk_test_REPLACE_ME';
-const API_ENDPOINT = '/api/create-payment-intent';
+const API_ENDPOINT = '/api/create-checkout-session';
 
 const PLANS = {
     premium: { name: 'Premium access', duration: 'Valid for one month', amount: 1799, display: '$17.99' },
@@ -8,9 +8,7 @@ const PLANS = {
 };
 
 let stripe;
-let stripeElements;
-let paymentElement;
-let paymentClientSecret;
+let embeddedCheckout;
 let paymentRequestId = 0;
 let currentPlan = 'premium';
 
@@ -115,51 +113,82 @@ async function initStripeCheckout() {
         return false;
     }
     if (!STRIPE_PUBLISHABLE_KEY || STRIPE_PUBLISHABLE_KEY.includes('REPLACE_ME')) {
-        showToast('Add your Stripe publishable key before taking payments.', 'error');
+        showCheckoutError('Add your Stripe publishable key before taking payments.');
         return false;
     }
 
     stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-    await preparePaymentElement();
+    await mountEmbeddedCheckout();
     return true;
 }
 
-async function preparePaymentElement() {
-    const mountPoint = document.getElementById('payment-element');
+async function mountEmbeddedCheckout() {
+    const mountPoint = document.getElementById('embedded-checkout');
+    const loading = document.getElementById('embedded-checkout-loading');
+    const requestId = ++paymentRequestId;
     if (!stripe || !mountPoint) return;
 
-    const requestId = ++paymentRequestId;
-    const button = document.getElementById('submit-btn');
-    button?.setAttribute('disabled', 'disabled');
-    mountPoint.innerHTML = '<div class="payment-element-loading">Loading payment methods…</div>';
+    embeddedCheckout?.destroy?.();
+    embeddedCheckout = null;
+    mountPoint.innerHTML = '';
+    loading?.classList.remove('hidden');
+    showCheckoutError('');
 
     try {
-        const response = await fetch(API_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ plan: currentPlan }),
+        const createEmbeddedCheckout = stripe.createEmbeddedCheckoutPage || stripe.initEmbeddedCheckout;
+        if (typeof createEmbeddedCheckout !== 'function') throw new Error('Embedded Checkout is not supported by this Stripe.js version.');
+        const embedded = await createEmbeddedCheckout.call(stripe, {
+            fetchClientSecret: async () => {
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ plan: currentPlan }),
+                });
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok || !result.clientSecret) throw new Error(result.error || 'Could not start secure checkout.');
+                return result.clientSecret;
+            },
+            appearance: {
+                theme: 'night',
+                variables: {
+                    colorPrimary: '#9b75ff',
+                    colorBackground: '#15151d',
+                    colorText: '#f6f4fb',
+                    colorTextSecondary: '#a6a3b0',
+                    colorDanger: '#ff8f9a',
+                    borderRadius: '10px',
+                    fontFamily: 'DM Sans, sans-serif',
+                },
+                rules: {
+                    '.Input': { border: '1px solid rgba(255,255,255,.14)' },
+                    '.Tab': { border: '1px solid rgba(255,255,255,.14)' },
+                },
+            },
+            onComplete: () => {
+                document.querySelector('.checkout-columns')?.classList.add('hidden');
+                document.getElementById('checkout-success')?.classList.remove('hidden');
+            },
         });
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(result.error || 'Could not load payment methods.');
-        if (requestId !== paymentRequestId) return;
 
-        paymentClientSecret = result.clientSecret;
-        paymentElement?.unmount();
-        stripeElements?.destroy?.();
-        stripeElements = stripe.elements({ clientSecret: paymentClientSecret, appearance: {
-            theme: 'night',
-            variables: { colorPrimary: '#9b75ff', colorBackground: '#15151d', colorText: '#f6f4fb', colorTextSecondary: '#a6a3b0', borderRadius: '10px', fontFamily: 'DM Sans, sans-serif' },
-        } });
-        paymentElement = stripeElements.create('payment', { layout: 'tabs' });
-        mountPoint.innerHTML = '';
-        paymentElement.mount('#payment-element');
-        button?.removeAttribute('disabled');
+        if (requestId !== paymentRequestId) {
+            embedded.destroy?.();
+            return;
+        }
+        embeddedCheckout = embedded;
+        loading?.classList.add('hidden');
+        embeddedCheckout.mount('#embedded-checkout');
     } catch (error) {
         if (requestId !== paymentRequestId) return;
-        paymentClientSecret = null;
-        mountPoint.innerHTML = '<div class="payment-element-error">Payment methods could not be loaded. Refresh and try again.</div>';
-        showToast(error.message || 'Payment methods could not be loaded.', 'error');
+        loading?.classList.add('hidden');
+        showCheckoutError(error.message || 'Secure checkout could not be loaded.');
     }
+}
+
+function showCheckoutError(message) {
+    const error = document.getElementById('embedded-checkout-error');
+    if (!error) return;
+    error.textContent = message;
+    error.classList.toggle('hidden', !message);
 }
 
 function setSelectedPlan(planId) {
@@ -175,50 +204,14 @@ function setSelectedPlan(planId) {
     Object.entries(values).forEach(([id, value]) => { const element = document.getElementById(id); if (element) element.textContent = value; });
 }
 
-async function handleCheckoutSubmit(event) {
-    event.preventDefault();
-    const emailInput = document.getElementById('email');
-    const error = document.getElementById('card-errors');
-    const button = document.getElementById('submit-btn');
-    if (!emailInput?.value || !emailInput.checkValidity()) { emailInput?.reportValidity(); return; }
-    if (!stripe || !stripeElements || !paymentElement || !paymentClientSecret) { showToast('Payment methods are not ready yet.', 'error'); return; }
-    button.disabled = true;
-    document.getElementById('pay-btn-text')?.classList.add('hidden');
-    document.getElementById('pay-btn-loader')?.classList.remove('hidden');
-    if (error) error.textContent = '';
-    try {
-        const confirmation = await stripe.confirmPayment({
-            elements: stripeElements,
-            clientSecret: paymentClientSecret,
-            confirmParams: {
-                return_url: window.location.href,
-                payment_method_data: { billing_details: { email: emailInput.value.trim() } },
-            },
-            redirect: 'if_required',
-        });
-        if (confirmation.error) throw new Error(confirmation.error.message);
-        if (confirmation.paymentIntent?.status === 'succeeded') {
-            document.getElementById('checkout-form')?.classList.add('hidden');
-            document.querySelector('.checkout-summary-card')?.classList.add('hidden');
-            document.getElementById('checkout-success')?.classList.remove('hidden');
-        }
-    } catch (paymentError) {
-        if (error) { error.textContent = paymentError.message || 'Payment could not be completed.'; error.dataset.formError = 'true'; }
-    } finally {
-        button.disabled = false;
-        document.getElementById('pay-btn-text')?.classList.remove('hidden');
-        document.getElementById('pay-btn-loader')?.classList.add('hidden');
-    }
-}
-
 function initCheckoutPage() {
     const queryPlan = new URLSearchParams(window.location.search).get('plan');
     setSelectedPlan(PLANS[queryPlan] ? queryPlan : 'premium');
     document.querySelectorAll('.checkout-plan-option').forEach(option => option.addEventListener('click', () => {
+        if (currentPlan === option.dataset.plan) return;
         setSelectedPlan(option.dataset.plan);
-        if (stripe) preparePaymentElement();
+        if (stripe) mountEmbeddedCheckout();
     }));
-    document.getElementById('checkout-form')?.addEventListener('submit', handleCheckoutSubmit);
     initStripeCheckout();
 }
 

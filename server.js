@@ -9,6 +9,7 @@ const pages = {
     '/': 'index.html',
     '/pricing': 'pricing.html',
     '/checkout': 'checkout.html',
+    '/checkout/success': 'checkout-success.html',
     '/docs': 'docs.html',
     '/about': 'about.html',
     '/terms': 'terms.html',
@@ -32,7 +33,19 @@ function sendJson(response, statusCode, body) {
     response.end(payload);
 }
 
-function handlePaymentIntent(request, response) {
+function createApiResponse(response) {
+    return {
+        status(code) {
+            response.statusCode = code;
+            return this;
+        },
+        json(body) {
+            sendJson(response, response.statusCode || 200, body);
+        },
+    };
+}
+
+function handleJsonApi(request, response, handler) {
     const chunks = [];
     request.on('data', chunk => chunks.push(chunk));
     request.on('end', async () => {
@@ -42,20 +55,24 @@ function handlePaymentIntent(request, response) {
             return sendJson(response, 400, { error: 'Invalid JSON body' });
         }
 
-        const serverResponse = {
-            status(code) {
-                response.statusCode = code;
-                return this;
-            },
-            json(body) {
-                sendJson(response, response.statusCode || 200, body);
-            },
-        };
-
         try {
-            await require('./api/create-payment-intent')(request, serverResponse);
+            await handler(request, createApiResponse(response));
         } catch (error) {
             console.error('Payment endpoint error:', error);
+            sendJson(response, 500, { error: 'Internal server error' });
+        }
+    });
+}
+
+function handleStripeWebhook(request, response) {
+    const chunks = [];
+    request.on('data', chunk => chunks.push(chunk));
+    request.on('end', async () => {
+        request.rawBody = Buffer.concat(chunks);
+        try {
+            await require('./api/stripe-webhook')(request, createApiResponse(response));
+        } catch (error) {
+            console.error('Stripe webhook endpoint error:', error);
             sendJson(response, 500, { error: 'Internal server error' });
         }
     });
@@ -83,8 +100,24 @@ function serveStatic(request, response, pathname) {
 const server = http.createServer((request, response) => {
     const { pathname } = new URL(request.url, `http://${request.headers.host || 'localhost'}`);
 
+    if (pathname === '/discord' && request.method === 'GET') {
+        response.writeHead(302, {
+            Location: 'https://discord.gg/zPtyr26K7K',
+            'Cache-Control': 'no-store',
+        });
+        return response.end();
+    }
+
+    if (pathname === '/api/create-checkout-session' && request.method === 'POST') {
+        return handleJsonApi(request, response, require('./api/create-checkout-session'));
+    }
+
     if (pathname === '/api/create-payment-intent' && request.method === 'POST') {
-        return handlePaymentIntent(request, response);
+        return handleJsonApi(request, response, require('./api/create-payment-intent'));
+    }
+
+    if (pathname === '/api/webhooks/stripe' && request.method === 'POST') {
+        return handleStripeWebhook(request, response);
     }
 
     if (pathname.startsWith('/api/')) {

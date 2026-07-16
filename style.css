@@ -64,3 +64,8 @@
 .code-content.is-typing{caret-color:transparent}
 .code-gutter{padding-top:30px;padding-bottom:30px}
 @media(max-width:640px){.code-content{padding-left:18px;padding-right:18px}}
+
+/* Embedded Checkout surface */
+.embedded-checkout-container{min-height:420px;margin:8px 0 18px;padding:0;border-radius:12px;overflow:hidden;background:var(--surface-2)}
+.embedded-checkout-container iframe{width:100%;border:0}
+.checkout-form-panel>.payment-element-loading,.checkout-form-panel>.payment-element-error{margin:8px 0 18px}

@@ -11,14 +11,19 @@
         const routes = {
             '/pricing': '/pricing.html',
             '/checkout': '/checkout.html',
+            '/checkout/success': '/checkout-success.html',
             '/docs': '/docs.html',
             '/about': '/about.html',
             '/terms': '/terms.html',
             '/privacy': '/privacy.html'
         };
-        const target = routes[window.location.pathname];
-        if (target) {
-            window.location.replace(target + window.location.search + window.location.hash);
+        if (window.location.pathname === '/discord') {
+            window.location.replace('https://discord.gg/zPtyr26K7K');
+        } else {
+            const target = routes[window.location.pathname];
+            if (target) {
+                window.location.replace(target + window.location.search + window.location.hash);
+            }
         }
     </script>
 </body>

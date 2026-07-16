@@ -24,15 +24,12 @@
                         <button class="checkout-plan-option" type="button" data-plan="premium"><span class="cpo-radio"></span><span class="cpo-info"><strong>Premium</strong><small>One-month access</small></span><b>$17.99</b></button>
                         <button class="checkout-plan-option" type="button" data-plan="enterprise"><span class="cpo-radio"></span><span class="cpo-info"><strong>Enterprise</strong><small>Three-month access</small></span><b>$39.99</b></button>
                     </div>
-                    <form id="checkout-form" novalidate>
-                        <div class="form-section-heading"><span>01</span><h2>Payment details</h2></div>
-                        <div class="checkout-form-group"><label for="email">Email address</label><input type="email" id="email" class="checkout-input" placeholder="you@example.com" autocomplete="email" required><small class="field-hint">We will send your key to this address.</small></div>
-                        <div class="checkout-form-group"><label>Payment method</label><div id="payment-element" class="stripe-payment-element"></div><small class="field-hint">Stripe will show the payment methods enabled for your account and available for this checkout, including cards, wallets, bank methods, and local options when supported.</small></div>
-                        <div class="stripe-methods-note"><span class="stripe-methods-icon">✓</span><p>Payment methods are securely rendered by Stripe. The list can include Visa, Mastercard, Apple Pay, Google Pay, Cash App, crypto, Pix, iDEAL, Alipay, and other methods configured in your Stripe Dashboard.</p></div>
-                        <div id="card-errors" class="checkout-error" role="alert"></div>
-                        <button type="submit" class="checkout-pay-btn" id="submit-btn"><span class="pay-btn-text" id="pay-btn-text">Pay <span id="pay-amount">$6.99</span> <span class="btn-arrow">→</span></span><span class="pay-btn-loader hidden" id="pay-btn-loader"><span class="spinner"></span> Processing...</span></button>
-                        <p class="checkout-legal">By continuing, you agree to receive your license key at the email above.</p>
-                    </form>
+                    <div class="form-section-heading"><span>01</span><h2>Payment details</h2></div>
+                    <div id="embedded-checkout-loading" class="payment-element-loading">Loading secure checkout…</div>
+                    <div id="embedded-checkout-error" class="payment-element-error hidden" role="alert"></div>
+                    <div id="embedded-checkout" class="embedded-checkout-container" aria-live="polite"></div>
+                    <div class="stripe-methods-note"><span class="stripe-methods-icon">✓</span><p>Stripe securely renders the payment form. Card details never touch our servers.</p></div>
+                    <p class="checkout-legal">By continuing, you agree to receive your license key at the email entered in Stripe Checkout.</p>
                 </section>
                 <aside class="checkout-summary-card"><div class="summary-top"><span class="summary-eyebrow">Your order</span><span class="summary-dot"></span></div><div class="summary-plan"><div><h2 id="summary-plan-name">Premium access</h2><p id="summary-billing">Valid for one month</p></div><strong id="summary-amount">$17.99</strong></div><div class="summary-divider"></div><div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">$17.99</span></div><div class="summary-row summary-total"><span>Total</span><strong id="summary-total">$17.99</strong></div><div class="summary-note"><span>✓</span><p>Secure payment through Stripe. We do not store full card details.</p></div></aside>
             </div>
