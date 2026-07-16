@@ -67,15 +67,26 @@
 .code-gutter{padding-top:30px;padding-bottom:30px}
 @media(max-width:640px){.code-highlight,.code-content{padding-left:18px;padding-right:18px}}
 
-/* Keep the textarea as an input-only layer so source text can never paint twice. */
-.code-editor-stack > textarea.code-content {
+/* Editor layers switch between one visible input and one visible highlighted output. */
+.code-editor-stack.editor-overlay-mode > .code-content {
     opacity:0 !important;
     color:transparent !important;
     -webkit-text-fill-color:transparent !important;
     caret-color:transparent !important;
 }
-.code-editor-stack.is-typing::after,
-.code-editor-stack:focus-within::after {
+.code-editor-stack.editor-overlay-mode > .code-highlight {
+    visibility:visible;
+}
+.code-editor-stack.editor-input-mode > .code-content {
+    opacity:1 !important;
+    color:#e7e1f6 !important;
+    -webkit-text-fill-color:#e7e1f6 !important;
+    caret-color:var(--primary-light) !important;
+}
+.code-editor-stack.editor-input-mode > .code-highlight {
+    visibility:hidden;
+}
+.code-editor-stack.is-typing::after {
     content:"";
     position:absolute;
     top:30px;
@@ -86,4 +97,4 @@
     pointer-events:none;
     animation:caretBlink 1s steps(2,end) infinite;
 }
-@media(max-width:640px){.code-editor-stack.is-typing::after,.code-editor-stack:focus-within::after{left:18px}}
+@media(max-width:640px){.code-editor-stack.is-typing::after{left:18px}}

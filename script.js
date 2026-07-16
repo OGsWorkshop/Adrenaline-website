@@ -240,6 +240,13 @@ function initCodeTyping() {
     editor.dataset.initialized = 'true';
     const source = editorFrame.dataset.code || '';
     const stack = editor.closest('.code-editor-stack');
+    let typingTimer = 0;
+    let typingActive = true;
+
+    const setEditorMode = mode => {
+        stack?.classList.toggle('editor-input-mode', mode === 'input');
+        stack?.classList.toggle('editor-overlay-mode', mode === 'overlay');
+    };
 
     const refreshLineNumbers = () => {
         const lineCount = Math.max(1, editor.value.split('\n').length);
@@ -259,28 +266,42 @@ function initCodeTyping() {
         syncScroll();
     };
 
-    editor.addEventListener('input', refreshEditor);
-    editor.addEventListener('scroll', syncScroll);
-
     const finishTyping = () => {
+        typingActive = false;
+        window.clearTimeout(typingTimer);
         editor.value = source;
         editor.readOnly = false;
         stack?.classList.remove('is-typing');
+        setEditorMode(document.activeElement === editor ? 'input' : 'overlay');
         refreshEditor();
     };
+
+    const makeEditable = () => {
+        if (editor.readOnly) finishTyping();
+        setEditorMode('input');
+    };
+
+    editor.addEventListener('input', refreshEditor);
+    editor.addEventListener('focus', makeEditable);
+    editor.addEventListener('blur', () => {
+        if (!editor.readOnly) setEditorMode('overlay');
+    });
+    editor.addEventListener('scroll', syncScroll);
+
+    setEditorMode('input');
+    editor.readOnly = true;
+    editor.value = '';
+    stack?.classList.add('is-typing');
+    refreshEditor();
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         finishTyping();
         return;
     }
 
-    editor.readOnly = true;
-    editor.value = '';
-    stack?.classList.add('is-typing');
-    refreshEditor();
-
     let position = 0;
     const typeNext = () => {
+        if (!typingActive) return;
         if (position >= source.length) {
             finishTyping();
             return;
@@ -289,10 +310,10 @@ function initCodeTyping() {
         position += 1;
         editor.value = source.slice(0, position);
         refreshEditor();
-        window.setTimeout(typeNext, source[position - 1] === '\n' ? 220 : 52);
+        typingTimer = window.setTimeout(typeNext, source[position - 1] === '\n' ? 220 : 52);
     };
 
-    window.setTimeout(typeNext, 500);
+    typingTimer = window.setTimeout(typeNext, 500);
 }
 
 function highlightHeroCode(editor) {

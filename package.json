@@ -3,13 +3,9 @@
     "version": "1.0.0",
     "description": "Adrenaline Executor - Official Website",
     "scripts": {
-        "start": "node server.js",
-        "vercel-build": "echo 'Static build complete'"
+        "start": "node server.js"
     },
     "dependencies": {
         "stripe": "^14.0.0"
-    },
-    "devDependencies": {
-        "@vercel/node": "^3.0.0"
     }
 }
