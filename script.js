@@ -234,36 +234,16 @@ function initCodeTyping() {
     const editor = document.getElementById('hero-code');
     const editorFrame = document.getElementById('hero-code-editor');
     const gutter = document.getElementById('hero-line-numbers');
-    const highlight = document.getElementById('hero-code-highlight');
     if (!editor || !editorFrame || editor.dataset.initialized === 'true') return;
 
     editor.dataset.initialized = 'true';
-    const source = editorFrame.dataset.code || '';
-    const stack = editor.closest('.code-editor-stack');
+    const source = editorFrame.dataset.code || 'print("Adrenaline Executed")';
     let typingTimer = 0;
     let typingActive = true;
-
-    const setEditorMode = mode => {
-        stack?.classList.toggle('editor-input-mode', mode === 'input');
-        stack?.classList.toggle('editor-overlay-mode', mode === 'overlay');
-    };
 
     const refreshLineNumbers = () => {
         const lineCount = Math.max(1, editor.value.split('\n').length);
         if (gutter) gutter.innerHTML = Array.from({ length: lineCount }, (_, index) => `<span>${index + 1}</span>`).join('');
-    };
-
-    const syncScroll = () => {
-        if (highlight) {
-            highlight.scrollTop = editor.scrollTop;
-            highlight.scrollLeft = editor.scrollLeft;
-        }
-    };
-
-    const refreshEditor = () => {
-        refreshLineNumbers();
-        highlightHeroCode(editor);
-        syncScroll();
     };
 
     const finishTyping = () => {
@@ -271,28 +251,20 @@ function initCodeTyping() {
         window.clearTimeout(typingTimer);
         editor.value = source;
         editor.readOnly = false;
-        stack?.classList.remove('is-typing');
-        setEditorMode(document.activeElement === editor ? 'input' : 'overlay');
-        refreshEditor();
+        editor.classList.remove('is-typing');
+        refreshLineNumbers();
     };
 
-    const makeEditable = () => {
+    const stopTypingForEditing = () => {
         if (editor.readOnly) finishTyping();
-        setEditorMode('input');
     };
 
-    editor.addEventListener('input', refreshEditor);
-    editor.addEventListener('focus', makeEditable);
-    editor.addEventListener('blur', () => {
-        if (!editor.readOnly) setEditorMode('overlay');
-    });
-    editor.addEventListener('scroll', syncScroll);
-
-    setEditorMode('input');
+    editor.addEventListener('input', refreshLineNumbers);
+    editor.addEventListener('focus', stopTypingForEditing);
     editor.readOnly = true;
     editor.value = '';
-    stack?.classList.add('is-typing');
-    refreshEditor();
+    editor.classList.add('is-typing');
+    refreshLineNumbers();
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         finishTyping();
@@ -309,11 +281,11 @@ function initCodeTyping() {
 
         position += 1;
         editor.value = source.slice(0, position);
-        refreshEditor();
-        typingTimer = window.setTimeout(typeNext, source[position - 1] === '\n' ? 220 : 52);
+        refreshLineNumbers();
+        typingTimer = window.setTimeout(typeNext, 52);
     };
 
-    typingTimer = window.setTimeout(typeNext, 500);
+    typingTimer = window.setTimeout(typeNext, 450);
 }
 
 function highlightHeroCode(editor) {
