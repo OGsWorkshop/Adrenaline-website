@@ -300,13 +300,13 @@ function highlightHeroCode(editor) {
     if (!highlight) return;
     const source = editor.value || '';
     const escapeHtml = value => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const tokenPattern = /(--[^\n]*|"(?:\\.|[^"])*"|'(?:\\.|[^'])*'|\b(?:local|function|end|if|then|else|for|in|do|return|true|false|nil)\b|\b(?:print|warn|wait|task)\b|\b\d+(?:\.\d+)?\b)/g;
+    const tokenPattern = /(--\[\[[\s\S]*?\]\]|--[^\n]*|"(?:\\.|[^"])*"|'(?:\\.|[^'])*'|\b(?:local|function|end|if|then|elseif|else|for|in|do|while|repeat|until|return|break|and|or|not|true|false|nil)\b|\b(?:print|warn|tostring|tonumber|type|pairs|ipairs|task|math|string|table)\b|\b\d+(?:\.\d+)?\b)/g;
     let output = '';
     let cursor = 0;
 
     source.replace(tokenPattern, (token, offset) => {
         output += escapeHtml(source.slice(cursor, offset));
-        const type = token.startsWith('--') ? 'comment' : token[0] === '"' || token[0] === "'" ? 'string' : /^\d/.test(token) ? 'number' : /^(print|warn|wait|task)$/.test(token) ? 'function' : 'keyword';
+        const type = token.startsWith('--') ? 'comment' : token[0] === '"' || token[0] === "'" ? 'string' : /^\d/.test(token) ? 'number' : /^(print|warn|tostring|tonumber|type|pairs|ipairs|task|math|string|table)$/.test(token) ? 'function' : 'keyword';
         output += `<span class="syntax-${type}">${escapeHtml(token)}</span>`;
         cursor = offset + token.length;
         return token;
@@ -315,20 +315,312 @@ function highlightHeroCode(editor) {
     highlight.innerHTML = output + (source.endsWith('\n') ? ' ' : '');
 }
 
+function tokenizeLuau(source) {
+    const tokens = [];
+    let index = 0;
+    let line = 1;
+    const add = (type, value, tokenLine = line) => tokens.push({ type, value, line: tokenLine });
+
+    while (index < source.length) {
+        const character = source[index];
+        if (/\s/.test(character)) {
+            if (character === '\n') line += 1;
+            index += 1;
+            continue;
+        }
+        if (source.startsWith('--', index)) {
+            while (index < source.length && source[index] !== '\n') index += 1;
+            continue;
+        }
+        if (character === '"' || character === "'") {
+            const quote = character;
+            const tokenLine = line;
+            let value = '';
+            index += 1;
+            while (index < source.length && source[index] !== quote) {
+                if (source[index] === '\\' && index + 1 < source.length) {
+                    const escaped = source[index + 1];
+                    value += escaped === 'n' ? '\n' : escaped === 't' ? '\t' : escaped;
+                    index += 2;
+                } else {
+                    value += source[index++];
+                }
+            }
+            if (source[index] !== quote) throw new Error(`line ${tokenLine}: unterminated string`);
+            index += 1;
+            add('string', value, tokenLine);
+            continue;
+        }
+        const number = source.slice(index).match(/^\d+(?:\.\d+)?/);
+        if (number) {
+            add('number', Number(number[0]));
+            index += number[0].length;
+            continue;
+        }
+        const identifier = source.slice(index).match(/^[A-Za-z_][A-Za-z0-9_]*/);
+        if (identifier) {
+            add('identifier', identifier[0]);
+            index += identifier[0].length;
+            continue;
+        }
+        const operator = ['...', '==', '~=', '<=', '>=', '..'].find(value => source.startsWith(value, index));
+        if (operator) {
+            add('operator', operator);
+            index += operator.length;
+            continue;
+        }
+        if ('+-*/%^#=<>(),.;{}[]'.includes(character)) {
+            add('operator', character);
+            index += 1;
+            continue;
+        }
+        throw new Error(`line ${line}: unsupported character '${character}'`);
+    }
+    add('eof', 'eof', line);
+    return tokens;
+}
+
+function createLuauPreview(source) {
+    const tokens = tokenizeLuau(source);
+    let cursor = 0;
+    const peek = value => value === undefined ? tokens[cursor] : tokens[cursor].value === value;
+    const take = value => {
+        const token = tokens[cursor];
+        if (value !== undefined && token.value !== value) throw new Error(`line ${token.line}: expected '${value}'`);
+        cursor += 1;
+        return token;
+    };
+    const isStop = stops => stops.includes(peek().value);
+
+    const parsePrimary = () => {
+        const token = take();
+        if (token.type === 'number' || token.type === 'string') return { type: 'literal', value: token.value };
+        if (token.value === 'true' || token.value === 'false') return { type: 'literal', value: token.value === 'true' };
+        if (token.value === 'nil') return { type: 'literal', value: null };
+        if (token.value === '(') {
+            const expression = parseExpression();
+            take(')');
+            return expression;
+        }
+        if (token.value === '-' || token.value === 'not' || token.value === '#') return { type: 'unary', operator: token.value, value: parsePrimary() };
+        if (token.type !== 'identifier') throw new Error(`line ${token.line}: expected an expression`);
+        let expression = { type: 'variable', name: token.value };
+        while (peek('(') || peek('.')) {
+            if (peek('.')) {
+                take('.');
+                expression = { type: 'member', object: expression, name: take().value };
+            } else {
+                take('(');
+                const argumentsList = [];
+                while (!peek(')')) {
+                    argumentsList.push(parseExpression());
+                    if (!peek(',')) break;
+                    take(',');
+                }
+                take(')');
+                expression = { type: 'call', callee: expression, arguments: argumentsList };
+            }
+        }
+        return expression;
+    };
+
+    const precedence = { or: 1, and: 2, '==': 3, '~=': 3, '<': 3, '>': 3, '<=': 3, '>=': 3, '..': 4, '+': 5, '-': 5, '*': 6, '/': 6, '%': 6, '^': 7 };
+    const parseExpression = (minimum = 0) => {
+        let left = parsePrimary();
+        while (true) {
+            const operator = peek().value;
+            const priority = precedence[operator];
+            if (priority === undefined || priority < minimum) break;
+            take();
+            left = { type: 'binary', operator, left, right: parseExpression(priority + (operator === '^' || operator === '..' ? 0 : 1)) };
+        }
+        return left;
+    };
+
+    const parseBlock = stops => {
+        const statements = [];
+        while (!peek('eof') && !isStop(stops)) statements.push(parseStatement());
+        return statements;
+    };
+
+    function parseStatement() {
+        if (peek(';')) { take(';'); return { type: 'empty' }; }
+        if (peek('local')) {
+            take('local');
+            if (peek('function')) throw new Error(`line ${peek().line}: local functions are not supported in the preview`);
+            const name = take().value;
+            const value = peek('=') ? (take('='), parseExpression()) : { type: 'literal', value: null };
+            return { type: 'set', name, value, local: true };
+        }
+        if (peek('if')) {
+            take('if');
+            const branches = [{ condition: parseExpression(), body: null }];
+            take('then');
+            branches[0].body = parseBlock(['elseif', 'else', 'end']);
+            while (peek('elseif')) {
+                take('elseif');
+                const branch = { condition: parseExpression(), body: null };
+                take('then');
+                branch.body = parseBlock(['elseif', 'else', 'end']);
+                branches.push(branch);
+            }
+            const otherwise = peek('else') ? (take('else'), parseBlock(['end'])) : [];
+            take('end');
+            return { type: 'if', branches, otherwise };
+        }
+        if (peek('for')) {
+            take('for');
+            const name = take().value;
+            take('=');
+            const start = parseExpression();
+            take(',');
+            const finish = parseExpression();
+            const step = peek(',') ? (take(','), parseExpression()) : { type: 'literal', value: 1 };
+            take('do');
+            const body = parseBlock(['end']);
+            take('end');
+            return { type: 'for', name, start, finish, step, body };
+        }
+        if (peek('while')) {
+            take('while');
+            const condition = parseExpression();
+            take('do');
+            const body = parseBlock(['end']);
+            take('end');
+            return { type: 'while', condition, body };
+        }
+        if (peek('return')) { take('return'); return { type: 'return', value: isStop(['eof', 'end']) ? null : parseExpression() }; }
+        if (peek('break')) { take('break'); return { type: 'break' }; }
+
+        const name = peek().value;
+        if (peek().type === 'identifier' && tokens[cursor + 1]?.value === '=') {
+            take(); take('=');
+            return { type: 'set', name, value: parseExpression(), local: false };
+        }
+        return { type: 'expression', value: parseExpression() };
+    }
+
+    const program = parseBlock(['eof']);
+    const output = [];
+    const environment = Object.create(null);
+    const safeMath = { abs: Math.abs, ceil: Math.ceil, floor: Math.floor, max: Math.max, min: Math.min, round: Math.round };
+    const builtins = {
+        print: (...values) => output.push(values.map(value => formatLuau(value)).join('\t')),
+        warn: (...values) => output.push(`Warning: ${values.map(value => formatLuau(value)).join('\t')}`),
+        tostring: value => formatLuau(value),
+        tonumber: value => Number(value),
+        type: value => value === null ? 'nil' : Array.isArray(value) ? 'table' : typeof value,
+        math: safeMath,
+    };
+    const getValue = expression => {
+        if (expression.type === 'literal') return expression.value;
+        if (expression.type === 'variable') return Object.prototype.hasOwnProperty.call(environment, expression.name) ? environment[expression.name] : builtins[expression.name];
+        if (expression.type === 'member') {
+            const object = getValue(expression.object);
+            return object && object[expression.name];
+        }
+        if (expression.type === 'unary') {
+            const value = getValue(expression.value);
+            if (expression.operator === '-') return -Number(value || 0);
+            if (expression.operator === '#') return value?.length || 0;
+            return !value;
+        }
+        if (expression.type === 'binary') {
+            const left = getValue(expression.left);
+            const right = getValue(expression.right);
+            switch (expression.operator) {
+                case 'or': return left || right;
+                case 'and': return left && right;
+                case '..': return formatLuau(left) + formatLuau(right);
+                case '+': return Number(left) + Number(right);
+                case '-': return Number(left) - Number(right);
+                case '*': return Number(left) * Number(right);
+                case '/': return Number(left) / Number(right);
+                case '%': return Number(left) % Number(right);
+                case '^': return Number(left) ** Number(right);
+                case '==': return left === right;
+                case '~=': return left !== right;
+                case '<': return left < right;
+                case '>': return left > right;
+                case '<=': return left <= right;
+                case '>=': return left >= right;
+                default: return null;
+            }
+        }
+        if (expression.type === 'call') {
+            const fn = getValue(expression.callee);
+            if (typeof fn !== 'function') throw new Error('attempt to call a non-function value');
+            return fn(...expression.arguments.map(getValue));
+        }
+        return null;
+    };
+    const execute = statements => {
+        for (const statement of statements) {
+            if (statement.type === 'empty') continue;
+            if (statement.type === 'set') { environment[statement.name] = getValue(statement.value); continue; }
+            if (statement.type === 'expression') { getValue(statement.value); continue; }
+            if (statement.type === 'return') return { returned: true };
+            if (statement.type === 'break') return { break: true };
+            if (statement.type === 'if') {
+                const branch = statement.branches.find(item => getValue(item.condition));
+                const result = execute(branch ? branch.body : statement.otherwise);
+                if (result) return result;
+                continue;
+            }
+            if (statement.type === 'for') {
+                const start = Number(getValue(statement.start));
+                const finish = Number(getValue(statement.finish));
+                const step = Number(getValue(statement.step)) || 1;
+                let iterations = 0;
+                for (let value = start; step > 0 ? value <= finish : value >= finish; value += step) {
+                    if (++iterations > 1000) throw new Error('loop limit exceeded');
+                    environment[statement.name] = value;
+                    const result = execute(statement.body);
+                    if (result?.returned) return result;
+                    if (result?.break) break;
+                }
+                continue;
+            }
+            if (statement.type === 'while') {
+                let iterations = 0;
+                while (getValue(statement.condition)) {
+                    if (++iterations > 1000) throw new Error('loop limit exceeded');
+                    const result = execute(statement.body);
+                    if (result?.returned) return result;
+                    if (result?.break) break;
+                }
+            }
+        }
+        return null;
+    };
+    execute(program);
+    return output;
+}
+
+function formatLuau(value) {
+    if (value === null || value === undefined) return 'nil';
+    if (value === true) return 'true';
+    if (value === false) return 'false';
+    return String(value);
+}
+
 function initHeroExecutor() {
     const code = document.getElementById('hero-code');
     const output = document.getElementById('hero-output-text');
     const button = document.getElementById('hero-execute');
-    if (!code || !output || !button) return;
+    if (!code || !output || !button || button.dataset.initialized === 'true') return;
+    button.dataset.initialized = 'true';
 
     button.addEventListener('click', () => {
-        const source = code.value.trim();
-        const prints = [...source.matchAll(/\bprint\s*\(\s*(['"])([\s\S]*?)\1\s*\)/g)]
-            .map(match => match[2].replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\'/g, "'"));
-
-        output.textContent = prints.length
-            ? prints.map((value, index) => `[${index + 1}] ${value}`).join('\n')
-            : 'No print() output found in this preview.';
-        output.parentElement?.classList.add('hero-output-ready');
+        try {
+            const results = createLuauPreview(code.value);
+            output.textContent = results.length
+                ? results.map((value, index) => `[${index + 1}] ${value}`).join('\n')
+                : 'Script ran successfully with no output.';
+            output.parentElement?.classList.add('hero-output-ready');
+        } catch (error) {
+            output.textContent = `Luau error: ${error.message}`;
+            output.parentElement?.classList.remove('hero-output-ready');
+        }
     });
 }

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="/AdrenalineLogoNoBg.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260716-2">
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -49,7 +49,9 @@
             </div>
             <div class="hero-panel reveal reveal-delay-one" aria-label="Adrenaline preview">
                 <div class="window-bar"><small>adrenaline.lua</small></div>
-                <div class="code-preview" id="hero-code-editor" data-code='print("Adrenaline Executed")' aria-label="LuaU script preview"><div class="code-gutter" id="hero-line-numbers" aria-hidden="true"><span>1</span></div><div class="code-editor-stack"><pre class="code-highlight" id="hero-code-highlight" aria-hidden="true"></pre><textarea class="code-content" id="hero-code" spellcheck="false" aria-label="LuaU script preview"></textarea></div></div>
+                <div class="code-preview" id="hero-code-editor" data-code='-- Luau preview
+local message = "Adrenaline Executed"
+print(message)' aria-label="LuaU script preview"><div class="code-gutter" id="hero-line-numbers" aria-hidden="true"><span>1</span></div><div class="code-editor-stack"><pre class="code-highlight" id="hero-code-highlight" aria-hidden="true"></pre><textarea class="code-content" id="hero-code" spellcheck="false" aria-label="LuaU script preview" style="opacity:0;color:transparent;-webkit-text-fill-color:transparent;caret-color:transparent;"></textarea></div></div>
                 <div class="hero-output" aria-live="polite"><div class="hero-output-label"><span class="output-dot"></span>Output</div><div class="hero-output-scroll"><code id="hero-output-text">Click Execute to run this preview.</code></div></div>
                 <div class="panel-toolbar"><span class="hero-language">Luau</span><button class="hero-execute" id="hero-execute" type="button">Execute <span class="btn-arrow">↑</span></button><span class="hero-version">v2.4.7</span></div>
             </div>
@@ -88,6 +90,6 @@
         <div class="footer-bottom"><p>© 2026 Adrenaline. Made for a better scripting workflow.</p></div>
     </footer>
     <div id="toast" class="toast hidden" role="status"></div>
-    <script src="script.js"></script>
+    <script src="script.js?v=20260716-2"></script>
 </body>
 </html>
