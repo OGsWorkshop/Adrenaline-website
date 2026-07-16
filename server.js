@@ -62,7 +62,7 @@ function handlePaymentIntent(request, response) {
 }
 
 function serveStatic(request, response, pathname) {
-    const requestedFile = pages[pathname] || pathname.slice(1);
+    const requestedFile = pages[pathname] || (pathname.startsWith('/docs/') ? 'docs.html' : pathname.slice(1));
     const filePath = path.resolve(root, requestedFile);
 
     if (!filePath.startsWith(root + path.sep) && filePath !== path.join(root, 'index.html')) {

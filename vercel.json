@@ -3,6 +3,7 @@
     "rewrites": [
         { "source": "/pricing", "destination": "/pricing.html" },
         { "source": "/checkout", "destination": "/checkout.html" },
+        { "source": "/docs/(.*)", "destination": "/docs.html" },
         { "source": "/docs", "destination": "/docs.html" },
         { "source": "/about", "destination": "/about.html" },
         { "source": "/terms", "destination": "/terms.html" },

@@ -571,6 +571,183 @@
         }
     }
 
+    // ── Function Reference ──
+    const API_DESCRIPTIONS = {
+        checkcaller: 'Returns whether the current call came from the calling script.',
+        clonefunction: 'Creates an independent callable copy of a function.',
+        getscriptclosure: 'Returns the closure associated with a script object.',
+        hookfunction: 'Replaces a function while returning the original implementation.',
+        iscclosure: 'Checks whether a value is a native C closure.',
+        islclosure: 'Checks whether a value is a Lua closure.',
+        isexecutorclosure: 'Checks whether a closure was created by the executor.',
+        newcclosure: 'Wraps a Lua callback as a protected C-style closure.',
+        getfunctionhash: 'Returns a stable hash for comparing function implementations.',
+        restorefunction: 'Restores a function that was previously hooked.',
+        'debug.getconstant': 'Reads one constant from a function prototype.',
+        'debug.getconstants': 'Returns the constants available to a function prototype.',
+        'debug.getinfo': 'Returns metadata about a function or stack frame.',
+        'debug.getproto': 'Returns one nested prototype from a function.',
+        'debug.getprotos': 'Returns the nested prototypes owned by a function.',
+        'debug.getstack': 'Reads a value from a running stack frame.',
+        'debug.getupvalue': 'Reads one captured upvalue from a function.',
+        'debug.getupvalues': 'Returns the captured upvalues for a function.',
+        'debug.setconstant': 'Updates one constant in a function prototype.',
+        'debug.setstack': 'Updates a value in a running stack frame.',
+        'debug.setupvalue': 'Updates one captured upvalue on a function.',
+        readfile: 'Reads text from a file in the client workspace.',
+        writefile: 'Writes text to a file, replacing existing contents.',
+        appendfile: 'Adds text to the end of a workspace file.',
+        loadfile: 'Loads a workspace file and returns it as a callable chunk.',
+        isfile: 'Checks whether a workspace path points to a file.',
+        delfile: 'Deletes a file from the client workspace.',
+        makefolder: 'Creates a folder in the client workspace.',
+        isfolder: 'Checks whether a workspace path points to a folder.',
+        delfolder: 'Deletes a workspace folder and its contents when permitted.',
+        listfiles: 'Returns the files and folders inside a workspace path.',
+        getscriptbytecode: 'Returns the bytecode associated with a script object.',
+        getscripthash: 'Returns a hash that can be used to compare script bytecode.',
+        getscripts: 'Returns script objects currently known to the environment.',
+        getrunningscripts: 'Returns scripts that are active in the current session.',
+        getscriptfromthread: 'Finds the script associated with a running thread.',
+        getcallingscript: 'Returns the script that called the current function.',
+        getsenv: 'Returns the environment table belonging to a script.',
+        getloadedmodules: 'Returns module scripts that have been loaded.',
+        loadstring: 'Compiles source text into a callable Lua function.',
+        getinstances: 'Returns instances currently tracked by the client.',
+        getnilinstances: 'Returns instances that are not parented in the visible tree.',
+        gethui: 'Returns the hidden interface container used for client UI.',
+        getconnections: 'Returns connections attached to an event signal.',
+        getcallbackvalue: 'Reads the callback stored by a connection.',
+        fireclickdetector: 'Triggers a click detector from a test script.',
+        fireproximityprompt: 'Triggers a proximity prompt programmatically.',
+        firetouchinterest: 'Simulates a touch interaction between two instances.',
+        firesignal: 'Invokes listeners attached to a signal.',
+        replicatesignal: 'Sends a supported signal through the replication layer.',
+        getrawmetatable: 'Returns a metatable without respecting its read-only flag.',
+        setrawmetatable: 'Assigns a metatable without the normal protection wrapper.',
+        getnamecallmethod: 'Returns the method name used by the active namecall.',
+        hookmetamethod: 'Hooks one metamethod and returns its original function.',
+        isreadonly: 'Checks whether a table is marked read-only.',
+        setreadonly: 'Changes the read-only state of a table.',
+        'Drawing.new': 'Creates a new client-side drawing object of the requested type.',
+        'Drawing.Fonts': 'Lists the font values available to drawing objects.',
+        isrenderobj: 'Checks whether a value is a drawing render object.',
+        getrenderproperty: 'Reads a property from a drawing render object.',
+        setrenderproperty: 'Updates a property on a drawing render object.',
+        cleardrawcache: 'Removes drawing objects created by the current script.',
+        getcustomasset: 'Returns a usable asset reference for a local file.',
+        getrenv: 'Returns the environment table for the running experience.',
+        getgenv: 'Returns the shared executor environment table.',
+        getgc: 'Returns garbage-collected objects visible to the script.',
+        filtergc: 'Returns garbage-collected objects matching supplied filters.',
+        getthreadidentity: 'Returns the identity level of the current thread.',
+        setthreadidentity: 'Changes the identity level of the current thread.',
+        identifyexecutor: 'Returns the executor name and version when available.',
+        gethiddenproperty: 'Reads a property that is hidden from normal reflection.',
+        sethiddenproperty: 'Updates a property that is hidden from normal reflection.',
+        isscriptable: 'Checks whether an instance property is scriptable.',
+        setscriptable: 'Changes whether an instance property is scriptable.',
+        'cache.iscached': 'Checks whether an instance reference is in the client cache.',
+        'cache.invalidate': 'Removes an instance reference from the client cache.',
+        'cache.replace': 'Replaces one cached instance reference with another.',
+        cloneref: 'Creates a separate reference to an instance.',
+        compareinstances: 'Checks whether two instance references point to the same object.',
+        getactors: 'Returns actor containers available to the current experience.',
+        getactor: 'Finds a specific actor container by name or reference.',
+        run_on_actor: 'Runs a function in the context of a selected actor.',
+        rconsoleprint: 'Writes normal text to the client console.',
+        rconsolewarn: 'Writes a warning message to the client console.',
+        rconsoleerr: 'Writes an error message to the client console.',
+        rconsoleclear: 'Clears the current client console output.',
+        rconsolename: 'Changes the title shown on the client console.',
+        rconsoleinput: 'Reads a line of input from the client console.',
+        'crypt.hash': 'Creates a digest from supplied text or bytes.',
+        'crypt.encrypt': 'Encrypts data with a supplied key.',
+        'crypt.decrypt': 'Decrypts data with a compatible key.',
+        'crypt.generatekey': 'Generates a random key for cryptographic helpers.',
+        'crypt.base64encode': 'Encodes data as Base64 through the crypt namespace.',
+        'crypt.base64decode': 'Decodes Base64 data through the crypt namespace.',
+        base64_encode: 'Encodes text or bytes as Base64.',
+        base64_decode: 'Decodes a Base64 string into its original data.',
+        json_encode: 'Serializes a Lua value as JSON text.',
+        json_decode: 'Parses JSON text into a Lua value.',
+        url_encode: 'Escapes text so it can safely be used in a URL.',
+        url_decode: 'Decodes URL-escaped text.',
+        keypress: 'Sends a key-down event for a keyboard key.',
+        keyrelease: 'Sends a key-up event for a keyboard key.',
+        mouse1press: 'Sends a primary mouse-button press.',
+        mouse1release: 'Sends a primary mouse-button release.',
+        mousemoverel: 'Moves the mouse by a relative screen offset.',
+        mousemoveabs: 'Moves the mouse to an absolute screen position.',
+        mouse2press: 'Sends a secondary mouse-button press.',
+        mouse2release: 'Sends a secondary mouse-button release.',
+        getstate: 'Returns a proxy for the active Lua state.',
+        pushvalue: 'Pushes a value onto a Lua state stack.',
+        popvalue: 'Removes and returns the top value from a Lua state stack.',
+        gettop: 'Returns the number of values on a Lua state stack.',
+        settop: 'Moves the top of a Lua state stack to a selected index.',
+        setclipboard: 'Copies text into the operating system clipboard.',
+        getclipboard: 'Returns text currently stored in the operating system clipboard.',
+        gethwid: 'Returns the client hardware identifier used for licensing.',
+        setfpscap: 'Sets the maximum client frame rate.',
+        getfpscap: 'Returns the current client frame-rate cap.',
+        isnetworkowner: 'Checks whether the client owns an instance network region.',
+        isrbxactive: 'Checks whether the experience window currently has focus.',
+        queue_on_teleport: 'Queues source text to run after the next teleport.',
+        setsimulationradius: 'Sets the supported simulation radius values for testing.',
+        getnetworkownershipauto: 'Reads automatic network-ownership behavior.',
+        setnetworkownershipauto: 'Changes automatic network-ownership behavior.',
+        request: 'Sends an HTTP request and returns the response details.',
+        'WebSocket.connect': 'Opens a WebSocket connection to a supported endpoint.',
+        'WebSocket.OnMessage': 'Registers a callback for incoming WebSocket messages.',
+        'WebSocket.OnClose': 'Registers a callback for a closed WebSocket connection.',
+        'WebSocket.Send': 'Sends text or data through an open WebSocket.',
+        'WebSocket.Close': 'Closes an open WebSocket connection.',
+        lz4compress: 'Compresses data using the LZ4 format.',
+        lz4decompress: 'Decompresses data that was encoded with LZ4.'
+    };
+
+    function apiSlug(name) {
+        return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+
+    function decorateApiEntries() {
+        document.querySelectorAll('.api-section').forEach(section => {
+            section.querySelectorAll('.api-list li').forEach(item => {
+                const code = item.querySelector('code');
+                if (!code) return;
+                const name = code.textContent.trim();
+                const slug = apiSlug(name);
+                const functionId = `api-${section.id}-${slug}`;
+                const description = API_DESCRIPTIONS[name] || 'Provides the ' + name + ' helper for scripts in this reference category.';
+                item.id = functionId;
+                item.classList.add('api-entry');
+                code.replaceWith(Object.assign(document.createElement('a'), {
+                    className: 'api-function-link',
+                    href: `/docs/${section.id}/${slug}`,
+                    textContent: name
+                }));
+                const detail = document.createElement('p');
+                detail.className = 'api-function-description';
+                detail.textContent = description;
+                item.appendChild(detail);
+            });
+        });
+    }
+
+    function openApiEntryFromPath() {
+        const parts = window.location.pathname.split('/').filter(Boolean);
+        if (parts[0] !== 'docs' || parts.length < 3) return;
+        const sectionId = parts[1];
+        const functionId = `api-${sectionId}-${apiSlug(parts.slice(2).join('-'))}`;
+        const target = document.getElementById(functionId);
+        if (!target) return;
+        const section = document.getElementById(sectionId);
+        if (section) setActiveSection(sectionId);
+        target.classList.add('api-entry-focused');
+        window.setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'center' }), 80);
+    }
+
     // ── Global Event Bindings ──
     document.addEventListener('DOMContentLoaded', () => {
         // Theme
@@ -586,6 +763,9 @@
             title.addEventListener('click', () => toggleCategory(title));
         });
 
+        // Add function-level descriptions and deep links before indexing search content.
+        decorateApiEntries();
+
         // Search events
         buildSearchData();
         const searchInput = document.getElementById('docs-search-input');
@@ -599,6 +779,7 @@
 
         // Intersection scrollspy initialization
         initDocsTracking();
+        openApiEntryFromPath();
 
         // Smooth scroll for all side links / anchor tags
         document.querySelectorAll('a[href^="#"]').forEach(link => {
