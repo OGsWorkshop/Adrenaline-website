@@ -722,9 +722,8 @@
                 const description = API_DESCRIPTIONS[name] || 'Provides the ' + name + ' helper for scripts in this reference category.';
                 item.id = functionId;
                 item.classList.add('api-entry');
-                code.replaceWith(Object.assign(document.createElement('a'), {
+                code.replaceWith(Object.assign(document.createElement('span'), {
                     className: 'api-function-link',
-                    href: `/docs/${section.id}/${slug}`,
                     textContent: name
                 }));
                 const detail = document.createElement('p');

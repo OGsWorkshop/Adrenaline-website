@@ -195,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAmbientBackground();
     initRevealAnimations();
     initCodeTyping();
+    initHeroExecutor();
     if (document.body.classList.contains('checkout-body')) initCheckoutPage();
 });
 
@@ -218,4 +219,22 @@ function initCodeTyping() {
         window.setTimeout(typeNext, source[position - 1] === '\n' ? 220 : 52);
     };
     window.setTimeout(typeNext, 500);
+}
+
+function initHeroExecutor() {
+    const code = document.getElementById('hero-code');
+    const output = document.getElementById('hero-output-text');
+    const button = document.getElementById('hero-execute');
+    if (!code || !output || !button) return;
+
+    button.addEventListener('click', () => {
+        const source = (code.textContent || '').trim();
+        const prints = [...source.matchAll(/\bprint\s*\(\s*(['"])([\s\S]*?)\1\s*\)/g)]
+            .map(match => match[2].replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\'/g, "'"));
+
+        output.textContent = prints.length
+            ? prints.map((value, index) => `[${index + 1}] ${value}`).join('\n')
+            : 'No print() output found in this preview.';
+        output.parentElement?.classList.add('hero-output-ready');
+    });
 }
