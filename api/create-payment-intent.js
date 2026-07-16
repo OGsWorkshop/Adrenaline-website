@@ -1,8 +1,8 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const PLAN_AMOUNTS = {
-    premium: 699,
-    enterprise: 1799,
+    premium: 1799,
+    enterprise: 3999,
 };
 
 module.exports = async (req, res) => {

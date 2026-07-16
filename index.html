@@ -21,11 +21,11 @@
             </a>
             <div class="nav-right">
                 <div class="nav-links">
+                    <a href="/" class="active">Home</a>
                     <a href="#features">What you get</a>
                     <a href="/pricing">Pricing</a>
                     <a href="/docs">Docs</a>
                 </div>
-                <a href="/pricing" class="btn btn-primary btn-sm">View plans</a>
             </div>
             <button class="mobile-menu-btn" type="button" aria-label="Open menu" onclick="toggleMobileMenu()">
                 <span></span><span></span><span></span>
@@ -49,14 +49,14 @@
             </div>
             <div class="hero-panel reveal reveal-delay-one" aria-label="Adrenaline preview">
                 <div class="window-bar"><span></span><span></span><span></span><small>adrenaline.lua</small></div>
-                <div class="code-preview"><span class="code-muted">-- your workspace</span><br><span class="code-purple">local</span> <span class="code-blue">session</span> = <span class="code-green">Adrenaline</span>.<span class="code-yellow">connect</span>()<br><br><span class="code-purple">if</span> session.<span class="code-yellow">ready</span> <span class="code-purple">then</span><br>&nbsp;&nbsp;session:<span class="code-yellow">run</span>(script)<br><span class="code-purple">end</span></div>
+                <div class="code-preview" id="hero-code" data-code="-- a small first test\nprint(\"Adrenaline is ready\")"></div>
                 <div class="panel-status"><span class="status-pulse"></span>Workspace ready <span>v2.4.7</span></div>
             </div>
         </section>
 
         <section id="features" class="features page-section section-shell">
             <div class="section-header reveal">
-                <span class="section-label">The basics, done well</span>
+                <span class="section-label">A cleaner way to work</span>
                 <h2 class="section-title">No inflated feature list.<br><span class="gradient-text">Just the useful stuff.</span></h2>
                 <p class="section-desc">A straightforward client for scripting, testing, and keeping your workspace organized.</p>
             </div>
@@ -73,9 +73,9 @@
         <section class="pricing page-section" id="pricing">
             <div class="section-header reveal"><span class="section-label">Plans</span><h2 class="section-title">Pick the time frame<br><span class="gradient-text">that fits.</span></h2><p class="section-desc">Start free, or grab a key when you are ready. The duration is always clear before you pay.</p></div>
             <div class="pricing-grid">
-                <article class="pricing-card reveal"><div class="plan-kicker">Start here</div><h3>Free</h3><div class="price">$0</div><p class="price-desc">No key required</p><ul class="pricing-features"><li>Basic client access</li><li>Community documentation</li><li>Community support</li></ul><button class="btn btn-outline btn-full" type="button" onclick="linkvertiseRedirect()">Download free</button></article>
-                <article class="pricing-card featured reveal reveal-delay-one"><div class="popular-badge">Most picked</div><div class="plan-kicker">Short-term access</div><h3>Premium</h3><div class="price">$6.99</div><p class="price-desc">One-week key</p><ul class="pricing-features"><li>Adrenaline client access</li><li>One-week license key</li><li>Access to current updates</li></ul><a href="/checkout?plan=premium" class="btn btn-primary btn-full">Get Premium <span class="btn-arrow">→</span></a></article>
-                <article class="pricing-card reveal reveal-delay-two"><div class="plan-kicker">More breathing room</div><h3>Enterprise</h3><div class="price">$17.99</div><p class="price-desc">One-month key</p><ul class="pricing-features"><li>Adrenaline client access</li><li>One-month license key</li><li>Access to current updates</li></ul><a href="/checkout?plan=enterprise" class="btn btn-primary btn-full">Get Enterprise <span class="btn-arrow">→</span></a></article>
+                <article class="pricing-card reveal"><div class="plan-kicker">Start here</div><h3>Free</h3><div class="price">$0</div><p class="price-desc">No long-term commitment</p><ul class="pricing-features"><li>Full script execution</li><li>Customizable desktop interface</li><li>Manual license reset requests</li><li>Automatic updates</li></ul><button class="btn btn-outline btn-full" type="button" onclick="linkvertiseRedirect()">Download free</button></article>
+                <article class="pricing-card featured reveal reveal-delay-one"><div class="popular-badge">Most picked</div><div class="plan-kicker">Monthly access</div><h3>Premium</h3><div class="price">$17.99</div><p class="price-desc">Per month</p><ul class="pricing-features"><li>Everything in Free</li><li>Up to 25 concurrent instances</li><li>Priority crash-report handling</li><li>Two license reset requests each month</li><li>Priority email support</li></ul><a href="/checkout?plan=premium" class="btn btn-plan-primary btn-full">Buy Premium <span class="btn-arrow">→</span></a></article>
+                <article class="pricing-card reveal reveal-delay-two"><div class="plan-kicker">Quarterly access</div><h3>Enterprise</h3><div class="price">$39.99</div><p class="price-desc">Per quarter</p><ul class="pricing-features"><li>Everything in Premium</li><li>VIP support and treatment</li><li>Beta feature access</li><li>Custom integrations</li></ul><a href="/checkout?plan=enterprise" class="btn btn-plan-primary btn-full">Buy Enterprise <span class="btn-arrow">→</span></a></article>
             </div>
         </section>
 
@@ -83,7 +83,7 @@
     </main>
 
     <footer>
-        <div class="footer-inner"><div class="footer-brand"><a href="/" class="footer-logo"><img src="AdrenalineLogoNoBg.png" alt="" class="footer-logo-image">ADRENALINE</a><p class="footer-desc">A focused scripting workspace without the sales pitch.</p></div><div class="footer-links"><div class="footer-col"><h4>Explore</h4><a href="/">Home</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a></div><div class="footer-col"><h4>Community</h4><a href="https://discord.gg/8ZhSp6PqmK" target="_blank" rel="noopener noreferrer">Discord</a></div></div></div>
+        <div class="footer-inner"><div class="footer-brand"><a href="/" class="footer-logo"><img src="AdrenalineLogoNoBg.png" alt="" class="footer-logo-image">ADRENALINE</a><p class="footer-desc">A focused scripting workspace without the sales pitch.</p></div><div class="footer-links"><div class="footer-col"><h4>Explore</h4><a href="/">Home</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a></div><div class="footer-col"><h4>Company</h4><a href="/about">About</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a></div><div class="footer-col"><h4>Community</h4><a href="https://discord.gg/8ZhSp6PqmK" target="_blank" rel="noopener noreferrer">Discord</a></div></div></div>
         <div class="footer-bottom"><p>© 2026 Adrenaline. Made for a better scripting workflow.</p></div>
     </footer>
     <div id="toast" class="toast hidden" role="status"></div>

@@ -3,8 +3,8 @@ const STRIPE_PUBLISHABLE_KEY = window.STRIPE_PUBLISHABLE_KEY || window.STRIPE_KE
 const API_ENDPOINT = '/api/create-payment-intent';
 
 const PLANS = {
-    premium: { name: 'Premium key', duration: 'Valid for one week', amount: 699, display: '$6.99' },
-    enterprise: { name: 'Enterprise key', duration: 'Valid for one month', amount: 1799, display: '$17.99' },
+    premium: { name: 'Premium access', duration: 'Valid for one month', amount: 1799, display: '$17.99' },
+    enterprise: { name: 'Enterprise access', duration: 'Valid for three months', amount: 3999, display: '$39.99' },
 };
 
 let stripe;
@@ -105,7 +105,7 @@ function toggleMobileMenu() {
     if (existing) { existing.remove(); return; }
     const menu = document.createElement('div');
     menu.className = 'mobile-menu active';
-    menu.innerHTML = '<a href="/">Home</a><a href="/#features">What you get</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/pricing" class="btn btn-primary btn-full">View plans</a>';
+    menu.innerHTML = '<a href="/">Home</a><a href="/#features">What you get</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a>';
     document.body.appendChild(menu);
 }
 
@@ -194,5 +194,28 @@ function initCheckoutPage() {
 document.addEventListener('DOMContentLoaded', () => {
     initAmbientBackground();
     initRevealAnimations();
+    initCodeTyping();
     if (document.body.classList.contains('checkout-body')) initCheckoutPage();
 });
+
+function initCodeTyping() {
+    const code = document.getElementById('hero-code');
+    if (!code) return;
+    const source = code.dataset.code || '';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        code.textContent = source;
+        return;
+    }
+    code.textContent = '';
+    let position = 0;
+    const caret = document.createElement('span');
+    caret.className = 'hero-code-caret';
+    code.appendChild(caret);
+    const typeNext = () => {
+        if (position >= source.length) return;
+        caret.before(document.createTextNode(source[position]));
+        position += 1;
+        window.setTimeout(typeNext, source[position - 1] === '\n' ? 260 : 42);
+    };
+    window.setTimeout(typeNext, 500);
+}

@@ -10,6 +10,9 @@ const pages = {
     '/pricing': 'pricing.html',
     '/checkout': 'checkout.html',
     '/docs': 'docs.html',
+    '/about': 'about.html',
+    '/terms': 'terms.html',
+    '/privacy': 'privacy.html',
 };
 const contentTypes = {
     '.css': 'text/css; charset=utf-8',

@@ -13,15 +13,15 @@
 </head>
 <body class="checkout-body">
     <canvas class="ambient-canvas" aria-hidden="true"></canvas>
-    <nav class="checkout-nav"><div class="checkout-nav-inner"><a href="/" class="checkout-logo"><img src="AdrenalineLogoNoBg.png" alt="" class="logo-image"><span>ADRENALINE</span></a><div class="checkout-nav-links"><a href="/pricing">Back to pricing</a><a href="/docs">Docs</a></div></div></nav>
+    <nav class="checkout-nav"><div class="checkout-nav-inner"><a href="/" class="checkout-logo"><img src="AdrenalineLogoNoBg.png" alt="" class="logo-image"><span>ADRENALINE</span></a><div class="checkout-nav-links"><a href="/">Home</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a></div></div></nav>
     <main class="checkout-main-page">
         <div class="checkout-layout-card reveal" id="checkout-card">
             <div class="checkout-intro"><span class="section-label">Secure checkout</span><h1>Finish your order.</h1><p>Enter your details below. Card information is handled by Stripe and never touches our servers.</p></div>
             <div class="checkout-columns">
                 <section class="checkout-form-panel">
                     <div class="checkout-plan-selector" id="plan-selector" aria-label="Choose a key">
-                        <button class="checkout-plan-option" type="button" data-plan="premium"><span class="cpo-radio"></span><span class="cpo-info"><strong>Premium</strong><small>One-week key</small></span><b>$6.99</b></button>
-                        <button class="checkout-plan-option" type="button" data-plan="enterprise"><span class="cpo-radio"></span><span class="cpo-info"><strong>Enterprise</strong><small>One-month key</small></span><b>$17.99</b></button>
+                        <button class="checkout-plan-option" type="button" data-plan="premium"><span class="cpo-radio"></span><span class="cpo-info"><strong>Premium</strong><small>One-month access</small></span><b>$17.99</b></button>
+                        <button class="checkout-plan-option" type="button" data-plan="enterprise"><span class="cpo-radio"></span><span class="cpo-info"><strong>Enterprise</strong><small>Three-month access</small></span><b>$39.99</b></button>
                     </div>
                     <form id="checkout-form" novalidate>
                         <div class="form-section-heading"><span>01</span><h2>Payment details</h2></div>
@@ -33,7 +33,7 @@
                         <p class="checkout-legal">By continuing, you agree to receive your license key at the email above.</p>
                     </form>
                 </section>
-                <aside class="checkout-summary-card"><div class="summary-top"><span class="summary-eyebrow">Your order</span><span class="summary-dot"></span></div><div class="summary-plan"><div><h2 id="summary-plan-name">Premium key</h2><p id="summary-billing">Valid for one week</p></div><strong id="summary-amount">$6.99</strong></div><div class="summary-divider"></div><div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">$6.99</span></div><div class="summary-row summary-total"><span>Total</span><strong id="summary-total">$6.99</strong></div><div class="summary-note"><span>✓</span><p>Secure payment through Stripe. We do not store card details.</p></div></aside>
+                <aside class="checkout-summary-card"><div class="summary-top"><span class="summary-eyebrow">Your order</span><span class="summary-dot"></span></div><div class="summary-plan"><div><h2 id="summary-plan-name">Premium access</h2><p id="summary-billing">Valid for one month</p></div><strong id="summary-amount">$17.99</strong></div><div class="summary-divider"></div><div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">$17.99</span></div><div class="summary-row summary-total"><span>Total</span><strong id="summary-total">$17.99</strong></div><div class="summary-note"><span>✓</span><p>Secure payment through Stripe. We do not store full card details.</p></div></aside>
             </div>
             <div class="checkout-success hidden" id="checkout-success"><div class="success-icon">✓</div><h2>Payment received.</h2><p>Your key is on its way. Check the inbox for the email you used at checkout.</p><a href="/" class="btn btn-primary">Back to Adrenaline <span class="btn-arrow">→</span></a></div>
         </div>
