@@ -502,6 +502,7 @@ function createLuauPreview(source) {
     }
 
     const program = parseBlock(['eof']);
+    if (!program.length) throw new Error('No executable Luau statements found.');
     const output = [];
     const environment = Object.create(null);
     const safeMath = { abs: Math.abs, ceil: Math.ceil, floor: Math.floor, max: Math.max, min: Math.min, round: Math.round };
@@ -515,7 +516,11 @@ function createLuauPreview(source) {
     };
     const getValue = expression => {
         if (expression.type === 'literal') return expression.value;
-        if (expression.type === 'variable') return Object.prototype.hasOwnProperty.call(environment, expression.name) ? environment[expression.name] : builtins[expression.name];
+        if (expression.type === 'variable') {
+            if (Object.prototype.hasOwnProperty.call(environment, expression.name)) return environment[expression.name];
+            if (Object.prototype.hasOwnProperty.call(builtins, expression.name)) return builtins[expression.name];
+            throw new Error(`unknown identifier '${expression.name}'`);
+        }
         if (expression.type === 'member') {
             const object = getValue(expression.object);
             return object && object[expression.name];
