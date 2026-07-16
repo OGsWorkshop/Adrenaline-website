@@ -18,8 +18,7 @@
 .legal-main{max-width:900px;margin:0 auto;padding:165px 28px 90px}.legal-hero{max-width:650px;margin-bottom:48px}.legal-hero h1{font:600 clamp(3rem,6vw,5rem)/1.02 'Space Grotesk';letter-spacing:-.065em;margin:16px 0 22px}.legal-hero p{max-width:570px;color:var(--muted);font-size:1.05rem;line-height:1.75}.legal-card{padding:42px;border:1px solid var(--border);border-radius:20px;background:rgba(16,16,22,.82);box-shadow:var(--shadow)}.legal-card h2{font:600 1.25rem 'Space Grotesk';margin:30px 0 10px}.legal-card h2:first-child{margin-top:0}.legal-card p{color:var(--muted);font-size:.93rem;line-height:1.8;margin-bottom:15px}.legal-updated{color:var(--dim)!important;font-size:.75rem!important;margin-top:34px!important}@media(max-width:640px){.legal-main{padding:125px 18px 65px}.legal-card{padding:26px 21px}.legal-hero h1{font-size:3.1rem}}
 
 /* Interactive LuaU preview */
-.code-preview[contenteditable="true"]{outline:none;cursor:text;white-space:pre-wrap}
-.code-preview[contenteditable="true"]:focus{box-shadow:inset 0 0 0 1px rgba(155,117,255,.2)}
+/* Legacy contenteditable selectors are intentionally unused; the textarea is the only editor input. */
 .hero-output{display:flex;align-items:flex-start;gap:14px;min-height:54px;padding:13px 18px;border-top:1px solid var(--border);background:rgba(4,4,8,.32);font-size:.75rem}
 .hero-output-label{display:flex;align-items:center;gap:7px;min-width:58px;color:var(--dim);font:600 .68rem 'Space Grotesk',sans-serif;text-transform:uppercase;letter-spacing:.08em}
 .output-dot{width:6px;height:6px;border-radius:50%;background:var(--dim)}
@@ -67,3 +66,24 @@
 .code-highlight{scrollbar-width:none}.code-highlight::-webkit-scrollbar{display:none}
 .code-gutter{padding-top:30px;padding-bottom:30px}
 @media(max-width:640px){.code-highlight,.code-content{padding-left:18px;padding-right:18px}}
+
+/* Keep the textarea as an input-only layer so source text can never paint twice. */
+.code-editor-stack > textarea.code-content {
+    opacity:0 !important;
+    color:transparent !important;
+    -webkit-text-fill-color:transparent !important;
+    caret-color:transparent !important;
+}
+.code-editor-stack.is-typing::after,
+.code-editor-stack:focus-within::after {
+    content:"";
+    position:absolute;
+    top:30px;
+    left:28px;
+    width:7px;
+    height:1.05em;
+    background:var(--primary-light);
+    pointer-events:none;
+    animation:caretBlink 1s steps(2,end) infinite;
+}
+@media(max-width:640px){.code-editor-stack.is-typing::after,.code-editor-stack:focus-within::after{left:18px}}

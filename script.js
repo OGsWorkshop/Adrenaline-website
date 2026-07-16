@@ -234,47 +234,64 @@ function initCodeTyping() {
     const editor = document.getElementById('hero-code');
     const editorFrame = document.getElementById('hero-code-editor');
     const gutter = document.getElementById('hero-line-numbers');
-    if (!editor || !editorFrame) return;
-    const source = editorFrame.dataset.code || '';
     const highlight = document.getElementById('hero-code-highlight');
+    if (!editor || !editorFrame || editor.dataset.initialized === 'true') return;
+
+    editor.dataset.initialized = 'true';
+    const source = editorFrame.dataset.code || '';
+    const stack = editor.closest('.code-editor-stack');
 
     const refreshLineNumbers = () => {
         const lineCount = Math.max(1, editor.value.split('\n').length);
         if (gutter) gutter.innerHTML = Array.from({ length: lineCount }, (_, index) => `<span>${index + 1}</span>`).join('');
     };
 
-    const refreshEditor = () => {
-        refreshLineNumbers();
-        highlightHeroCode(editor);
-    };
-
-    editor.addEventListener('input', refreshEditor);
-    editor.addEventListener('scroll', () => {
+    const syncScroll = () => {
         if (highlight) {
             highlight.scrollTop = editor.scrollTop;
             highlight.scrollLeft = editor.scrollLeft;
         }
-    });
+    };
+
+    const refreshEditor = () => {
+        refreshLineNumbers();
+        highlightHeroCode(editor);
+        syncScroll();
+    };
+
+    editor.addEventListener('input', refreshEditor);
+    editor.addEventListener('scroll', syncScroll);
+
+    const finishTyping = () => {
+        editor.value = source;
+        editor.readOnly = false;
+        stack?.classList.remove('is-typing');
+        refreshEditor();
+    };
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        editor.value = source;
-        refreshEditor();
+        finishTyping();
         return;
     }
 
+    editor.readOnly = true;
     editor.value = '';
+    stack?.classList.add('is-typing');
     refreshEditor();
+
     let position = 0;
     const typeNext = () => {
         if (position >= source.length) {
-            refreshEditor();
+            finishTyping();
             return;
         }
-        editor.value += source[position];
+
         position += 1;
+        editor.value = source.slice(0, position);
         refreshEditor();
         window.setTimeout(typeNext, source[position - 1] === '\n' ? 220 : 52);
     };
+
     window.setTimeout(typeNext, 500);
 }
 
