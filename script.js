@@ -1,5 +1,5 @@
 const LINKVERTISE_URL = 'https://linkvertise.com/your-link-here';
-const STRIPE_PUBLISHABLE_KEY = window.STRIPE_PUBLISHABLE_KEY || window.STRIPE_KEY || 'pk_test_REPLACE_ME';
+const STRIPE_PUBLISHABLE_KEY = window.STRIPE_PUBLISHABLE_KEY || window.STRIPE_KEY || '';
 const API_ENDPOINT = '/api/create-checkout-session';
 
 const PLANS = {
@@ -112,7 +112,7 @@ async function initStripeCheckout() {
         showToast('Stripe could not be loaded. Refresh and try again.', 'error');
         return false;
     }
-    if (!STRIPE_PUBLISHABLE_KEY || STRIPE_PUBLISHABLE_KEY.includes('REPLACE_ME')) {
+    if (!STRIPE_PUBLISHABLE_KEY || STRIPE_PUBLISHABLE_KEY.includes('REPLACE_ME') || STRIPE_PUBLISHABLE_KEY.includes('YOUR_PUBLISHABLE_KEY_HERE')) {
         showCheckoutError('Add your Stripe publishable key before taking payments.');
         return false;
     }
