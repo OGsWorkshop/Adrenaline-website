@@ -1,6 +1,6 @@
 # =============================================================
 #                       Red's Offsets
-#                  https://offsets.getadrenaline.dev
+#                  https://getadrenaline.dev/offsets
 # -------------------------------------------------------------
 #  Dumped With     : AdrenalineDumper (RTTI)
 #  Total Offsets   : 278
