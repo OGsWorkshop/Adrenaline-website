@@ -103,7 +103,7 @@ function toggleMobileMenu() {
     if (existing) { existing.remove(); return; }
     const menu = document.createElement('div');
     menu.className = 'mobile-menu active';
-    menu.innerHTML = '<a href="/">Home</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a>';
+    menu.innerHTML = '<a href="/">Home</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/offsets">Offsets</a>';
     document.body.appendChild(menu);
 }
 

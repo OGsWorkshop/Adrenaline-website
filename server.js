@@ -10,6 +10,7 @@ const pages = {
     '/pricing': 'pricing.html',
     '/checkout': 'checkout.html',
     '/checkout/success': 'checkout-success.html',
+    '/offsets': 'offsets.html',
     '/docs': 'docs.html',
     '/about': 'about.html',
     '/terms': 'terms.html',

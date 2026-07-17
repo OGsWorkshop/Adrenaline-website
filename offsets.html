@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pre-generated Roblox offsets for external development. Dumped with AdrenalineDumper (RTTI).">
+    <title>Offsets — Adrenaline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/AdrenalineLogoNoBg.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .offsets-page{background:radial-gradient(circle at 30% -10%,#1a1230 0,transparent 40%),radial-gradient(circle at 70% 110%,#0f0a1e 0,transparent 50%),var(--bg)}
+        .offsets-hero{padding:145px 28px 50px;max-width:1000px;margin:0 auto}
+        .offsets-hero h1{font:700 clamp(2.8rem,7vw,4.5rem)/1.05 'Space Grotesk',sans-serif;letter-spacing:-.06em;margin:14px 0 16px}
+        .offsets-hero .section-label{display:inline-block;font:600 .72rem 'Space Grotesk',sans-serif;text-transform:uppercase;letter-spacing:.15em;color:var(--primary-light);background:rgba(155,117,255,.12);border:1px solid rgba(155,117,255,.2);border-radius:100px;padding:6px 16px}
+        .offsets-hero-desc{max-width:620px;color:var(--muted);font-size:1.05rem;line-height:1.75;margin:0 0 10px}
+        .offsets-meta{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 10px}
+        .offsets-meta-item{display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:.8rem;color:var(--muted)}
+        .offsets-meta-item strong{color:var(--text);font-weight:600}
+        .offsets-downloads{max-width:1000px;margin:0 auto;padding:30px 28px 40px}
+        .offsets-downloads h2{font:600 1.25rem 'Space Grotesk',sans-serif;margin-bottom:16px}
+        .offsets-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+        .offsets-card{display:flex;flex-direction:column;gap:6px;padding:18px 20px;border:1px solid var(--border);border-radius:14px;background:var(--surface);text-decoration:none;color:var(--text);transition:border-color .25s ease,transform .25s ease,box-shadow .25s ease}
+        .offsets-card:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:0 12px 32px rgba(155,117,255,.12)}
+        .offsets-card .card-icon{font-size:1.4rem;line-height:1}
+        .offsets-card .card-name{font-weight:600;font-size:.9rem}
+        .offsets-card .card-desc{font-size:.75rem;color:var(--dim)}
+        .offsets-card .card-size{font-size:.7rem;color:var(--dim);margin-top:auto;padding-top:6px;border-top:1px solid var(--border)}
+        .offsets-browse{max-width:1000px;margin:0 auto;padding:10px 28px 70px}
+        .offsets-browse h2{font:600 1.25rem 'Space Grotesk',sans-serif;margin-bottom:6px}
+        .offsets-browse-desc{color:var(--muted);font-size:.88rem;margin-bottom:24px}
+        .offsets-search{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-family:inherit;font-size:.9rem;outline:none;transition:border-color .25s ease;margin-bottom:20px}
+        .offsets-search:focus{border-color:var(--primary)}
+        .offsets-search::placeholder{color:var(--dim)}
+        .offsets-class{margin-bottom:16px;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface)}
+        .offsets-class-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;user-select:none;transition:background .2s ease}
+        .offsets-class-header:hover{background:var(--surface-2)}
+        .offsets-class-header h3{font:600 .95rem 'Space Grotesk',sans-serif;display:flex;align-items:center;gap:10px}
+        .offsets-class-header .count{font-size:.72rem;color:var(--dim);background:var(--surface-3);padding:2px 10px;border-radius:100px}
+        .offsets-class-header .chevron{width:16px;height:16px;transition:transform .3s ease;color:var(--dim)}
+        .offsets-class-header.open .chevron{transform:rotate(180deg)}
+        .offsets-table{width:100%;border-collapse:collapse;display:none}
+        .offsets-class.open .offsets-table{display:table}
+        .offsets-table th{padding:10px 18px;text-align:left;font:600 .72rem 'Space Grotesk',sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);background:var(--surface-3);border-bottom:1px solid var(--border)}
+        .offsets-table td{padding:9px 18px;font-size:.82rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted)}
+        .offsets-table tr:last-child td{border-bottom:0}
+        .offsets-table td:first-child{color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:500}
+        .offsets-table td:last-child{text-align:right;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--primary-light)}
+        .offsets-table tr:hover td{background:rgba(155,117,255,.04)}
+        .offsets-empty{text-align:center;padding:40px;color:var(--dim);font-size:.9rem}
+        .offsets-credit{max-width:1000px;margin:0 auto;padding:0 28px 50px;text-align:center;color:var(--dim);font-size:.78rem}
+        .offsets-credit a{color:var(--primary-light);text-decoration:none}
+        .offsets-credit a:hover{text-decoration:underline}
+        @media(max-width:640px){.offsets-hero{padding:125px 18px 30px}.offsets-downloads,.offsets-browse,.offsets-credit{padding-left:18px;padding-right:18px}.offsets-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}.offsets-table th,.offsets-table td{padding:8px 14px}.offsets-table td:first-child{font-size:.72rem}}
+    </style>
+</head>
+<body class="offsets-page">
+    <canvas class="ambient-canvas" aria-hidden="true"></canvas>
+    <nav class="site-nav"><div class="nav-inner"><a href="/" class="logo" aria-label="Adrenaline home"><img src="AdrenalineLogoNoBg.png" alt="" class="logo-image"><span class="logo-text">ADRENALINE</span></a><div class="nav-right"><div class="nav-links"><a href="/">Home</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/offsets" class="active">Offsets</a></div></div><button class="mobile-menu-btn" type="button" aria-label="Open menu" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button></div></nav>
+
+    <main>
+        <section class="offsets-hero reveal">
+            <span class="section-label">Roblox Dumper</span>
+            <h1>Red's<br><span class="gradient-text">Offsets</span></h1>
+            <p class="offsets-hero-desc">Pre-generated Roblox offset files dumped with AdrenalineDumper (RTTI). Ready to drop into your C++, Python, C#, or JSON project.</p>
+            <div class="offsets-meta" id="offsets-meta">
+                <div class="offsets-meta-item"><strong>Dumper:</strong> AdrenalineDumper (RTTI)</div>
+                <div class="offsets-meta-item"><strong>Offsets:</strong> <span id="total-count">278</span></div>
+                <div class="offsets-meta-item"><strong>Discord:</strong> <a href="https://getadrenaline.dev/discord" target="_blank" rel="noopener noreferrer" style="color:var(--primary-light);text-decoration:none">join →</a></div>
+            </div>
+        </section>
+
+        <section class="offsets-downloads reveal">
+            <h2>Download</h2>
+            <div class="offsets-grid" id="downloads-grid">
+                <a href="/offsets/offsets.h" class="offsets-card" download><div class="card-icon">C++</div><div class="card-name">offsets.h</div><div class="card-desc">C++ header with constexpr offsets</div><div class="card-size">418 lines</div></a>
+                <a href="/offsets/offsets.py" class="offsets-card" download><div class="card-icon">Python</div><div class="card-name">offsets.py</div><div class="card-desc">Python class with static attributes</div><div class="card-size">418 lines</div></a>
+                <a href="/offsets/offsets.cs" class="offsets-card" download><div class="card-icon">C#</div><div class="card-name">offsets.cs</div><div class="card-desc">C# static class constants</div><div class="card-size">418 lines</div></a>
+                <a href="/offsets/offsets.json" class="offsets-card" download><div class="card-icon">JSON</div><div class="card-name">offsets.json</div><div class="card-desc">Machine-readable JSON format</div><div class="card-size">418 lines</div></a>
+            </div>
+        </section>
+
+        <section class="offsets-browse reveal" id="browse">
+            <h2>Browse offsets</h2>
+            <p class="offsets-browse-desc">Search for a class or property name. Click a class header to expand.</p>
+            <input type="text" class="offsets-search" id="offsets-search" placeholder="Search classes and properties…" autocomplete="off">
+            <div id="offsets-list"></div>
+        </section>
+
+        <section class="offsets-credit reveal">
+            <p>Dumped with <a href="https://github.com/nopjo/roblox-dumper" target="_blank" rel="noopener noreferrer">roblox-dumper</a>. Hosted on <a href="https://offsets.getadrenaline.dev" target="_blank" rel="noopener noreferrer">offsets.getadrenaline.dev</a>.</p>
+        </section>
+    </main>
+
+    <footer><div class="footer-inner"><div class="footer-brand"><a href="/" class="footer-logo"><img src="AdrenalineLogoNoBg.png" alt="" class="footer-logo-image">ADRENALINE</a><p class="footer-desc">A focused scripting workspace without the sales pitch.</p></div><div class="footer-links"><div class="footer-col"><h4>Explore</h4><a href="/">Home</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/offsets">Offsets</a></div><div class="footer-col"><h4>Company</h4><a href="/about">About</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a></div><div class="footer-col"><h4>Community</h4><a href="https://discord.gg/8ZhSp6PqmK" target="_blank" rel="noopener noreferrer">Discord</a></div></div></div><div class="footer-bottom"><p>© 2026 Adrenaline. Made for a better scripting workflow.</p></div></footer>
+    <div id="toast" class="toast hidden" role="status"></div>
+    <script src="config.js"></script>
+    <script>
+    (function() {
+        var data = {
+            "metadata": {
+                "dumper": "AdrenalineDumper (RTTI)",
+                "total_offsets": 278
+            },
+            "offsets": {
+                "Atmosphere": {"Color":184,"Decay":196,"Density":208,"Glare":212,"Haze":216,"Offset":220},
+                "Attribute": {"Key":0,"Size":88,"Value":24},
+                "BasePart": {"CastShadow":213,"Color3":328,"Locked":214,"Massless":215,"Primitive":296,"Reflectance":204,"Shape":345,"Transparency":208},
+                "BloomEffect": {"Intensity":184,"Size":188,"Threshold":192},
+                "ByteCode": {"Pointer":16,"Size":32},
+                "Camera": {"CFrame":216,"FieldOfView":320,"Position":252,"Rotation":216,"ViewportInt16":652,"ViewportSize":712},
+                "CharacterMesh": {"BaseTextureId":200,"BodyPart":328,"MeshId":248,"OverlayTextureId":296},
+                "DataModel": {"CreatorId":384,"GameId":392,"GameLoaded":1400,"JobId":288,"PlaceId":400,"ServerIP":1376,"Workspace":352},
+                "FakeDataModel": {"Pointer":131237128,"RealDataModel":464},
+                "GuiBase2D": {"AbsolutePosition":244,"AbsoluteRotation":376,"AbsoluteSize":256},
+                "GuiObject": {"Active":1448,"AnchorPoint":1368,"AutomaticSize":1376,"BackgroundColor3":1344,"BackgroundTransparency":1380,"BorderColor3":1356,"BorderMode":1384,"BorderSizePixel":1388,"ClipsDescendants":1449,"GuiState":1400,"Interactable":1451,"LayoutOrder":1408,"Position":1296,"Rotation":376,"Selectable":1452,"SelectionOrder":1436,"Size":1328,"SizeConstraint":1440,"Visible":1453,"ZIndex":1444},
+                "Humanoid": {"AutoJumpEnabled":468,"AutoRotate":469,"AutomaticScalingEnabled":470,"BreakJointsOnDeath":471,"CameraOffset":296,"DisplayDistanceType":384,"EvaluateStateMachine":472,"Health":392,"HealthDisplayDistance":396,"HealthDisplayType":400,"HipHeight":404,"JumpHeight":416,"JumpPower":420,"MaxHealth":424,"MaxSlopeAngle":428,"NameDisplayDistance":432,"NameOcclusion":436,"RequiresNeck":477,"RigType":448,"SeatPart":264,"Sit":478,"TargetPoint":332,"UseJumpPower":480,"WalkSpeed":464,"WalkSpeedCheck":956,"WalkToPoint":356},
+                "InputObject": {"MousePosition":212},
+                "Instance": {"ChildrenEnd":8,"ChildrenStart":112,"ClassDescriptor":24,"ClassName":8,"ComponentMap":56,"Name":152,"Parent":104},
+                "Lighting": {"Ambient":200,"Atmosphere":472,"Brightness":272,"ClockTime":424,"ColorShift_Bottom":212,"ColorShift_Top":224,"EnvironmentDiffuseScale":276,"EnvironmentSpecularScale":280,"ExposureCompensation":284,"FogColor":236,"FogEnd":292,"FogStart":296,"OutdoorAmbient":248,"ShadowSoftness":304,"Sky":456},
+                "LightingParameters": {"GeographicLatitude":384,"LightColor":332,"LightDirection":344,"SkyAmbient":320,"SkyAmbient2":388,"Source":356,"TrueMoonPosition":372,"TrueSunPosition":360},
+                "LocalScript": {"Bytecode":400,"Hash":152},
+                "MaterialColors": {"Asphalt":48,"Basalt":39,"Brick":15,"Cobblestone":51,"Concrete":12,"CrackedLava":45,"Glacier":27,"Grass":6,"Ground":42,"Ice":54,"LeafyGrass":57,"Limestone":63,"Mud":36,"Pavement":66,"Rock":24,"Salt":60,"Sand":18,"Sandstone":33,"Slate":9,"Snow":30,"WoodPlanks":21},
+                "MeshPart": {"MeshId":656,"TextureId":704},
+                "ModuleScript": {"Bytecode":312,"Hash":152},
+                "MouseService": {"InputObject":256},
+                "Player": {"AccountAge":860,"Character":664,"DisplayName":312,"HealthDisplayDistance":912,"LocaleId":1848,"NameDisplayDistance":928,"Team":728,"TeamColor":940,"UserId":768},
+                "Players": {"LocalPlayer":304},
+                "Primitive": {"AssemblyAngularVelocity":260,"AssemblyLinearVelocity":248,"CFrame":200,"Material":574,"Orientation":200,"Position":236,"PrimitiveFlags":438,"Rotation":200,"Size":440},
+                "PrimitiveFlags": {"Anchored":2,"CanCollide":8,"CanQuery":32,"CanTouch":16},
+                "ProximityPrompt": {"ActionText":176,"Enabled":310,"HoldDuration":288,"KeyboardKeyCode":292,"MaxActivationDistance":296,"ObjectText":208,"RequiresLineOfSight":311},
+                "RenderView": {"LightingValid":552,"SkyboxValid":653},
+                "Seat": {"Occupant":432},
+                "Sky": {"MoonAngularSize":580,"MoonTextureId":200,"SkyboxBk":248,"SkyboxDn":296,"SkyboxFt":344,"SkyboxLf":392,"SkyboxOrientation":568,"SkyboxRt":440,"SkyboxUp":488,"StarCount":584,"SunAngularSize":588,"SunTextureId":536},
+                "SpecialMesh": {"MeshId":248,"Offset":184,"Scale":196,"TextureId":296},
+                "TaskScheduler": {"JobEnd":208,"JobName":24,"JobStart":200,"MaxFps":176,"Pointer":137076552},
+                "Team": {"TeamColor":184},
+                "Terrain": {"GrassLength":392,"MaterialColors":1080,"WaterColor":376,"WaterReflectance":400,"WaterTransparency":404,"WaterWaveSize":408,"WaterWaveSpeed":412},
+                "TextButton": {"AutoButtonColor":2500,"ContentText":3536,"Font":4328,"LineHeight":3784,"LocalizedText":3536,"MaxVisibleGraphemes":4340,"Modal":2501,"RichText":4038,"Selected":2502,"Text":3536,"TextColor3":4304,"TextDirection":3944,"TextScaled":3513,"TextSize":4348,"TextStrokeColor3":4316,"TextStrokeTransparency":4352,"TextTransparency":4356,"TextTruncate":4360,"TextWrapped":4032,"TextXAlignment":4364,"TextYAlignment":3856},
+                "TextLabel": {"ContentText":2896,"Font":3688,"LineHeight":3144,"LocalizedText":2896,"MaxVisibleGraphemes":3700,"RichText":3398,"Text":2896,"TextColor3":3664,"TextDirection":3304,"TextScaled":2873,"TextSize":3708,"TextStrokeColor3":3676,"TextStrokeTransparency":3712,"TextTransparency":3716,"TextTruncate":3720,"TextWrapped":3392,"TextXAlignment":3724,"TextYAlignment":3216},
+                "Tool": {"CanBeDropped":1208,"Enabled":1209,"Grip":1160,"GripForward":1184,"GripPos":1196,"GripRight":1160,"GripUp":1172,"ManualActivationOnly":1210,"RequiresHandle":1211,"Tooltip":1128},
+                "Value": {"Value":184},
+                "VehicleSeat": {"MaxSpeed":456,"Occupant":424,"SteerFloat":464,"ThrottleFloat":472,"Torque":476,"TurnSpeed":480},
+                "VisualEngine": {"Dimensions":2736,"FakeDataModel":2704,"Pointer":138706024,"RenderView":3000,"ViewMatrix":336},
+                "Workspace": {"CurrentCamera":1160,"ReadOnlyGravity":2456,"World":992},
+                "World": {"Gravity":528,"Primitives":648,"WorldSteps":1664}
+            }
+        };
+
+        var container = document.getElementById('offsets-list');
+        var searchInput = document.getElementById('offsets-search');
+        var totalSpan = document.getElementById('total-count');
+
+        var entries = Object.entries(data.offsets);
+        var total = entries.reduce(function(sum, e) { return sum + Object.keys(e[1]).length; }, 0);
+        if (totalSpan) totalSpan.textContent = total;
+
+        function render(filter) {
+            container.innerHTML = '';
+            var matched = 0;
+            var filterLower = (filter || '').toLowerCase().trim();
+
+            entries.forEach(function(pair) {
+                var className = pair[0];
+                var props = pair[1];
+                var propEntries = Object.entries(props);
+
+                var classMatch = !filterLower || className.toLowerCase().includes(filterLower);
+                var filteredProps = propEntries;
+                if (filterLower && !classMatch) {
+                    filteredProps = propEntries.filter(function(p) { return p[0].toLowerCase().includes(filterLower); });
+                    if (filteredProps.length === 0) return;
+                }
+
+                matched++;
+                var section = document.createElement('div');
+                section.className = 'offsets-class' + (filterLower ? ' open' : '');
+                if (!filterLower) section.classList.add('open');
+
+                var header = document.createElement('div');
+                header.className = 'offsets-class-header';
+                header.innerHTML = '<h3><span class="gradient-text">' + escapeHtml(className) + '</span><span class="count">' + filteredProps.length + '</span></h3><svg class="chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4.5l3 3 3-3"/></svg>';
+                header.addEventListener('click', function() { section.classList.toggle('open'); });
+                section.appendChild(header);
+
+                var table = document.createElement('table');
+                table.className = 'offsets-table';
+                var thead = document.createElement('thead');
+                thead.innerHTML = '<tr><th>Property</th><th>Offset</th></tr>';
+                table.appendChild(thead);
+                var tbody = document.createElement('tbody');
+
+                filteredProps.forEach(function(prop) {
+                    var tr = document.createElement('tr');
+                    var nameTd = document.createElement('td');
+                    nameTd.textContent = prop[0];
+                    var valTd = document.createElement('td');
+                    valTd.textContent = '0x' + prop[1].toString(16).toUpperCase();
+                    tr.appendChild(nameTd);
+                    tr.appendChild(valTd);
+                    tbody.appendChild(tr);
+                });
+
+                table.appendChild(tbody);
+                section.appendChild(table);
+                container.appendChild(section);
+            });
+
+            if (matched === 0) {
+                container.innerHTML = '<div class="offsets-empty">No classes or properties match your search.</div>';
+            }
+        }
+
+        function escapeHtml(str) {
+            var div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        render('');
+
+        var searchTimer;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() { render(searchInput.value); }, 150);
+        });
+    })();
+
+    document.querySelectorAll('.offsets-class-header').forEach(function(h) {
+        h.addEventListener('click', function() {
+            this.parentElement.classList.toggle('open');
+        });
+    });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
