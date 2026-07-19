@@ -16,11 +16,13 @@ paths.push(["/devs/404", "/devs/404.html"])
 let template = await readFile(resolve("dist/static/index.html"), "utf8");
 
 for (const [route, path] of paths) {
-	const rendered = await renderSsr(template, () => entry.default(route));
+	const cleanRoute = route === "//" ? "/" : route;
+	const cleanPath = path === "//.html" ? "/devs/index.html" : path.replace(/^\/\//, "/devs/");
+	const rendered = await renderSsr(template, () => entry.default(cleanRoute));
 	console.log(
-		`prerendered: ${route}\t${(new TextEncoder().encode(rendered).byteLength / 1024).toFixed(2)}kb`
+		`prerendered: ${cleanRoute}\t${(new TextEncoder().encode(rendered).byteLength / 1024).toFixed(2)}kb`
 	);
-	const outPath = path.replace(/^\/devs\//, "");
+	const outPath = cleanPath.replace(/^\/devs\//, "");
 	let resolved = resolve("dist/static/" + outPath);
 	await mkdir(dirname(resolved), { recursive: true });
 	await writeFile(resolved, rendered);
