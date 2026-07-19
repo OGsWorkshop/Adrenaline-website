@@ -129,6 +129,41 @@ const server = http.createServer((request, response) => {
         return sendJson(response, 405, { error: 'Method not allowed' });
     }
 
+    if (pathname === '/devs' || pathname.startsWith('/devs/')) {
+        const devsRoot = path.join(root, 'devs', 'dist', 'static');
+        let requestedPath = pathname.replace(/^\/devs/, '') || '/index.html';
+        if (requestedPath.endsWith('/')) requestedPath += 'index.html';
+        if (!path.extname(requestedPath) && !requestedPath.endsWith('.html')) {
+            const htmlPath = path.join(devsRoot, requestedPath + '.html');
+            const dirPath = path.join(devsRoot, requestedPath);
+            try {
+                const dirStat = fs.statSync(dirPath);
+                if (dirStat.isDirectory()) {
+                    requestedPath = path.join(requestedPath, 'index.html');
+                } else {
+                    requestedPath += '.html';
+                }
+            } catch { requestedPath += '.html'; }
+        }
+        const filePath = path.join(devsRoot, requestedPath);
+        const ext = path.extname(filePath).toLowerCase();
+        const contentType = contentTypes[ext] || 'application/octet-stream';
+        fs.stat(filePath, (error, stats) => {
+            if (error || !stats.isFile()) {
+                const fallbackPath = path.join(devsRoot, '404.html');
+                fs.stat(fallbackPath, (err2, stats2) => {
+                    if (err2 || !stats2.isFile()) return sendJson(response, 404, { error: 'Not found' });
+                    response.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+                    fs.createReadStream(fallbackPath).pipe(response);
+                });
+                return;
+            }
+            response.writeHead(200, { 'Content-Type': contentType });
+            fs.createReadStream(filePath).pipe(response);
+        });
+        return;
+    }
+
     serveStatic(request, response, pathname);
 });
 

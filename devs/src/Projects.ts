@@ -8,7 +8,7 @@ export const projects: Project[] = [
 		longDescription: undefined,
 		screenshotURL: undefined,
 		url: "https://sh1mmer.me",
-		repo: "https://github.com/MercuryWorkshop/sh1mmer",
+		repo: "https://github.com/OGsWorkshop/sh1mmer",
 	},
 	{
 		name: "anuraOS",
@@ -17,7 +17,7 @@ export const projects: Project[] = [
 		longDescription: undefined,
 		screenshotURL: undefined,
 		url: undefined,
-		repo: "https://github.com/MercuryWorkshop/anuraOS",
+		repo: "https://github.com/OGsWorkshop/anuraOS",
 	},
 	{
 		name: "Scramjet",
@@ -26,7 +26,7 @@ export const projects: Project[] = [
 		longDescription: undefined,
 		screenshotURL: undefined,
 		url: undefined,
-		repo: "https://github.com/MercuryWorkshop/scramjet",
+		repo: "https://github.com/OGsWorkshop/scramjet",
 	},
 	{
 		name: "Wisp",
@@ -35,7 +35,7 @@ export const projects: Project[] = [
 		longDescription: undefined,
 		screenshotURL: undefined,
 		url: undefined,
-		repo: "https://github.com/MercuryWorkshop/wisp-protocol",
+		repo: "https://github.com/OGsWorkshop/wisp-protocol",
 	},
 	{
 		name: "epoxy",
@@ -43,7 +43,7 @@ export const projects: Project[] = [
 		longDescription: undefined,
 		screenshotURL: undefined,
 		url: undefined,
-		repo: "https://github.com/MercuryWorkshop/epoxy-tls",
+		repo: "https://github.com/OGsWorkshop/epoxy-tls",
 	},
 	{
 		name: "dreamland.js",
@@ -52,7 +52,7 @@ export const projects: Project[] = [
 		longDescription: undefined,
 		screenshotURL: undefined,
 		url: undefined,
-		repo: "https://github.com/MercuryWorkshop/dreamlandjs",
+		repo: "https://github.com/OGsWorkshop/dreamlandjs",
 	},
 	{
 		name: "Webleste",
@@ -61,7 +61,7 @@ export const projects: Project[] = [
 		longDescription: undefined,
 		screenshotURL: undefined,
 		url: undefined,
-		repo: "https://github.com/MercuryWorkshop/celeste-wasm",
+		repo: "https://github.com/OGsWorkshop/celeste-wasm",
 	},
 	{
 		name: "RecoMod",
@@ -69,7 +69,7 @@ export const projects: Project[] = [
 		longDescription: undefined,
 		screenshotURL: undefined,
 		url: undefined,
-		repo: "https://github.com/MercuryWorkshop/RecoMod",
+		repo: "https://github.com/OGsWorkshop/RecoMod",
 	},
 	{
 		name: "cros.download",

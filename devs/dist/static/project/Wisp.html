@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<meta
+			name="description"
+			content="An organization of developers dedicated to writing free and open source software for everyone"
+		/>
+		<meta name="darkreader-lock" />
+		<meta name="msapplication-TileColor" content="#483475" />
+		<meta name="theme-color" content="#070b34" />
+		<title>OG's Workshop</title>
+		<base target="_blank" />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/icons/apple-touch-icon.png?k"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/icons/favicon-32x32.png?k"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/icons/favicon-16x16.png?k"
+		/>
+		<link rel="manifest" href="/site.webmanifest?k" />
+		<link
+			rel="mask-icon"
+			href="/icons/safari-pinned-tab.svg?k"
+			color="#483475"
+		/>
+		<link rel="shortcut icon" href="/favicon.ico?" />
+		<link
+			rel="preload"
+			href="/fonts/SpaceGrotesk-Medium.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+		<script type="application/json" dlssr-d=":3">{"k":["pageHue","pageSat","name","description","longDescription","screenshotURL","url","repo","project","outlet"],"v":[215,"60%","Wisp","A low-overhead, easy to implement protocol for proxying multiple TCP/UDP sockets over a WebSocket connection.",null,"https://github.com/OGsWorkshop/wisp-protocol"],"n":{"298":[[0,0],[1,1]],"303":[302,0],"305":[304,0],"308":[],"309":[],"311":[310,0],"313":[312,0],"315":[314,0],"317":[316,0],"318":[316,1],"320":[319,2],"322":[[8,[1,[[2,2],[3,3],[4,4],[5,4],[6,4],[7,5]]]],[9,4]],"476":[],"477":[476,0],"478":[476,2]},"i":{"1":"dlcss-0","3":"dlcss-2","6":"dlcss-3","7":"dlcss-4","208":"dlcss-8"},"t":[[316,0,11],[316,1,1]]}</script><style dlssri="0" dlc="App" dlcss-id="dlcss-0">.dlcss-0.dlc:where(.dlcss-0) {margin: 0; --page-hs: var(--page-hue),var(--page-sat);}
+#clocks:where(.dlcss-0) {position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(0turn) scale(0); transform-origin: center; padding: 1px; transition: transform .5s ease; visibility: hidden; box-shadow: 0 0 2rem 1rem hsla(var(--fg-raw),.2); border: none; border-radius: 1rem; z-index: 10;}
+#clocks.playing:where(.dlcss-0) {transform: translate(-50%,-50%) rotate(1turn) scale(1); visibility: visible;}
+#clocks.ending:where(.dlcss-0) {transform: translate(-50%,-50%) rotate(0turn) scale(0); visibility: visible;}
+</style><style dlssri="2" dlc="Stage" dlcss-id="dlcss-2">.stage:where(.dlcss-2) {position: fixed; inset: 0; width: 100vw; height: 120vh; min-height: 100vh; overflow: hidden; transform-origin: 50% 0; z-index: -10; --color: hsla(var(--page-hue), var(--page-sat), 75%, 0.2); background: linear-gradient(to bottom,hsl(var(--page-hue),var(--page-sat),4%) 0,hsl(var(--page-hue),var(--page-sat),2%) 100%);}
+.stage__beam:where(.dlcss-2) {transform: scaleY(1); position: absolute; inset: 0; top: -15vh; width: 100%; height: 100%; background: conic-gradient(at 50% 5%,transparent 30%,var(--color) 40%,var(--color) 60%,transparent 70%),50% -25px/100% 100%; background-blend-mode: overlay; background-repeat: no-repeat; mix-blend-mode: screen; opacity: 1; filter: blur(10px); -webkit-mask-image: radial-gradient(circle at 50% 0,#000 5%,transparent 80%); mask-image: radial-gradient(circle at 50% 0,#000 5%,transparent 80%);}
+@keyframes stage-breathe { 
+  0%,100% {opacity: .4; filter: blur(8px); transform: scaleY(1);} 
+  50% {opacity: 1; filter: blur(12px); transform: scaleY(1.08);} 
+}
+</style><style dlssri="5" dlc="Header" dlcss-id="dlcss-3">.dlcss-3.dlc:where(.dlcss-3) {display: flex; align-items: center; top: 1rem; z-index: 4; background: hsla(var(--bg2-raw),.4); backdrop-filter: blur(12px) saturate(1.4) brightness(.8);}
+@media (max-width:30rem) {.dlcss-3.dlc:where(.dlcss-3) {justify-content: center;}}
+</style><style dlssri="6" dlc="Logo" dlcss-id="dlcss-4">.dlcss-4.dlc:where(.dlcss-4) {display: flex; align-items: center; flex-direction: row; gap: 1.1rem; user-select: none;}
+a:where(.dlcss-4),a:visited:where(.dlcss-4) {text-decoration: none; color: var(--fg) !important;}
+@media (max-width:30rem) {.dlcss-4.dlc:where(.dlcss-4) {flex-direction: column;}}
+@media (max-width:22rem) {.dlcss-4.dlc:where(.dlcss-4) h1:where(.dlcss-4) {display: none;}.dlcss-4.dlc:where(.dlcss-4) {gap: 0;}}
+span:where(.dlcss-4) {transition: color .25s ease,text-shadow .25s ease; cursor: pointer;}
+img:where(.dlcss-4) {transition: filter .25s ease; width: 4.25rem; height: 4.25rem;}
+.dlcss-4.dlc:has(h1:hover:where(.dlcss-4)) img:where(.dlcss-4),img:hover:where(.dlcss-4) {filter: drop-shadow(0 0 .25rem rgba(255, 255, 255, .5));}
+h1:hover:where(.dlcss-4) span:where(.dlcss-4) {color: var(--accent); text-shadow: 0 0 .5rem hsla(var(--accent-raw),.75);}
+h1:hover:where(.dlcss-4) span.thin:where(.dlcss-4) {color: var(--accent2); text-shadow: 0 0 .5rem hsla(var(--accent2-raw),.75);}
+.thin:where(.dlcss-4) {font-weight: 400;}
+h1:where(.dlcss-4),img:where(.dlcss-4) {display: inline; margin: 0;}
+</style><style dlssri="207" dlc="ProjectView" dlcss-id="dlcss-8">article:where(.dlcss-8) h2:where(.dlcss-8) {margin-top: 0;}
+.card:where(.dlcss-8) {width: 100%; height: auto; margin-top: 1rem;}
+</style>
+		<script type="module" crossorigin src="/assets/index-CrpJmyIH.js"></script>
+		<link rel="stylesheet" crossorigin href="/assets/index-w61zfJnP.css">
+	</head>
+	<body>
+		<div dlssri="476" id="app" class="dlcss-0 dlc"><!--[--><main dlssri="322" class="dlcss-8 dlc"><div dlssri="298" style="--page-hue: 215; --page-sat: 60%;" class="stage dlcss-2 dlc"><div dlssri="297" class="stage__beam dlcss-2"></div></div><article dlssri="321" class="dlcss-8"><header dlssri="309" class="card dlcss-3 dlc"><div dlssri="308" class="logo dlcss-4 dlc"><img dlssri="301" src="/assets/percury.svg" alt="OG's Workshop Logo" width="50" height="50" class="dlcss-4"><a dlssri="307" class="dlcss-4"><h1 dlssri="306" class="dlcss-4"><span dlssri="302" class="dlcss-4">OG's</span><span dlssri="304" class="thin dlcss-4">Workshop</span></h1></a></div></header><div dlssri="319" class="card dlcss-8"><h2 dlssri="310" class="name dlcss-8">Wisp</h2><p dlssri="312" class="description dlcss-8">A low-overhead, easy to implement protocol for proxying multiple TCP/UDP sockets over a WebSocket connection.</p><!--undefined--><p dlssri="316" class="dlcss-8">Repository: <a dlssri="314" href="https://github.com/OGsWorkshop/wisp-protocol" target="_blank" rel="noopener noreferrer" class="dlcss-8">https://github.com/OGsWorkshop/wisp-protocol</a></p></div></article></main><!--]--><div dlssri="475" style="width: 0; height: 0; overflow: hidden;" class="dlcss-0"><video dlssri="474" id="clocks" disablepictureinpicture="true" disableremoteplayback="true" class="dlcss-0"><source dlssri="473" src="/assets/clocks.mp4" type="video/mp4" preload="auto" class="dlcss-0"></video></div></div>
+	</body>
+</html>

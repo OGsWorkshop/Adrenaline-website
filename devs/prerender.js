@@ -1,5 +1,5 @@
 import { dirname, resolve as resolvePath } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { renderSsr } from "dreamland/vite";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
@@ -7,7 +7,7 @@ import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const resolve = (p) => resolvePath(__dirname, p);
 
-const entry = await import(resolve("dist/server/main-server.js"));
+const entry = await import(pathToFileURL(resolve("dist/server/main-server.js")).href);
 
 entry.default("/");
 const paths = entry.router.ssgables();
