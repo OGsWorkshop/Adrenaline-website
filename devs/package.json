@@ -1,0 +1,22 @@
+{
+	"name": "hg-website",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build:client": "vite build --ssrManifest .vite/ssr-manifest.json --outDir dist/static",
+		"build:server": "vite build --ssr src/main-server.ts --outDir dist/server",
+		"build": "pnpm run build:client && pnpm run build:server && node prerender.js",
+		"format": "prettier --write ."
+	},
+	"devDependencies": {
+		"@literals/rollup-plugin-html-css-minifier": "^3.0.1",
+		"prettier": "^3.7.4",
+		"typescript": "~5.9.3",
+		"vite": "^7.2.6"
+	},
+	"dependencies": {
+		"dreamland": "^0.1.3"
+	}
+}
