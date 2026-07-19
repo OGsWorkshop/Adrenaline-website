@@ -38,16 +38,8 @@ const Homepage: Component<{}, {}> = function () {
 						<Logo />
 						<div>
 							<p>
-								Legal request? Contact{" "}
-								<a href="mailto:legal@mercurywork.shop">legal@mercurywork.shop</a>
-							</p>
-							<p>
-								Found a security issue? Contact{" "}
-								<a href="mailto:security@mercurywork.shop">security@mercurywork.shop</a>
-							</p>
-							<p>
 								Need help or just want to contact the team? Email us at{" "}
-								<a href="mailto:support@mercurywork.shop">support@mercurywork.shop</a>
+								<a href="mailto:support@adrenaline.dev">support@adrenaline.dev</a>
 							</p>
 						</div>
 				</footer>

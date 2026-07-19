@@ -159,23 +159,11 @@ const Homepage = function() {
       /* @__PURE__ */ jsx("section", { id: "members", children: members.map((member) => /* @__PURE__ */ jsx(MemberCell, { member })) }),
       /* @__PURE__ */ jsxs("footer", { class: "card", children: [
         /* @__PURE__ */ jsx(Logo, {}),
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsxs("p", { children: [
-            "Legal request? Contact",
-            " ",
-            /* @__PURE__ */ jsx("a", { href: "mailto:legal@mercurywork.shop", children: "legal@mercurywork.shop" })
-          ] }),
-          /* @__PURE__ */ jsxs("p", { children: [
-            "Found a security issue? Contact",
-            " ",
-            /* @__PURE__ */ jsx("a", { href: "mailto:security@mercurywork.shop", children: "security@mercurywork.shop" })
-          ] }),
-          /* @__PURE__ */ jsxs("p", { children: [
-            "Need help or just want to contact the team? Email us at",
-            " ",
-            /* @__PURE__ */ jsx("a", { href: "mailto:support@mercurywork.shop", children: "support@mercurywork.shop" })
-          ] })
-        ] })
+        /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsxs("p", { children: [
+          "Need help or just want to contact the team? Email us at",
+          " ",
+          /* @__PURE__ */ jsx("a", { href: "mailto:support@adrenaline.dev", children: "support@adrenaline.dev" })
+        ] }) })
       ] }),
       /* @__PURE__ */ jsx("span", { class: "konami", children: /* @__PURE__ */ jsx("svg", { xmlns: "http://www.w3.org/2000/svg", height: "0.5em", viewBox: "0 0 1021.2 71.6", children: /* @__PURE__ */ jsx(
         "path",
