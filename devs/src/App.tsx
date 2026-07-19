@@ -24,7 +24,7 @@ const App: Component<{}, {}> = function (cx) {
 	return (
 		<div id="app">
 			<Router>
-				<Route show={<Homepage />} />
+				<Route path="" show={<Homepage />} />
 				{...members.map((member) => <Route path={`devs/member/${member.avatarName}`} show={<MemberView member={member} />} />)}
 				{...projects.map((project) => <Route path={`devs/project/${project.name}`} show={<ProjectView project={project} />} />)}
 				<Route path="*" show={<NotFoundView />} />

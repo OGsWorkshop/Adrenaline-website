@@ -289,7 +289,7 @@ const App = function(cx) {
   };
   return /* @__PURE__ */ jsxs("div", { id: "app", children: [
     /* @__PURE__ */ jsxs(Router, { children: [
-      /* @__PURE__ */ jsx(Route, { show: /* @__PURE__ */ jsx(Homepage, {}) }),
+      /* @__PURE__ */ jsx(Route, { path: "", show: /* @__PURE__ */ jsx(Homepage, {}) }),
       ...members.map((member) => /* @__PURE__ */ jsx(Route, { path: `devs/member/${member.avatarName}`, show: /* @__PURE__ */ jsx(MemberView, { member }) })),
       ...projects.map((project) => /* @__PURE__ */ jsx(Route, { path: `devs/project/${project.name}`, show: /* @__PURE__ */ jsx(ProjectView, { project }) })),
       /* @__PURE__ */ jsx(Route, { path: "*", show: /* @__PURE__ */ jsx(NotFoundView, {}) })
