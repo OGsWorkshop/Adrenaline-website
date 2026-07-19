@@ -8,7 +8,7 @@ const Logo = function() {
     /* @__PURE__ */ jsx(
       "img",
       {
-        src: "/devs/assets/percury.svg",
+        src: "/devs/assets/ogsw.svg",
         alt: "OG's Workshop Logo",
         width: "50",
         height: "50"
@@ -91,7 +91,7 @@ const members = [
     ]
   },
   {
-    name: "'Juggmylittlepony'",
+    name: "osamabinoven",
     bio: "Just another Furry doing cybersecurity.",
     avatarName: "luke",
     profileLinks: [
@@ -102,8 +102,8 @@ const members = [
       },
       {
         title: "github",
-        content: "r58playz",
-        url: "https://github.com/samabinoven"
+        content: "osamabinoven",
+        url: "https://github.com/osamabinoven"
       },
       { title: "discord", content: "@osamabinoven", url: void 0 },
       { title: "IRL Name", content: "Luke", url: void 0 }

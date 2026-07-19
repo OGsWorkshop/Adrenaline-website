@@ -16,7 +16,7 @@ export const members: Member[] = [
 		],
 	},
 	{
-		name: "'Juggmylittlepony'",
+		name: "osamabinoven",
 		bio: "Just another Furry doing cybersecurity.",
 		avatarName: "luke",
 		profileLinks: [
@@ -27,8 +27,8 @@ export const members: Member[] = [
 			},
 			{
 				title: "github",
-				content: "r58playz",
-				url: "https://github.com/samabinoven",
+				content: "osamabinoven",
+				url: "https://github.com/osamabinoven",
 			},
 			{ title: "discord", content: "@osamabinoven", url: undefined },
 			{ title: "IRL Name", content: "Luke", url: undefined },
