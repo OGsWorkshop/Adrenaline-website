@@ -17,7 +17,7 @@ let template = await readFile(resolve("dist/static/index.html"), "utf8");
 
 for (const [route, path] of paths) {
 	const cleanRoute = route === "//" ? "/" : route;
-	const cleanPath = path === "//.html" ? "/devs/index.html" : path.replace(/^\/\//, "/devs/");
+	const cleanPath = path === "//.html" || path === "/devs/.html" ? "/devs/index.html" : path.replace(/^\/\//, "/devs/");
 	const rendered = await renderSsr(template, () => entry.default(cleanRoute));
 	console.log(
 		`prerendered: ${cleanRoute}\t${(new TextEncoder().encode(rendered).byteLength / 1024).toFixed(2)}kb`
