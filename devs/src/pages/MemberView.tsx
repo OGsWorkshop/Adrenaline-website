@@ -1,6 +1,7 @@
 import { Component, css } from "dreamland/core";
 import Member from "../types/Member";
 import Header from "../components/Header";
+import Logo from "../components/Logo";
 import Stage from "../components/Stage";
 
 const MemberView: Component<{ member: Member }, {}> = function () {
@@ -44,6 +45,15 @@ const MemberView: Component<{ member: Member }, {}> = function () {
 						)}
 					</section>
 				)}
+				<footer class="card">
+					<Logo />
+					<div>
+						<p>
+							Need help? Email us at{" "}
+							<a href="mailto:support@adrenaline.dev">support@adrenaline.dev</a>
+						</p>
+					</div>
+				</footer>
 			</article>
 		</main>
 	);
@@ -95,6 +105,20 @@ MemberView.style = css`
 		font-size: 0.95rem;
 		color: var(--fg) !important;
 		word-break: break-word;
+	}
+
+	footer {
+		margin-block: 1.66rem;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	footer > div {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		font-size: 1.1rem;
+		text-align: right;
 	}
 `;
 
