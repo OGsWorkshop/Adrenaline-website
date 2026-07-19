@@ -1,5 +1,6 @@
 import { Component, css } from "dreamland/core";
 import Header from "../components/Header";
+import Logo from "../components/Logo";
 import Project from "../types/Project";
 import Stage from "../components/Stage";
 
@@ -37,6 +38,15 @@ const ProjectView: Component<{ project: Project }, {}> = function () {
 						</p>
 					)}
 				</div>
+				<footer class="card">
+					<Logo />
+					<div>
+						<p>
+							Need help? Email us at{" "}
+							<a href="mailto:support@adrenaline.dev">support@adrenaline.dev</a>
+						</p>
+					</div>
+				</footer>
 			</article>
 		</main>
 	);
@@ -51,6 +61,20 @@ ProjectView.style = css`
 		width: 100%;
 		height: auto;
 		margin-top: 1rem;
+	}
+
+	footer {
+		margin-block: 1.66rem;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	footer > div {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		font-size: 1.1rem;
+		text-align: right;
 	}
 `;
 

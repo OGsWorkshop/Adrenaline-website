@@ -130,76 +130,20 @@ const ProjectCard = function(cx) {
 ProjectCard.style = css`:scope{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:.25rem;min-height:8rem;text-decoration:none;color:inherit}.name{font-size:1.5rem;font-weight:700;color:var(--fg);margin:0}.description{font-size:1rem;color:var(--fg2);margin:0}`;
 const projects = [
   {
-    name: "SH1MMER",
-    description: "A recovery-based enterprise enrollment jailbreak targeting ChromeOS devices.",
-    longDescription: void 0,
-    screenshotURL: void 0,
-    url: "https://sh1mmer.me",
-    repo: "https://github.com/OGsWorkshop/sh1mmer"
-  },
-  {
-    name: "anuraOS",
-    description: 'A web "OS" and development environment with full Linux emulation, for systems education in restricted environments.',
+    name: "RedOS",
+    description: "The next-gen webOS and development environment with full Linux emulation.",
     longDescription: void 0,
     screenshotURL: void 0,
     url: void 0,
-    repo: "https://github.com/OGsWorkshop/anuraOS"
+    repo: "https://github.com/Red60sapphire/RedOS"
   },
   {
-    name: "Scramjet",
-    description: "An experimental interception-based web proxy that aims to be the successor to Ultraviolet.",
+    name: "Infrared",
+    description: "An experimental UBG site with many features.",
     longDescription: void 0,
     screenshotURL: void 0,
     url: void 0,
-    repo: "https://github.com/OGsWorkshop/scramjet"
-  },
-  {
-    name: "Wisp",
-    description: "A low-overhead, easy to implement protocol for proxying multiple TCP/UDP sockets over a WebSocket connection.",
-    longDescription: void 0,
-    screenshotURL: void 0,
-    url: void 0,
-    repo: "https://github.com/OGsWorkshop/wisp-protocol"
-  },
-  {
-    name: "epoxy",
-    description: "An encrypted proxy for browser JavaScript.",
-    longDescription: void 0,
-    screenshotURL: void 0,
-    url: void 0,
-    repo: "https://github.com/OGsWorkshop/epoxy-tls"
-  },
-  {
-    name: "dreamland.js",
-    description: "A utilitarian JavaScript framework and JSX shim for a more efficient web.",
-    longDescription: void 0,
-    screenshotURL: void 0,
-    url: void 0,
-    repo: "https://github.com/OGsWorkshop/dreamlandjs"
-  },
-  {
-    name: "Webleste",
-    description: "A port of Celeste (2018) and the Everest Mod Loader to WebAssembly.",
-    longDescription: void 0,
-    screenshotURL: void 0,
-    url: void 0,
-    repo: "https://github.com/OGsWorkshop/celeste-wasm"
-  },
-  {
-    name: "RecoMod",
-    description: "A ChromeOS recovery image modification toolkit.",
-    longDescription: void 0,
-    screenshotURL: void 0,
-    url: void 0,
-    repo: "https://github.com/OGsWorkshop/RecoMod"
-  },
-  {
-    name: "cros.download",
-    description: "A website providing downloads for ChromeOS recovery images and RMA shims.",
-    longDescription: void 0,
-    screenshotURL: void 0,
-    url: "https://cros.download/",
-    repo: void 0
+    repo: "https://github.com/OGsWorkshop/Infrared"
   }
 ];
 const Homepage = function() {
@@ -339,11 +283,19 @@ const ProjectView = function() {
             }
           )
         ] })
+      ] }),
+      /* @__PURE__ */ jsxs("footer", { class: "card", children: [
+        /* @__PURE__ */ jsx(Logo, {}),
+        /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsxs("p", { children: [
+          "Need help? Email us at",
+          " ",
+          /* @__PURE__ */ jsx("a", { href: "mailto:support@adrenaline.dev", children: "support@adrenaline.dev" })
+        ] }) })
       ] })
     ] })
   ] });
 };
-ProjectView.style = css`article h2{margin-top:0}.card{width:100%;height:auto;margin-top:1rem}`;
+ProjectView.style = css`article h2{margin-top:0}.card{width:100%;height:auto;margin-top:1rem}footer{margin-block:1.66rem;display:flex;justify-content:space-between}footer>div{display:flex;flex-direction:column;gap:.25rem;font-size:1.1rem;text-align:right}`;
 let page = createState({});
 const App = function(cx) {
   cx.init = () => {

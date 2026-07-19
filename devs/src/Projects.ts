@@ -2,82 +2,20 @@ import Project from "./types/Project";
 
 export const projects: Project[] = [
 	{
-		name: "SH1MMER",
+		name: "RedOS",
 		description:
-			"A recovery-based enterprise enrollment jailbreak targeting ChromeOS devices.",
-		longDescription: undefined,
-		screenshotURL: undefined,
-		url: "https://sh1mmer.me",
-		repo: "https://github.com/OGsWorkshop/sh1mmer",
-	},
-	{
-		name: "anuraOS",
-		description:
-			'A web "OS" and development environment with full Linux emulation, for systems education in restricted environments.',
+			"The next-gen webOS and development environment with full Linux emulation.",
 		longDescription: undefined,
 		screenshotURL: undefined,
 		url: undefined,
-		repo: "https://github.com/OGsWorkshop/anuraOS",
+		repo: "https://github.com/Red60sapphire/RedOS",
 	},
 	{
-		name: "Scramjet",
-		description:
-			"An experimental interception-based web proxy that aims to be the successor to Ultraviolet.",
+		name: "Infrared",
+		description: "An experimental UBG site with many features.",
 		longDescription: undefined,
 		screenshotURL: undefined,
 		url: undefined,
-		repo: "https://github.com/OGsWorkshop/scramjet",
-	},
-	{
-		name: "Wisp",
-		description:
-			"A low-overhead, easy to implement protocol for proxying multiple TCP/UDP sockets over a WebSocket connection.",
-		longDescription: undefined,
-		screenshotURL: undefined,
-		url: undefined,
-		repo: "https://github.com/OGsWorkshop/wisp-protocol",
-	},
-	{
-		name: "epoxy",
-		description: "An encrypted proxy for browser JavaScript.",
-		longDescription: undefined,
-		screenshotURL: undefined,
-		url: undefined,
-		repo: "https://github.com/OGsWorkshop/epoxy-tls",
-	},
-	{
-		name: "dreamland.js",
-		description:
-			"A utilitarian JavaScript framework and JSX shim for a more efficient web.",
-		longDescription: undefined,
-		screenshotURL: undefined,
-		url: undefined,
-		repo: "https://github.com/OGsWorkshop/dreamlandjs",
-	},
-	{
-		name: "Webleste",
-		description:
-			"A port of Celeste (2018) and the Everest Mod Loader to WebAssembly.",
-		longDescription: undefined,
-		screenshotURL: undefined,
-		url: undefined,
-		repo: "https://github.com/OGsWorkshop/celeste-wasm",
-	},
-	{
-		name: "RecoMod",
-		description: "A ChromeOS recovery image modification toolkit.",
-		longDescription: undefined,
-		screenshotURL: undefined,
-		url: undefined,
-		repo: "https://github.com/OGsWorkshop/RecoMod",
-	},
-	{
-		name: "cros.download",
-		description:
-			"A website providing downloads for ChromeOS recovery images and RMA shims.",
-		longDescription: undefined,
-		screenshotURL: undefined,
-		url: "https://cros.download/",
-		repo: undefined,
+		repo: "https://github.com/OGsWorkshop/Infrared",
 	},
 ];
