@@ -226,19 +226,11 @@ const MemberView = function() {
           /* @__PURE__ */ jsx("span", { class: "title", children: link.title }),
           /* @__PURE__ */ jsx("span", { class: "content", children: link.content })
         ] })
-      ) }),
-      /* @__PURE__ */ jsxs("footer", { class: "card", children: [
-        /* @__PURE__ */ jsx(Logo, {}),
-        /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsxs("p", { children: [
-          "Need help? Email us at",
-          " ",
-          /* @__PURE__ */ jsx("a", { href: "mailto:support@adrenaline.dev", children: "support@adrenaline.dev" })
-        ] }) })
-      ] })
+      ) })
     ] })
   ] });
 };
-MemberView.style = css`:scope{display:block}.pfp{border-radius:50%}.info{display:flex;align-items:center;gap:1rem;margin-top:1rem}article h2{margin:0}#profile-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin-top:1rem}.profile-link{display:flex;flex-direction:column;gap:.25rem;text-decoration:none;color:var(--text)}.profile-link .title{font-size:.9em;font-weight:700;font-family:var(--font-display);color:var(--fg2)}.profile-link .content{font-size:.95rem;color:var(--fg)!important;word-break:break-word}footer{margin-block:1.66rem;display:flex;justify-content:space-between}footer>div{display:flex;flex-direction:column;gap:.25rem;font-size:1.1rem;text-align:right}`;
+MemberView.style = css`:scope{display:block}.pfp{border-radius:50%}.info{display:flex;align-items:center;gap:1rem;margin-top:1rem}article h2{margin:0}#profile-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin-top:1rem}.profile-link{display:flex;flex-direction:column;gap:.25rem;text-decoration:none;color:var(--text)}.profile-link .title{font-size:.9em;font-weight:700;font-family:var(--font-display);color:var(--fg2)}.profile-link .content{font-size:.95rem;color:var(--fg)!important;word-break:break-word}`;
 const NotFoundView = function() {
   return /* @__PURE__ */ jsxs("main", { children: [
     /* @__PURE__ */ jsx(Stage, { pageHue: 340, pageSat: "45%" }),
@@ -283,19 +275,11 @@ const ProjectView = function() {
             }
           )
         ] })
-      ] }),
-      /* @__PURE__ */ jsxs("footer", { class: "card", children: [
-        /* @__PURE__ */ jsx(Logo, {}),
-        /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsxs("p", { children: [
-          "Need help? Email us at",
-          " ",
-          /* @__PURE__ */ jsx("a", { href: "mailto:support@adrenaline.dev", children: "support@adrenaline.dev" })
-        ] }) })
       ] })
     ] })
   ] });
 };
-ProjectView.style = css`article h2{margin-top:0}.card{width:100%;height:auto;margin-top:1rem}footer{margin-block:1.66rem;display:flex;justify-content:space-between}footer>div{display:flex;flex-direction:column;gap:.25rem;font-size:1.1rem;text-align:right}`;
+ProjectView.style = css`article h2{margin-top:0}.card{width:100%;height:auto;margin-top:1rem}`;
 let page = createState({});
 const App = function(cx) {
   cx.init = () => {
