@@ -11,7 +11,7 @@ const entry = await import(pathToFileURL(resolve("dist/server/main-server.js")).
 
 entry.default("/");
 const paths = entry.router.ssgables();
-paths.push(["/404", "/404.html"])
+paths.push(["/devs/404", "/devs/404.html"])
 
 let template = await readFile(resolve("dist/static/index.html"), "utf8");
 
@@ -20,7 +20,8 @@ for (const [route, path] of paths) {
 	console.log(
 		`prerendered: ${route}\t${(new TextEncoder().encode(rendered).byteLength / 1024).toFixed(2)}kb`
 	);
-	let resolved = resolve("dist/static/" + path);
+	const outPath = path.replace(/^\/devs\//, "");
+	let resolved = resolve("dist/static/" + outPath);
 	await mkdir(dirname(resolved), { recursive: true });
 	await writeFile(resolved, rendered);
 }

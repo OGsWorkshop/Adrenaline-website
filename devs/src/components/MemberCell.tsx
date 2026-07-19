@@ -5,7 +5,7 @@ import Member from "../types/Member";
 const MemberCell: Component<{ member: Member }, {}> = function (cx) {
 	return (
 		<a
-			href={`/member/${this.member.avatarName}`}
+			href={`/devs/member/${this.member.avatarName}`}
 			class="member-cell card interactable"
 			on:click={(e: MouseEvent) => {
 				e.preventDefault();
@@ -14,7 +14,7 @@ const MemberCell: Component<{ member: Member }, {}> = function (cx) {
 		>
 			<img
 				class="avatar"
-				src={`/assets/pfps/${this.member.avatarName}.webp`}
+				src={`/devs/assets/pfps/${this.member.avatarName}.webp`}
 				alt={`${this.member.name}'s avatar`}
 				width="100"
 				height="100"

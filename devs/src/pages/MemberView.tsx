@@ -12,7 +12,7 @@ const MemberView: Component<{ member: Member }, {}> = function () {
 				<div class="info card">
 					<img
 						class="pfp"
-						src={`/assets/pfps/${this.member.avatarName}.webp`}
+						src={`/devs/assets/pfps/${this.member.avatarName}.webp`}
 						alt={`${this.member.name}'s avatar`}
 						width="90"
 						height="90"

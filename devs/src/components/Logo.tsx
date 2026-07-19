@@ -5,7 +5,7 @@ const Logo: Component<{}, {}> = function () {
 	return (
 		<div class="logo">
 			<img
-				src="/assets/percury.svg"
+				src="/devs/assets/percury.svg"
 				alt="OG's Workshop Logo"
 				width="50"
 				height="50"

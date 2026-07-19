@@ -25,13 +25,13 @@ const App: Component<{}, {}> = function (cx) {
 		<div id="app">
 			<Router>
 				<Route show={<Homepage />} />
-				{...members.map((member) => <Route path={`member/${member.avatarName}`} show={<MemberView member={member} />} />)}
-				{...projects.map((project) => <Route path={`project/${project.name}`} show={<ProjectView project={project} />} />)}
+				{...members.map((member) => <Route path={`devs/member/${member.avatarName}`} show={<MemberView member={member} />} />)}
+				{...projects.map((project) => <Route path={`devs/project/${project.name}`} show={<ProjectView project={project} />} />)}
 				<Route path="*" show={<NotFoundView />} />
 			</Router>
 			<div style="width: 0; height: 0; overflow: hidden;">
 				<video id="clocks" disablepictureinpicture disableremoteplayback>
-					<source src="/assets/clocks.mp4" type="video/mp4" preload="auto" />
+					<source src="/devs/assets/clocks.mp4" type="video/mp4" preload="auto" />
 				</video>
 			</div>
 		</div>

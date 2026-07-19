@@ -8,7 +8,7 @@ const Logo = function() {
     /* @__PURE__ */ jsx(
       "img",
       {
-        src: "/assets/percury.svg",
+        src: "/devs/assets/percury.svg",
         alt: "OG's Workshop Logo",
         width: "50",
         height: "50"
@@ -52,7 +52,7 @@ const MemberCell = function(cx) {
   return /* @__PURE__ */ jsxs(
     "a",
     {
-      href: `/member/${this.member.avatarName}`,
+      href: `/devs/member/${this.member.avatarName}`,
       class: "member-cell card interactable",
       "on:click": (e) => {
         e.preventDefault();
@@ -63,7 +63,7 @@ const MemberCell = function(cx) {
           "img",
           {
             class: "avatar",
-            src: `/assets/pfps/${this.member.avatarName}.webp`,
+            src: `/devs/assets/pfps/${this.member.avatarName}.webp`,
             alt: `${this.member.name}'s avatar`,
             width: "100",
             height: "100"
@@ -254,7 +254,7 @@ const MemberView = function() {
           "img",
           {
             class: "pfp",
-            src: `/assets/pfps/${this.member.avatarName}.webp`,
+            src: `/devs/assets/pfps/${this.member.avatarName}.webp`,
             alt: `${this.member.name}'s avatar`,
             width: "90",
             height: "90"
@@ -346,11 +346,11 @@ const App = function(cx) {
   return /* @__PURE__ */ jsxs("div", { id: "app", children: [
     /* @__PURE__ */ jsxs(Router, { children: [
       /* @__PURE__ */ jsx(Route, { show: /* @__PURE__ */ jsx(Homepage, {}) }),
-      ...members.map((member) => /* @__PURE__ */ jsx(Route, { path: `member/${member.avatarName}`, show: /* @__PURE__ */ jsx(MemberView, { member }) })),
-      ...projects.map((project) => /* @__PURE__ */ jsx(Route, { path: `project/${project.name}`, show: /* @__PURE__ */ jsx(ProjectView, { project }) })),
+      ...members.map((member) => /* @__PURE__ */ jsx(Route, { path: `devs/member/${member.avatarName}`, show: /* @__PURE__ */ jsx(MemberView, { member }) })),
+      ...projects.map((project) => /* @__PURE__ */ jsx(Route, { path: `devs/project/${project.name}`, show: /* @__PURE__ */ jsx(ProjectView, { project }) })),
       /* @__PURE__ */ jsx(Route, { path: "*", show: /* @__PURE__ */ jsx(NotFoundView, {}) })
     ] }),
-    /* @__PURE__ */ jsx("div", { style: "width: 0; height: 0; overflow: hidden;", children: /* @__PURE__ */ jsx("video", { id: "clocks", disablepictureinpicture: true, disableremoteplayback: true, children: /* @__PURE__ */ jsx("source", { src: "/assets/clocks.mp4", type: "video/mp4", preload: "auto" }) }) })
+    /* @__PURE__ */ jsx("div", { style: "width: 0; height: 0; overflow: hidden;", children: /* @__PURE__ */ jsx("video", { id: "clocks", disablepictureinpicture: true, disableremoteplayback: true, children: /* @__PURE__ */ jsx("source", { src: "/devs/assets/clocks.mp4", type: "video/mp4", preload: "auto" }) }) })
   ] });
 };
 App.style = css`:scope{margin:0;--page-hs:var(--page-hue),var(--page-sat)}#clocks{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(0turn) scale(0);transform-origin:center;padding:1px;transition:transform .5s ease;visibility:hidden;box-shadow:0 0 2rem 1rem hsla(var(--fg-raw),.2);border:none;border-radius:1rem;z-index:10}#clocks.playing{transform:translate(-50%,-50%) rotate(1turn) scale(1);visibility:visible}#clocks.ending{transform:translate(-50%,-50%) rotate(0turn) scale(0);visibility:visible}`;
